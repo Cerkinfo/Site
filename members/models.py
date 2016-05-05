@@ -30,6 +30,22 @@ class Member(models.Model):
                                  null=True,
                                  verbose_name="date de naissance")
 
+    def username(self):
+        """
+        Returns: the user username if a user is linked, otherwise
+        the preferred surname
+        """
+        if self.user:
+            return self.user.username
+        return self.surname_set.get(is_prefered=True)
+
+    def is_baptised(self):
+        """
+        Check wether the member is baptised or not
+        Returns: A boolean value
+        """
+        return True if self.baptised_year else False
+
 class SurName(models.Model):
     """
     Represent the different surname of a member.
