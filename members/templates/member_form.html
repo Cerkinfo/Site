@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load bootstrap_dynamic_formsets %}
+{% load static %}
+
+{% block title %}
+    Modifier votre profil
+{% endblock %}
+
+{% block head %}
+    {{ form.media }}
+    <link rel='stylesheet' type='text/css' href='{% static 'css/jquery-ui/smoothness/jquery-ui.css' %}' />
+    <link href="{% static "css/bootstrap-datetimepicker.min.css" %}" rel="stylesheet" type="text/css">
+    <script src="{%  static "js/moment.js" %}"></script>
+    <script src="{%  static "js/bootstrap-datetimepicker.min.js" %}"></script>
+    <script type='text/javascript' src='{% static 'js/jquery-ui.js' %}'></script>
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>
+            {{ request.user.username.capitalize }}
+            <small>Modification du profil</small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-10">
+            <form action="{% url "user_edit" %}" method="post" class="form" enctype="multipart/form-data" >
+                {% csrf_token %}
+                <div class="row">
+
+                    <div class="col-md-8">
+                        <h2>Informations</h2>
+                        {% bootstrap_field form.birthdate %}
+                        <div class="form-group">
+                            <label class="control-label" for="id_email">Email</label>
+                            <input class="form-control" value="{{ request.user.email }}" disabled/>
+                        </div>
+                        <h2>Comité de Cercle</h2>
+                        {% bootstrap_dynamic_formset comite_form can_delete=True layout="horizontal" %}
+                        {% for hidden in comite_form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                        <h2>Parcours Folklorique</h2>
+                        {% bootstrap_dynamic_formset folklo_form can_delete=True layout="horizontal" %}
+                        {% for hidden in folklo_form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-4">
+                        <img src="{{ object.image_url }}" alt="{{ object }} picture"/>
+                        {%  bootstrap_field form.avatar %}
+                    </div>
+                </div>
+                <div class="row">
+                    {% buttons %}
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    {% endbuttons %}
+                </div>
+
+            </form>
+        </div>
+        <div class="col-md-1">
+
+        </div>
+    </div>
+{% endblock %}

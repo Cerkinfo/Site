@@ -1,0 +1,53 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load sekizai_tags metron_tags %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    {% render_block "css" %}
+
+    <title>{% block title %}Cercle Informatique{% endblock %}</title>
+
+    <link rel="icon" type="image/png" href="{{ MEDIA_URL }}images/icon/icon.png">
+
+    {% bootstrap_javascript jquery=1 %}
+    {% render_block "js" %}
+
+    <meta property="og:title" content="Cercle Informatique"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://cerkinfo.be/fr/"/>
+    <meta property="og:image" content="http://cerkinfo.be/static/img/cerkinfo_logo.png"/>
+
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+{% include 'navbar.html' %}
+<div class="content">
+    {% if messages %}
+        <!-- Messages for this instance -->
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                <a class="close" data-dismiss="alert" href="#">&times;</a>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</div>
+<a name="bottom" class="separator"></a>
+{% analytics %}
+</body>
+</html>
+
+{% addtoblock "css" %}
+    {% bootstrap_css %}
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css">
+{% endaddtoblock %}

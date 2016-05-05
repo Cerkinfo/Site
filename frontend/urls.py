@@ -13,9 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
-from django.contrib import admin
 
-urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-]
+from django.conf.urls import url, include
+from django.conf.urls.i18n import i18n_patterns
+from django.contrib import admin
+from django.contrib.auth.decorators import login_required
+from members.views import RegisterView, login_member, ImportMemberView
+
+admin.autodiscover()
+
+urlpatterns = i18n_patterns(
+    '',
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^auth', include('django.contrib.auth.urls')),
+    url(r'^cipedia/', include('members.urls')),
+    url(r'^register/', RegisterView.as_view(), name="register"),
+    url(r'^log_user/', login_member, name="test_log"),
+    url(
+        r'^retrieve_member/',
+        login_required(ImportMemberView.as_view()),
+        name="retrieve_member"),
+)

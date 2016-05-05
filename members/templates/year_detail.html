@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}
+    Comité de {{ object }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-2 text-left">
+            {% if object.get_previous_year %}
+                <a class="btn btn-primary btn-lg" href="{% url 'year_detail' object.get_previous_year.slug %}">Previous</a>
+            {% endif %}
+        </div>
+        <div class="col-md-8 center-block">
+            <h1 class="text-center">Année {{ object }}
+            {% if request.user.member.is_active_comite %}
+                <a href="{% url 'year_edit' object.slug %}" class="btn btn-default">
+                    <span class="fa fa-edit" aria-hidden="true"></span>
+                    Gérer
+                </a>
+            {% endif %}</h1>
+        </div>
+        <div class="col-md-2 text-right">
+            {% if object.get_next_year %}
+                <a class="btn btn-primary btn-lg" href="{% url 'year_detail' object.get_next_year.slug %}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+    {% for title, elems in object.get_all_cat %}
+        <div class="row">
+            {% with title_desc=title items=elems instance=object %}
+                {% include 'comite.html' %}
+            {% endwith %}
+        </div>
+    {% endfor %}
+{% endblock %}
