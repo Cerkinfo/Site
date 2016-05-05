@@ -66,7 +66,7 @@
             <div class="row">
                 <h2>Comités de Cercle</h2>
                 <ul>
-                    {% for cm in object.cercle_comites %}
+                    {% for cm in object.cercle_carreer %}
                         <li><a href="{% url 'year_detail' cm.year.slug %}"> {{cm.year }} </a> : {{ cm.poste }}</li>
                     {% endfor %}
                 </ul>
@@ -75,7 +75,7 @@
             <div class="row">
                 <h2>Parcours Folklorique</h2>
                 <ul>
-                    {% for cm in object.parcour_folklo %}
+                    {% for cm in object.bapteme_carreer %}
                         <li><a href="{% url 'year_detail' cm.year.slug %}"> {{cm.year }} </a> : {{ cm.poste }}</li>
                     {% endfor %}
                 </ul>

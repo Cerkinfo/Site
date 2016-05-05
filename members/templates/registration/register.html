@@ -1,0 +1,39 @@
+
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}
+    Créer un compte
+{% endblock %}
+
+{% block content %}
+
+    <form method="post" action="">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="page-header">
+                    <h1>
+                        Gestion utilisateur
+                        <small>Création</small>
+                    </h1>
+                </div>
+            </div>
+            <form method="post" action="">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">
+                        Créer un compte
+                    </button>
+                {% endbuttons %}
+
+            </form>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+
+{% endblock %}

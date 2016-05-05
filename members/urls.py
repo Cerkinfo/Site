@@ -19,11 +19,11 @@ urlpatterns = patterns(
         login_required(MemberEditView.as_view()),
         name='user_edit'),
     url(
-        r'^year',
+        r'^year/(?P<slug>.+)',
         YearDetailView.as_view(),
         name='year_detail'),
     url(
-        r'^manage_year',
+        r'^manage_year/(?P<slug>.+)',
         login_required(YearEditView.as_view()),
         name='year_edit'),
 )

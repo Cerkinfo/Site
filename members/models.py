@@ -113,7 +113,7 @@ class Member(models.Model):
         """
         return self.comitemembership_set.filter(
             poste__is_bapteme=False
-        ).order_by('year__start ')
+        ).order_by('year__start')
 
 
     def bapteme_carreer(self):
@@ -122,7 +122,7 @@ class Member(models.Model):
         """
         return self.comitemembership_set.filter(
             poste__is_bapteme=True
-        ).order_by('year__start ')
+        ).order_by('year__start')
 
     def admin_image(self):
         """Returns: an html element to display an image in the admin"""
@@ -137,7 +137,7 @@ class Member(models.Model):
         poste = self.comitemembership_set.filter(
             poste__is_bapteme=False
         ).filter(
-            year_active=True
+            year__active=True
         )
         return len(poste) > 0
 

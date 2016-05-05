@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}
+    Créer un compte
+{% endblock %}
+
+{% block content %}
+    <form method="post" action="">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="page-header">
+                    <h1>
+                        Gestion utilisateur
+                        <small>Récupération</small>
+                    </h1>
+                </div>
+            </div>
+            {% if request.user.member %}
+                Tu as déjà un profil membre
+            {% else %}
+            <form method="post" action="retrieve_member">
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                {% bootstrap_field form.c_in %}
+                {% bootstrap_field form.c_out %}
+                N'en sélectionner aucun si vous n'avez pas trouver votre ancien compte, et contacter l'admin
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">
+                        Choisir
+                    </button>
+                {% endbuttons %}
+            </form>
+
+            {% endif %}
+        </div>
+        <div class="col-md-2">
+
+        </div>
+
+{% endblock %}

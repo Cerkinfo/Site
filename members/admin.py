@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from .models import Member, ComitePoste, ComiteMembership, SurName
+from .models import Member, ComitePoste, ComiteMembership, SurName, AcademicYear
 
 
 class SurNameInline(admin.TabularInline):
@@ -47,3 +47,5 @@ class ComiteMembershipAdmin(admin.ModelAdmin):
     list_display = ['year', 'member', 'poste']
     list_filter = ['year', 'poste__is_bapteme', 'poste']
     raw_id_fields = ['member']
+
+admin.site.register(AcademicYear)

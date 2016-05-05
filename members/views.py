@@ -1,8 +1,11 @@
+from django.contrib import auth
+from django.contrib.auth import login, logout, authenticate
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.views.generic import DetailView ,UpdateView
+from django.views.generic import DetailView, UpdateView, CreateView
+from frontend.settings import LOGIN_REDIRECT_URL
 from members.forms import MemberForm, ComiteItemFormset, FolkloItemFormset, \
-    YearForm, ComiteListFormset
+    YearForm, ComiteListFormset, MemberImportForm, UserCreationForm
 from members.models import Member, ComiteMembership, AcademicYear
 
 
@@ -185,3 +188,70 @@ class YearEditView(UpdateView):
                                   comite_bapteme_form=comite_bapteme_form,
                                   bapt_cercle_form=cercle_bapteme_form,
                                   bleu_form=bleu_form))
+
+
+class ImportMemberView(UpdateView):
+    template_name = 'registration/member_choice.html'
+    form_class = MemberImportForm
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = MemberImportForm(user=self.object)
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form_class = self.get_form_class()
+        form = MemberImportForm(user=self.object)
+        c_in = request.POST.get('c_in')
+        c_out = request.POST.get('c_out')
+        if c_in:
+            member = Member.objects.get(id=c_in)
+        elif c_out:
+            member = Member.objects.get(id=c_out)
+        else:
+            member = Member()
+        member.user = self.object
+        member.save()
+        return HttpResponseRedirect(reverse('user_edit'));
+
+    def form_valid(self, form):
+        return HttpResponseRedirect(reverse('user_edit'));
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class RegisterView(CreateView):
+    template_name = 'registration/register.html'
+    form_class = UserCreationForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        ret = super(RegisterView, self).form_valid(form)
+        user = form.auth_user()
+        if user:
+            login(self.request, user)
+            if form.is_import():
+                return HttpResponseRedirect(reverse('retrieve_member'))
+            else:
+                Member(user=user).save()
+                return HttpResponseRedirect(reverse('user_edit'));
+        return ret
+
+
+def login_member(request):
+    logout(request)
+    username = password = ''
+    if request.POST:
+        username = request.POST.get('id_username')
+        password = request.POST.get('id_password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(LOGIN_REDIRECT_URL)
+    return auth.views.login(request, extra_context={'username': username, 'password': password})
