@@ -1,0 +1,3 @@
+Cerkinfo New Site
+=================
+Reworking of Site2.0 without django_cms and better handling of db migrations, ...
