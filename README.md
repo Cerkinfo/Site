@@ -4,7 +4,9 @@ Reworking of Site2.0 without django_cms and better handling of db migrations, ..
 
 ## Dependencies
 - python3
+- python3-dev
 - python3-venv
+- libjpeg-dev
 
 ## Set up
 ```
