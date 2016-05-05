@@ -1,0 +1,19 @@
+<a name="team" class="separator"></a>
+<section style="text-align:center;">
+    <div class="comite_desc"> {{ title_desc }}</div>
+    {% for membership in items %}
+        <a class="member-widget" href="{% if membership.member %}{% url 'member_profil' membership.member_id %}{% else %}#{% endif %}">
+            <div class="circle"
+                 style="background:url('{% if membership.member %}{{ membership.member.image_url }}{% else %}{{ MEDIA_URL }}/images/members/default-person.png{% endif %} ') no-repeat center center / 100% auto"></div>
+            <div class="member-poste">{{ membership.poste }}</div>
+            {% if membership.poste.is_bapteme %}
+                <div class="member-name"> {{ membership.member.username }} </div>
+            {% else %}
+                <div class="member-name"> {{ membership.member }} </div>
+            {% endif %}
+            {% if instance.active %}
+                <div class="member-mail"> {{ membership.poste.email }} </div>
+            {% endif %}
+        </a>
+    {% endfor %}
+</section>

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}
+    Profil de {{ object.username }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>
+            {{ object.username|capfirst }}
+             {% if object.user == user %}
+                <a href="{% url 'user_edit' %}" class="btn btn-default">
+                    <span class="fa fa-edit" aria-hidden="true"></span>
+                    Editer
+                </a>
+            {% endif %}
+        </h1>
+    </div>
+
+    <div class="col-md-1">
+
+    </div>
+    <div class="col-md-10">
+        <div class="col-md-8">
+            <div class="row">
+                <h2>Informations Générale</h2>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        Prénom:
+                    </div>
+                    <div class="col-md-9">
+                        {{ object.firstName }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        Nom:
+                    </div>
+                    <div class="col-md-9">
+                        {{ object.lastName }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        Surnom:
+                    </div>
+                    <div class="col-md-9 surname_list">
+                        <ul>
+                            {% for surname in object.surname_set.all %}
+                                <li>{{ surname }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        Date de naissance:
+                    </div>
+                    <div class="col-md-9 surname_list">
+                        {{ object.birthdate }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h2>Comités de Cercle</h2>
+                <ul>
+                    {% for cm in object.cercle_comites %}
+                        <li><a href="{% url 'year_detail' cm.year.slug %}"> {{cm.year }} </a> : {{ cm.poste }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="row">
+                <h2>Parcours Folklorique</h2>
+                <ul>
+                    {% for cm in object.parcour_folklo %}
+                        <li><a href="{% url 'year_detail' cm.year.slug %}"> {{cm.year }} </a> : {{ cm.poste }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img src="{{ object.image_url }}" alt="{{ object }} picture" style="width:300px;"/>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-1">
+
+    </div>
+{% endblock %}
