@@ -27,6 +27,7 @@ urlpatterns = i18n_patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^auth', include('django.contrib.auth.urls')),
     url(r'^cipedia/', include('members.urls')),
+    url(r'^wiki/', include('ciwiki.urls')),
     url(r'^register/', RegisterView.as_view(), name="register"),
     url(r'^log_user/', login_member, name="test_log"),
     url(

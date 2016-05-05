@@ -37,12 +37,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.humanize',
+    'django_nyt',
+    'mptt',
     'bootstrap3',
     'django_bootstrap_dynamic_formsets',
     'metron',
     'sekizai',
+    'sorl.thumbnail',
     'captcha',
-    'members'
+    'members',
+    'wiki',
+    'wiki.plugins.attachments',
+    'wiki.plugins.notifications',
+    'wiki.plugins.images',
+    'wiki.plugins.macros',
+    'ciwiki'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -63,12 +74,17 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'skeletton', 'templates')
+            os.path.join(BASE_DIR, 'skeletton', 'templates'),
+            os.path.join(BASE_DIR, 'ciwiki', 'templates')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -179,6 +195,8 @@ RECAPTCHA_PUBLIC_KEY = '6LcMLx8TAAAAACYpyhaNRYBQaGJ1Hi7XthsUFL_T'
 RECAPTCHA_PRIVATE_KEY = '6LcMLx8TAAAAAGoQdcykw_Bz5LHyAcsYJmHwHMY-'
 NOCAPTCHA = True
 RECAPTCHA_USE_SSL = True
+
+SITE_ID = 1
 
 try:
     from local_settings import *  # pragma: no flakes
