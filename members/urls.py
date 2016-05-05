@@ -2,10 +2,16 @@ from django.conf.urls import *
 from django.contrib.auth.decorators import login_required
 
 from .views import MemberDetailView, \
-    YearDetailView, CurrentMemberDetailView, MemberEditView, YearEditView
+    YearDetailView, CurrentMemberDetailView, MemberEditView, YearEditView, \
+    YearListView
 
 urlpatterns = patterns(
     '',
+    url(
+        r'^$',
+        YearListView.as_view(),
+        name="cipedia_home"
+    ),
     url(
         r'^profile',
         login_required(CurrentMemberDetailView.as_view()),

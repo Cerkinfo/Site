@@ -2,7 +2,7 @@ from django.contrib import auth
 from django.contrib.auth import login, logout, authenticate
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.views.generic import DetailView, UpdateView, CreateView
+from django.views.generic import DetailView, UpdateView, CreateView, ListView
 from frontend.settings import LOGIN_REDIRECT_URL
 from members.forms import MemberForm, ComiteItemFormset, FolkloItemFormset, \
     YearForm, ComiteListFormset, MemberImportForm, UserCreationForm
@@ -84,7 +84,9 @@ class YearDetailView(DetailView):
     template_name = 'year_detail.html'
     slug_field = 'slug'
 
-
+class YearListView(ListView):
+    model = AcademicYear
+    template_name = "year_list.html"
 
 class YearEditView(UpdateView):
     model = AcademicYear
