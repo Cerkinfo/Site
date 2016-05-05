@@ -1,7 +1,7 @@
 from django.conf.urls import *
 from django.contrib.auth.decorators import login_required
 
-from cerkinfo_members.views import MemberDetailView, \
+from .views import MemberDetailView, \
     YearDetailView, CurrentMemberDetailView, MemberEditView, YearEditView
 
 urlpatterns = patterns(

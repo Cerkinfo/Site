@@ -9,3 +9,8 @@ pytest-pep8
 pytest-django
 pyflakes
 coverage
+
+# frontend
+django-bootstrap3
+django-bootstrap3-datetimepicker-2
+fuzzywuzzy
