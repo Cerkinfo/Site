@@ -29,5 +29,8 @@ urlpatterns = i18n_patterns(
     url(r'^cipedia/', include('members.urls')),
     url(r'^register/', RegisterView.as_view(), name="register"),
     url(r'^log_user/', login_member, name="test_log"),
-    url(r'^retrieve_member/', login_required(ImportMemberView.as_view()), name="retrieve_member"),
+    url(
+        r'^retrieve_member/',
+        login_required(ImportMemberView.as_view()),
+        name="retrieve_member"),
 )
