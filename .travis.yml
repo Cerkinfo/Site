@@ -1,0 +1,14 @@
+sudo: false
+
+language: python
+
+python:
+  - "3.5"
+
+scipts:
+  - "./run_tests --cov ."
+
+notifications:
+  slack:
+    rooms:
+      - cerkinfo:YgnjW8o5b5y1zKaqEgMVvp7U#site_infra
