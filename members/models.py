@@ -29,3 +29,18 @@ class Member(models.Model):
     birthdate = models.DateField(blank=True,
                                  null=True,
                                  verbose_name="date de naissance")
+
+class SurName(models.Model):
+    """
+    Represent the different surname of a member.
+    A user can have as many surnames has he wants
+    and can chose which of them is his preferred
+    """
+    # The member which it belongs
+    member = models.ForeignKey(Member)
+    value = models.CharField(max_length=250)
+    is_prefered = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '{}'.format(self.value)
+
