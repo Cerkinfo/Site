@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_bootstrap_dynamic_formsets',
     'metron',
     'sekizai',
+    'captcha',
     'members'
 ]
 
@@ -173,6 +174,10 @@ STATICFILES_DIRS = (
 )
 LOGIN_REDIRECT_URL = '/cipedia/profile'
 
+RECAPTCHA_PUBLIC_KEY = '6LcMLx8TAAAAACYpyhaNRYBQaGJ1Hi7XthsUFL_T'
+RECAPTCHA_PRIVATE_KEY = '6LcMLx8TAAAAAGoQdcykw_Bz5LHyAcsYJmHwHMY-'
+NOCAPTCHA = True
+RECAPTCHA_USE_SSL = True
 
 try:
     from local_settings import *  # pragma: no flakes
