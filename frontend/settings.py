@@ -120,6 +120,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 try:
-    from local_settings import * # pragma: no flakes
+    from local_settings import *  # pragma: no flakes
 except ImportError:
     pass
