@@ -24,7 +24,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Research -->
 
-                    {% comment %}    <li class="active">
+                    <li class="active">
                     <form class="navbar-form navbar-right" id="wiki-search-form" method="GET"
                           action="{% url 'wiki:search' %}">
                         <div class="input-group">
@@ -36,7 +36,7 @@
                                 </button>
                             </span>
                         </div><!-- /input-group -->
-                    </form>{% endcomment %}
+                    </form>
                         </li>
                     {% if request.user.is_authenticated %}
                         <li class="dropdown">
@@ -108,6 +108,13 @@
                     <li class="active">
                         <a href="{% url 'cipedia_home' %}">
                             CIpédia
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="{% url 'wiki:root' %}">
+                            Wiki
                         </a>
                     </li>
                 </ul>
