@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}
+    CIpédia
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Liste des comités</h1>
+        </div>
+    </div>
+    <ul>
+    {% for year in object_list %}
+        <li>
+            <a href="{% url 'year_detail' year.slug %}">
+                {{ year }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
