@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'wiki.plugins.notifications',
     'wiki.plugins.images',
     'wiki.plugins.macros',
-    'ciwiki'
+    'ciwiki',
+    'agenda'
 ]
 
 MIDDLEWARE_CLASSES = [

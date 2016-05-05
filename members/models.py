@@ -185,6 +185,11 @@ class Member(models.Model):
             return gravatar_url
         return MEDIA_URL + "/images/members/default-person.png"
 
+    def __str__(self):
+        if self.user.first_name or self.user.last_name:
+            return "%s %s" % (self.user.first_name, self.user.last_name)
+        return "%s" % self.username()
+
 
 class SurName(models.Model):
     """
