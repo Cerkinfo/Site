@@ -1,0 +1,5 @@
+[run]
+omit = .ve/, venv/*, venv3/*, dist/*
+
+[html]
+directory = docs/coverage
