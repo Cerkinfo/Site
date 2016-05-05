@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import logging.config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -100,6 +101,42 @@ AUTH_PASSWORD_VALIDATORS = [
             'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s.%(levelname)s %(name)s: %(message)s'
+        },
+    },
+    'handlers': {
+        'default': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['default'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+        'py.warnings': {
+            'handlers': ['default'],
+            'level': 'ERROR',
+            'propagate': True
+        },
+        'django': {
+            'handlers': ['default'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    }
+})
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
