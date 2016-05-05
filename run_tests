@@ -1,0 +1,3 @@
+#!/bin/bash
+set -e
+py.test --pep8 --cov-config .coveragerc -- flakes frontend

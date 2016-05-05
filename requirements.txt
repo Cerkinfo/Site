@@ -1,1 +1,9 @@
 django>=1.9
+
+# For testing
+pytest
+pytest-cov
+pytest-pep8
+pytest-django
+pyflakes
+coverage
