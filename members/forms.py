@@ -1,4 +1,5 @@
 from bootstrap3_datetime.widgets import DateTimePicker
+from captcha.fields import ReCaptchaField
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
@@ -146,6 +147,9 @@ class UserCreationForm(forms.ModelForm):
         required=False,
         help_text=_("Si vous aviez une page sur l'ancien wiki, checker ça")
     )
+
+    captcha = ReCaptchaField()
+
     class Meta:
         model = User
         fields = ("username", "email")

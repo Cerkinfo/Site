@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_bootstrap_dynamic_formsets',
     'metron',
     'sekizai',
+    'captcha',
     'members'
 ]
 
@@ -48,6 +49,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
@@ -173,6 +175,10 @@ STATICFILES_DIRS = (
 )
 LOGIN_REDIRECT_URL = '/cipedia/profile'
 
+RECAPTCHA_PUBLIC_KEY = '6LcMLx8TAAAAACYpyhaNRYBQaGJ1Hi7XthsUFL_T'
+RECAPTCHA_PRIVATE_KEY = '6LcMLx8TAAAAAGoQdcykw_Bz5LHyAcsYJmHwHMY-'
+NOCAPTCHA = True
+RECAPTCHA_USE_SSL = True
 
 try:
     from local_settings import *  # pragma: no flakes
