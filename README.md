@@ -10,7 +10,7 @@ Reworking of Site2.0 without django_cms and better handling of db migrations, ..
 ```
 	$ git clone https://github.com/Cerkinfo/Site.git cerkinfo_site
 	$ cd cerkinfo_site
-	$ pyvenv .ve
+        $ virtualenv --python=/usr/bin/python3 .ve
 	$ source .ve/bin/activate
 	$ pip install -r requirements.txt
 ```
