@@ -19,7 +19,6 @@ django-jquery-ui
 -e git+git://github.com/loispostula/django-bootstrap-dynamic-formsets.git#egg=django-bootstrap-dynamic-formsets
 fuzzywuzzy
 djangorestframework
-fuzzywuzzy
 metron
 django-debug-toolbar
 django-sekizai
