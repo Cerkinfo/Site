@@ -62,15 +62,6 @@ class AcademicYear(models.Model):
 class Member(models.Model):
     # link to the django user
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # basic info
-    firstName = models.CharField(max_length=50,
-                                 blank=True,
-                                 null=True,
-                                 verbose_name="prénom")
-    lastName = models.CharField(max_length=50,
-                                blank=True,
-                                null=True,
-                                verbose_name="nom")
     # picture
     avatar = models.ImageField(upload_to='images/members',
                                blank=True,
@@ -83,6 +74,22 @@ class Member(models.Model):
     birthdate = models.DateField(blank=True,
                                  null=True,
                                  verbose_name="date de naissance")
+
+    def firstname(self):
+        """
+
+        Returns: the user firstname
+
+        """
+        return "" if not self.user else self.user.first_name
+
+    def lastname(self):
+        """
+
+        Returns: the user lastname
+
+        """
+        return "" if not self.user else self.user.last_name
 
     def username(self):
         """
@@ -119,7 +126,7 @@ class Member(models.Model):
 
     def admin_image(self):
         """Returns: an html element to display an image in the admin"""
-        return "<img src={} style='width: 60px;' />".format(self.image_url)
+        return "<img src={} style='width: 60px;' >".format(self.image_url)
 
     admin_image.allow_tags = True
 
@@ -159,6 +166,7 @@ class Member(models.Model):
     def surnames(self):
         return self.surname_set.all()
 
+    @property
     def image_url(self):
         """
 

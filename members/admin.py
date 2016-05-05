@@ -28,6 +28,7 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(Member)
 class MembreAdmin(admin.ModelAdmin):
+    list_display = ['admin_image', 'username', 'firstname', 'lastname']
     inlines = [
         SurNameInline,
         ComiteMembershipInline
