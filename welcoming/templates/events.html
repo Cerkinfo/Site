@@ -1,0 +1,252 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load sekizai_tags metron_tags %}
+{% load i18n %}
+{% load mathfilters %}
+
+<style type="text/css">
+	{% if length > 1 %}
+		.slider_bullet {
+			width: 15px;
+			height:15px;
+			border: 1px solid whitesmoke;
+			display:inline-block;
+			border-radius: 8px;
+			margin: 0 6px;
+			opacity: 0.8;
+			background-color: transparent;
+		}
+		.radio_slider_bullet {
+    		display: none;
+		}
+		{% for id,event in items %}
+		#radio_bullet-{{id}}:checked ~ .agenda_slider .slider_container {
+			left:-{{id|mul:100}}%;
+			-webkit-animation: paused; /* Chrome, Safari, Opera */
+    		animation: paused;
+    		-webkit-transition: left 500ms linear 0s; /* For Safari 3.1 to 6.0 */
+    		transition: left 500ms linear 0s;
+		}
+		#radio_bullet-{{id}}:checked ~ .slider_pagination .slider_bullet,
+		#radio_bullet-{{id}}:checked ~ .event_info .event_desc_container {
+			-webkit-animation: paused; /* Chrome, Safari, Opera */
+			animation: paused;
+		}
+		#radio_bullet-{{id}}:checked ~ .slider_pagination #bullet-{{id}} {
+			background-color: white;
+			-webkit-transition: background-color 500ms linear 0s; /* For Safari 3.1 to 6.0 */
+    		transition: background-color 500ms linear 0s;
+		}
+		#radio_bullet-{{id}}:checked ~ .event_info #desc_container-{{id}} {
+			cursor:default;
+			opacity: 1.0;
+			-webkit-transition: opacity 500ms linear 0s; /* For Safari 3.1 to 6.0 */
+    		transition: opacity 500ms linear 0s;
+		}
+		{% endfor %}
+		{% for id,event in items %}
+		#bullet-{{ id }} {
+			-webkit-animation: agenda_bullet_animation {{ animLength|mul:length }}s ease-in-out {{ id|mul:animLength }}s infinite normal; /* Chrome, Safari, Opera */
+	    	animation: agenda_bullet_animation {{ animLength|mul:length }}s ease-in-out {{ id|mul:animLength }}s infinite normal;
+	    }
+	    {% endfor %}
+		.slider_bullet:hover {
+			opacity:1;
+			cursor:pointer;
+		}
+		.slider_pagination {
+			position:absolute;
+			z-index:10;
+			margin: 20px;
+
+		}
+	{% endif %}
+	.agenda_slider {
+		width:100%;
+		height:{{height}}px;
+		overflow:hidden;
+		position:relative;
+	}
+	.slider_container {
+		height:100%;
+		position:relative;
+		{% if length > 1 %}
+			width:{{ length|mul:100 }}%;
+			-webkit-animation: agenda_slider_animation {{ animLength|mul:length }}s ease-in-out 0s infinite normal; /* Chrome, Safari, Opera */
+			animation: agenda_slider_animation {{ animLength|mul:length }}s ease-in-out 0s infinite normal;
+		{% else %}
+			width:100%;
+			background-color:whitesmoke;
+		{% endif %}
+	}
+	.agenda_slider .slide {
+		width:{{ slideSize }}%;
+		height:100%;
+		display:inline-block;
+	}
+	{% if length > 0 %}
+		/* Chrome, Safari, Opera */
+		@-webkit-keyframes agenda_slider_animation
+		{
+			{% for id,event in items %}
+	    		{{ 100|mul:id|intdiv:length }}% { left:-{{ 100|mul:id }}%; }
+	    		{{ id|add:1|mul:100|intdiv:length|sub:2 }}% { left:-{{ 100|mul:id }}%; }
+	    	{% endfor %}
+	    	100% { left:0; }
+		}
+		/* Standard syntax */
+		@keyframes agenda_slider_animation
+		{
+			{% for id,event in items %}
+	    		{{ 100|mul:id|intdiv:length }}% { left:-{{ 100|mul:id }}%; }
+	    		{{ id|add:1|mul:100|intdiv:length|sub:2 }}% { left:-{{ 100|mul:id }}%; }
+	    	{% endfor %}
+	    	100% { left:0; }
+		}
+		/* Chrome, Safari, Opera */
+		@-webkit-keyframes agenda_bullet_animation {
+    		0%, {{ 100|intdiv:length }}% { background-color: white; }
+    		{{ 100|intdiv:length|add:1 }}%, 100% { background-color: transparent; }
+		}
+		/* Standard syntax */
+		@keyframes agenda_bullet_animation {
+			0%, {{ 100|intdiv:length }}% { background-color: white; }
+    		{{ 100|intdiv:length|add:1 }}%, 100% { background-color: transparent; }
+		}
+		/* Chrome, Safari, Opera */
+		@-webkit-keyframes desc_container_animation {
+    		0%, {{ 100|intdiv:length }}% { opacity: 1; }
+    		{{ 100|intdiv:length|add:1 }}%, 100% { opacity:0.5; }
+		}
+		/* Standard syntax */
+		@keyframes desc_container_animation {
+			0%, {{ 100|intdiv:length }}% { opacity: 1; }
+    		{{ 100|intdiv:length|add:1 }}%, 100% { opacity:0.5; }
+		}
+	{% endif %}
+	.event_info {
+		display:table;
+		width:100%;
+		background-color: whitesmoke;
+		text-align: center;
+		border-spacing: 10px 40px;
+		margin: 0 auto;
+		max-width: 1200px;
+	}
+	.event_desc {
+    	text-align: justify;
+    	font-weight: 300;
+	}
+	.event_title {
+		font-weight: 500;
+		padding-bottom: 10px;
+	}
+	.event_desc_container {
+		border-radius: 5px;
+		display:table-cell;
+		width:300px;
+		background-color: white;
+		padding: 20px;
+		vertical-align: top;
+		opacity:0.5;
+		cursor:pointer;
+		border:1px solid transparent;
+		transition:border-bottom-color 500ms ease-in-out 0s,border-top-color 500ms ease-in-out 0s, border-left-color 500ms ease-in-out 0s, border-right-color 500ms ease-in-out 0s;
+		-webkit-transition:border-bottom-color 500ms ease-in-out 0s,border-top-color 500ms ease-in-out 0s, border-left-color 500ms ease-in-out 0s, border-right-color 500ms ease-in-out 0s;
+	}
+	.event_desc_container:hover {
+		border-color:rgba(0,0,0,0.2);
+		transition:border-bottom-color 500ms ease-in-out 0s,border-top-color 500ms ease-in-out 0s, border-left-color 500ms ease-in-out 0s, border-right-color 500ms ease-in-out 0s;
+		-webkit-transition:border-bottom-color 500ms ease-in-out 0s,border-top-color 500ms ease-in-out 0s, border-left-color 500ms ease-in-out 0s, border-right-color 500ms ease-in-out 0s;
+	}
+	{% for id,event in items %}
+		#desc_container-{{id}} {
+			-webkit-animation: desc_container_animation {{ animLength|mul:length }}s ease-in-out {{ id|mul:animLength }}s infinite normal; /* Chrome, Safari, Opera */
+	    	animation: desc_container_animation {{ animLength|mul:length }}s ease-in-out {{ id|mul:animLength }}s infinite normal;
+	    }
+	{% endfor %}
+	/* CALENDAR */
+	.calendar {
+		display: inline-block;
+	    max-width: 600px;
+	    padding: 20px 15px;
+	    display:table-cell;
+	    vertical-align: middle;
+	}
+	.calendar .title {
+		font-size: 1.4em;
+	    font-weight: 300;
+	    margin-bottom: 10px;
+	    text-align: center;
+	}
+	.event {
+		text-align: left;
+		font-weight: 200;
+	}
+	.event td {
+		padding:5px 10px;
+	}
+	.events {
+		border:none;
+		border-spacing:0;
+	}
+	.events tr:not(:last-child) td {
+		border-bottom: 2px solid whitesmoke;
+	}
+	.calendar .events-table-box {
+		max-height: 300px;
+		overflow-y: scroll;
+		margin-bottom: 15px;
+	}
+	.calendar .tools  {
+		width:100%;
+		text-align:right;
+	}
+	.calendar .tools a {
+		text-align: left;
+		margin-right:10px;
+	}
+	.calendar_container {
+		position:absolute;
+		right:75px;
+		z-index: 10;
+		height:{{height}}px;
+		display:table;
+	}
+</style>
+<a name="agenda" class="separator"></a>
+<section style="background-color: whitesmoke;">
+    <dic class="calendar_container">
+        <div class="calendar">
+            <div cstyle="background-color:rgba(255,255,255,0.95);
+                         padding: 20px 15px;
+                         border-radius: 3px">
+                <div class="title">
+                    Évènements à venir
+                </div>
+                <div class="events-table-box">
+                    <table class="events">
+                        {% for event in instance %}
+                            <tr class="event">
+                                <td>
+                                    {% if event.link %}
+                                        <a href="{{ event.link }}" target="_blank">
+                                    {% endif %}
+                                        <b>{{ event.title }}</b>
+                                    {% if event.link %}
+                                        </a>
+                                    {% endif %}
+                                </td>
+                                <td>{{ event.date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="tools">
+                    <a target="_blank" href=https://www.google.com/calendar/embed?src=b6s2tn7vm5mr8cl4sdq1m9qp0o%40group.calendar.google.com&ctz=Europe/Brussels">Original</a>
+					<a target="_blank" href="https://www.google.com/calendar/render?cid=b6s2tn7vm5mr8cl4sdq1m9qp0o%40group.calendar.google.com">S'abonner</a>
+                </div>
+            </div>
+        </div>
+    </dic>
+</section>
