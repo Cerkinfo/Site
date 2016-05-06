@@ -27,7 +27,7 @@
     </div>
     {% for title, elems in object.get_all_cat %}
         <div class="row">
-            {% with title_desc=title items=elems instance=object %}
+            {% with title_desc=title memberships=elems instance=object %}
                 {% include 'comite.html' %}
             {% endwith %}
         </div>

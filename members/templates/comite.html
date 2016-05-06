@@ -1,7 +1,7 @@
 <a name="team" class="separator"></a>
 <section style="text-align:center;">
     <div class="comite_desc"> {{ title_desc }}</div>
-    {% for membership in items %}
+    {% for membership in memberships %}
         <a class="member-widget" href="{% if membership.member %}{% url 'member_profil' membership.member_id %}{% else %}#{% endif %}">
             <div class="circle"
                  style="background:url('{% if membership.member %}{{ membership.member.image_url }}{% else %}{{ MEDIA_URL }}/images/members/default-person.png{% endif %} ') no-repeat center center / 100% auto"></div>

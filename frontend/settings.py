@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
-import os
 import logging.config
+
+import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.humanize',
+    'mathfilters',
     'django_nyt',
     'mptt',
     'bootstrap3',
@@ -54,7 +56,10 @@ INSTALLED_APPS = [
     'wiki.plugins.images',
     'wiki.plugins.macros',
     'ciwiki',
-    'agenda'
+    'agenda',
+    'welcoming',
+    'guide',
+    'tinymce'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -170,6 +175,11 @@ logging.config.dictConfig({
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
 LANGUAGE_CODE = 'fr'
+
+LANGUAGES = (
+    ('fr', 'Français'),
+)
+
 
 TIME_ZONE = 'Europe/Brussels'
 

@@ -22,9 +22,15 @@ djangorestframework
 metron
 django-debug-toolbar
 django-sekizai
+django-mathfilters
+
+django-tinymce
 
 # recaptcha
 django-recaptcha
 
 # Wiki
 wiki
+
+# Calendar
+icalendar
