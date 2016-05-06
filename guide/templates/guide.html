@@ -1,8 +1,38 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles  %}
+{% load mathfilters %}
 {% block title %}
-    Guide
+    {{ guide }}
 {% endblock %}
 
 {% block content %}
+    <div class="guide_menu_container">
+        <div class="guide_menu_box row">
+            <div class="carousel">
+                <div>
+                    {{ guide.description | safe }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p style="font-size:0.7em;">
+                {{ guide.disclaimer | safe }}
+            </p>
+        </div>
+        <div class="row">
+            <div class="guide_menu">
+                {% for link in guide.links %}
+                    <a class="guide_menu_item" href="{% url 'guide' guide.slug %}#{{ link.slug }}">
+                        <div class="guide_item_icon_container"
+                             style="background: url('{{ link.icon.url }}') no-repeat center center">
+                        </div>
+                        <div class="guide_item_desc">
+                            {{ link.description | safe }}
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

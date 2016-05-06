@@ -22,6 +22,7 @@ djangorestframework
 metron
 django-debug-toolbar
 django-sekizai
+django-mathfilters
 
 # recaptcha
 django-recaptcha

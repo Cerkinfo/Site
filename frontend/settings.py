@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.humanize',
+    'mathfilters',
     'django_nyt',
     'mptt',
     'bootstrap3',

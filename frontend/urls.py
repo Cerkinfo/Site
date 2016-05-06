@@ -14,7 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 
-from django.conf.urls import url, include
+from django.conf import settings
+from django.conf.urls import url, include, patterns
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
@@ -37,3 +38,13 @@ urlpatterns = i18n_patterns(
         login_required(ImportMemberView.as_view()),
         name="retrieve_member"),
 )
+
+# This is only needed when using runserver.
+if settings.DEBUG:
+    urlpatterns = patterns(
+        '',
+        url(r'^media/(?P<path>.*)$',
+            'django.views.static.serve',
+            {'document_root': settings.MEDIA_ROOT,
+             'show_indexes': True}),
+    ) + urlpatterns
