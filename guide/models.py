@@ -8,3 +8,14 @@ class Guide(models.Model):
 
     def __str__(self):
         return self.title
+
+class GuideItem(models.Model):
+    icon = models.CharField(max_length=50,
+                            default='',
+                            blank=False,
+                            verbose_name="favicon")
+    description = models.TextField()
+    guide = models.ForeignKey(Guide)
+
+    def __str__(self):
+        return self.description
