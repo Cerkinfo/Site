@@ -7,32 +7,55 @@
 {% endblock %}
 
 {% block content %}
-    <div class="guide_menu_container">
-        <div class="guide_menu_box row">
-            <div class="carousel">
-                <div>
-                    {{ guide.description | safe }}
+        <div class="guide_menu_container">
+            <div class="guide_menu_box row">
+                <div class="carousel">
+                    <div>
+                        {{ guide.description | safe }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p style="font-size:0.7em;">
+                    {{ guide.disclaimer | safe }}
+                </p>
+            </div>
+            <div class="row">
+                <div class="guide_menu">
+                    {% for item in guide.items %}
+                        <a class="guide_menu_item" href="{% url 'guide' guide.slug %}#{{ item.slug }}">
+                            <div class="guide_item_icon_container"
+                                 style="background: url('{{ item.icon.url }}') no-repeat center center">
+                            </div>
+                            <div class="guide_item_desc">
+                                {{ item.description | safe }}
+                            </div>
+                        </a>
+                    {% endfor %}
                 </div>
             </div>
         </div>
-        <div class="row">
-            <p style="font-size:0.7em;">
-                {{ guide.disclaimer | safe }}
-            </p>
-        </div>
-        <div class="row">
-            <div class="guide_menu">
-                {% for link in guide.links %}
-                    <a class="guide_menu_item" href="{% url 'guide' guide.slug %}#{{ link.slug }}">
-                        <div class="guide_item_icon_container"
-                             style="background: url('{{ link.icon.url }}') no-repeat center center">
-                        </div>
-                        <div class="guide_item_desc">
-                            {{ link.description | safe }}
-                        </div>
-                    </a>
-                {% endfor %}
+        {% for item in guide.items %}
+            <div class="guide_content_container">
+                <div class="guide_content">
+                    <a class="separator" name="{{ item.slug }}"></a>
+                    <h1>{{ item.title }}</h1>
+                </div>
+                {% if item.remarq %}
+                    <fieldset class="tune_up">
+                        <legend></legend>
+                        <p style="padding-left: 25px;">
+                            {{ item.remarq | safe }}
+                        </p>
+                    </fieldset>
+                {% endif %}
+                {{ item.content | safe }}
+                {% if item.advice %}
+                    <fieldset class="advice">
+                        <legend></legend>
+                        {{ item.advice | safe }}
+                    </fieldset>
+                {% endif %}
             </div>
-        </div>
-    </div>
+        {% endfor %}
 {% endblock %}

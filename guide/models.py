@@ -8,7 +8,7 @@ class Guide(models.Model):
     description = models.TextField(default='')
     active = models.BooleanField(default=False)
 
-    def links(self):
+    def items(self):
         return self.guideitem_set.all()
 
     def __str__(self):
@@ -17,11 +17,17 @@ class Guide(models.Model):
 class GuideItem(models.Model):
     icon = models.ImageField(upload_to='guide_menu',
                             blank=True)
-    description = models.TextField()
+    title = models.CharField(default='',
+                             blank=False,
+                             max_length=70)
+    description = models.TextField(default='')
     slug = models.CharField(max_length=6,
                             default='',
                             blank=False)
     guide = models.ForeignKey(Guide)
+    remarq = models.TextField(default='', blank=True)
+    content = models.TextField(default='', blank=True)
+    advice = models.TextField(default='', blank=True)
 
     def __str__(self):
-        return self.description
+        return self.title

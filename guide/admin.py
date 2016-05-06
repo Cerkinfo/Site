@@ -2,8 +2,9 @@ from django.contrib import admin
 from guide.models import Guide, GuideItem
 
 
-class ItemInline(admin.TabularInline):
+class ItemInline(admin.StackedInline):
     model = GuideItem
+    extra = 1
 
 
 
