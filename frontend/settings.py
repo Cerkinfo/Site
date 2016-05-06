@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'wiki.plugins.images',
     'wiki.plugins.macros',
     'ciwiki',
-    'agenda'
+    'agenda',
+    'welcoming'
 ]
 
 MIDDLEWARE_CLASSES = [

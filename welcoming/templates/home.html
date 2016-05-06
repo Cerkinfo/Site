@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles %}
 {% block title %}
-    Profil de {{ object.username }}
+    Home
 {% endblock %}
 {% block content %}
-
+    <div class="header_container" style="background-image: url({% static 'img/header.jpg' %})">
+        <div class="header-logo">
+            <img class="header img-responsive" src="{% static 'img/cerkinfo_logo.png' %}" usemap="#header-logo-map">
+        </div>
+    </div>
 {% endblock %}
