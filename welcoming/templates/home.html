@@ -15,4 +15,16 @@
             <img class="header img-responsive" src="{% static 'img/cerkinfo_logo.png' %}" usemap="#header-logo-map">
         </div>
     </div>
+    <div class="guide_container">
+        <div class="guide_link">
+            <div>
+                <a class="hvr-icon-wobble-horizontal" href="#">
+                    {{ guide.title }}
+                </a>
+            </div>
+            <div class="desc">
+                {{ guide.description }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

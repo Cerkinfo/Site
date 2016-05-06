@@ -196,7 +196,7 @@ img.header:hover {
     background: rgba(0, 0, 0, 0) linear-gradient(75deg, crimson 0px, crimson 34%, gold 80%, gold 100%) repeat scroll 0 0;
     /*background:rgba(0, 0, 0, 0) linear-gradient(75deg, #ba5a6d 0px, #ba5a6d 34%, #5980a8 80%, #5980a8 100%) repeat scroll 0 0;*/
     display: table;
-    height: 50vh;
+    height: 30vh;
     width: 100%;
 }
 
