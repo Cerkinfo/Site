@@ -13,7 +13,7 @@ class HomeView(TemplateView):
         events = Event.objects.filter(displayed=True).all()
         context['guide'] = guide
         context['events'] = events
-        context['height'] = '30vh'
+        context['height'] = '300'
         context['length'] = len(events)
         context['slideSize'] = str(
             100 / (

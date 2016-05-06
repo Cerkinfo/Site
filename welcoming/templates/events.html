@@ -218,7 +218,7 @@
 <section style="background-color: whitesmoke;">
     <dic class="calendar_container">
         <div class="calendar">
-            <div cstyle="background-color:rgba(255,255,255,0.95);
+            <div style="background-color:rgba(255,255,255,0.95);
                          padding: 20px 15px;
                          border-radius: 3px">
                 <div class="title">
@@ -249,4 +249,35 @@
             </div>
         </div>
     </dic>
+    {% if length > 1 %}
+        {% for id, event in items %}
+			<input type="radio" id="radio_bullet-{{id}}" class="radio_slider_bullet" name="bullets">
+        {% endfor %}
+
+		<div class="slider_pagination">
+			{% for id,event in items %}
+				<label id="bullet-{{ id }}" class="slider_bullet" for="radio_bullet-{{id}}"></label>
+			{% endfor %}
+		</div>
+    {% endif %}
+
+	<div class="agenda_slider">
+		<div class="slider_container"><!--
+			{% for id,event in items %}
+		    	--><div class="slide" style="background:url('{% if event.pict %}{{ event.pict.url }}{% endif %}') no-repeat center center / 100% auto ">
+		    	</div><!--
+			{% endfor %}
+			-->
+	   	</div>
+	</div>
+	{% if length > 0 %}
+		<div class="event_info">
+			{% for id,event in items %}
+				<label class="event_desc_container" id="desc_container-{{id}}" for="radio_bullet-{{id}}">
+					<div class="event_title">{{ event.title|safe }}</div>
+				    <div class="event_desc">{{ event.desc|safe }}</div>
+				</label>
+			{% endfor %}
+		</div>
+	{% endif %}
 </section>
