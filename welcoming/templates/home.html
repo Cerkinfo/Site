@@ -5,7 +5,12 @@
     Home
 {% endblock %}
 {% block content %}
-    <div class="header_container" style="background-image: url({% static 'img/header.jpg' %})">
+    <div class="header_container" style="
+            background-size: cover;
+            -webkit-background-size:cover;
+            -moz-background-size:cover;
+            -o-background-size:cover;
+            background-image: url({% static 'img/header.jpg' %}">
         <div class="header-logo">
             <img class="header img-responsive" src="{% static 'img/cerkinfo_logo.png' %}" usemap="#header-logo-map">
         </div>
