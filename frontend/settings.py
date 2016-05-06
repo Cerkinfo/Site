@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     'ciwiki',
     'agenda',
     'welcoming',
-    'guide'
+    'guide',
+    'tinymce'
 ]
 
 MIDDLEWARE_CLASSES = [

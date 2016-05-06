@@ -24,6 +24,8 @@ django-debug-toolbar
 django-sekizai
 django-mathfilters
 
+django-tinymce
+
 # recaptcha
 django-recaptcha
 

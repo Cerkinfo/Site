@@ -1,4 +1,5 @@
 from django.db import models
+from tinymce import models as tinymce_models
 
 
 class Guide(models.Model):
@@ -20,14 +21,14 @@ class GuideItem(models.Model):
     title = models.CharField(default='',
                              blank=False,
                              max_length=70)
-    description = models.TextField(default='')
+    description = tinymce_models.HTMLField(default='')
     slug = models.CharField(max_length=6,
                             default='',
                             blank=False)
     guide = models.ForeignKey(Guide)
-    remarq = models.TextField(default='', blank=True)
-    content = models.TextField(default='', blank=True)
-    advice = models.TextField(default='', blank=True)
+    remarq = tinymce_models.HTMLField(default='', blank=True)
+    content = tinymce_models.HTMLField(default='', blank=True)
+    advice = tinymce_models.HTMLField(default='', blank=True)
 
     def __str__(self):
         return self.title
