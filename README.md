@@ -19,5 +19,8 @@ Reworking of Site2.0 without django_cms and better handling of db migrations, ..
 ## Run
 ```
         $ python manage.py migrate
+        $ python manage.py loaddata fixtures/group.json
+        $ python manage.py loaddata fixtures/events.json
+        $ python manage.py loaddata fixtures/wiki.json
         $ python manage.py runserver
 ```
