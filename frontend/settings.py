@@ -176,6 +176,11 @@ logging.config.dictConfig({
 
 LANGUAGE_CODE = 'fr'
 
+LANGUAGES = (
+    ('fr', 'Français'),
+)
+
+
 TIME_ZONE = 'Europe/Brussels'
 
 USE_I18N = True

@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<style type="text/css">
+    #map-canvas {
+        height: 500px;
+        width: 100%;
+    }
+</style>
+
+<a name="contact" class="separator"></a>
+<div class="frater-info">
+    <div class="info">
+        <div class="adress">
+            <b>Cerkinfo A.S.B.L.</b> <br />
+            Boulevard du Triomphe, CP 206<br />
+            1050, Ixelles<br />
+            Bruxelles
+        </div>
+        <div class="phone-mail">
+            <a href="{% url 'home' %}#team">Contact</a>
+            02 650 54 88
+        </div>
+    </div>
+    <div class="desc">
+        Notre local est situé sur le <b>campus de la Plaine</b>, à deux pas de tes salles de cours et de la Jefke. Il se trouve <b>en dessous des forums</b>. En te penchant par la rambarde devant l'entrée de la cafétéria, tu peux apercevoir la porte d'entrée, plus communément appelée la <b>porte jaune</b>.
+    </div>
+</div>
+
+<div id="map-canvas"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript">
+	function initialize() {
+		var mapCanvas = document.getElementById('map-canvas');
+		var mapOptions = {
+			center: new google.maps.LatLng(50.819988, 4.399052),
+			zoom: 17,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			scrollwheel: false
+		}
+		var map = new google.maps.Map(mapCanvas, mapOptions);
+
+		var icon = {
+          url: '{% static 'img/marker.png' %}'
+        }
+
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(50.819988, 4.399052),
+			map: map,
+			icon: icon
+		});
+
+
+	}
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
