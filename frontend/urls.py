@@ -29,7 +29,7 @@ urlpatterns = i18n_patterns(
     url(r'^cipedia/', include('members.urls')),
     url(r'^wiki/', include('ciwiki.urls')),
     url(r'^register/', RegisterView.as_view(), name="register"),
-    url(r'^log_user/', login_member, name="test_log"),
+    url(r'^login/', login_member, name="login"),
     url(
         r'^retrieve_member/',
         login_required(ImportMemberView.as_view()),
