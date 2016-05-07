@@ -17,10 +17,11 @@ Reworking of Site2.0 without django_cms and better handling of db migrations, ..
 	$ pip install -r requirements.txt
 ```
 ## Run
+
+N.B. If for dev don't forget to create a superuser `$ python manage.py createsuperuser`
+
 ```
         $ python manage.py migrate
-        $ python manage.py loaddata fixtures/group.json
-        $ python manage.py loaddata fixtures/events.json
-        $ python manage.py loaddata fixtures/wiki.json
+        $ python manage.py loaddata fixtures/init.json
         $ python manage.py runserver
 ```

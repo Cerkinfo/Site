@@ -1,10 +1,9 @@
-import hashlib
 from logging import getLogger
 
+import hashlib
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.utils import timezone
-
 from frontend.settings import MEDIA_URL
 
 logger = getLogger(__name__)
@@ -61,7 +60,7 @@ class AcademicYear(models.Model):
 
 class Member(models.Model):
     # link to the django user
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     # picture
     avatar = models.ImageField(upload_to='images/members',
                                blank=True,
@@ -74,6 +73,8 @@ class Member(models.Model):
     birthdate = models.DateField(blank=True,
                                  null=True,
                                  verbose_name="date de naissance")
+    # Additionnal Info
+    extra_info = models.TextField(default='')
 
     def firstname(self):
         """
@@ -186,8 +187,9 @@ class Member(models.Model):
         return MEDIA_URL + "/images/members/default-person.png"
 
     def __str__(self):
-        if self.user.first_name or self.user.last_name:
-            return "%s %s" % (self.user.first_name, self.user.last_name)
+        if self.user:
+            if self.user.first_name or self.user.last_name:
+                return "%s %s" % (self.user.first_name, self.user.last_name)
         return "%s" % self.username()
 
 

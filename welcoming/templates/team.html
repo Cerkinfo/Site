@@ -1,8 +1,8 @@
 <a name="team" class="separator"></a>
-    {% for title, elems in academic_year.get_all_cat %}
+    {% if academic_year %}
         <div class="row">
-            {% with title_desc=title memberships=elems instance=academic_year %}
+            {% with title_desc="Comité de Cercle" memberships=academic_year.get_comite instance=academic_year %}
                 {% include 'comite.html' %}
             {% endwith %}
         </div>
-    {% endfor %}
+ {% endif %}

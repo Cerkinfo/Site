@@ -1,5 +1,6 @@
 from agenda.icalReader import IcalReader
 from agenda.models import Event
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import TemplateView
 from guide.models import Guide
 from members.models import AcademicYear
@@ -12,7 +13,10 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
         guide = Guide.objects.filter(active=True).get()
         events = Event.objects.filter(displayed=True).all()
-        year_active = AcademicYear.objects.filter(active=True).get()
+        try:
+            year_active = AcademicYear.objects.filter(active=True).get()
+        except ObjectDoesNotExist:
+            year_active = None
         context['guide'] = guide
         context['events'] = events
         context['height'] = '300'
