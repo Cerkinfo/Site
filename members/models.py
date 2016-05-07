@@ -60,7 +60,7 @@ class AcademicYear(models.Model):
 
 class Member(models.Model):
     # link to the django user
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     # picture
     avatar = models.ImageField(upload_to='images/members',
                                blank=True,
