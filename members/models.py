@@ -1,10 +1,9 @@
-import hashlib
 from logging import getLogger
 
+import hashlib
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.utils import timezone
-
 from frontend.settings import MEDIA_URL
 
 logger = getLogger(__name__)
@@ -74,6 +73,8 @@ class Member(models.Model):
     birthdate = models.DateField(blank=True,
                                  null=True,
                                  verbose_name="date de naissance")
+    # Additionnal Info
+    extra_info = models.TextField(default='')
 
     def firstname(self):
         """
