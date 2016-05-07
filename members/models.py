@@ -187,8 +187,9 @@ class Member(models.Model):
         return MEDIA_URL + "/images/members/default-person.png"
 
     def __str__(self):
-        if self.user.first_name or self.user.last_name:
-            return "%s %s" % (self.user.first_name, self.user.last_name)
+        if self.user:
+            if self.user.first_name or self.user.last_name:
+                return "%s %s" % (self.user.first_name, self.user.last_name)
         return "%s" % self.username()
 
 
