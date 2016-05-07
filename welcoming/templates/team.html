@@ -1,8 +1,10 @@
 <a name="team" class="separator"></a>
-    {% for title, elems in academic_year.get_all_cat %}
-        <div class="row">
-            {% with title_desc=title memberships=elems instance=academic_year %}
-                {% include 'comite.html' %}
-            {% endwith %}
-        </div>
-    {% endfor %}
+    {% if academic_year %}
+        {% for title, elems in academic_year.get_all_cat %}
+            <div class="row">
+                {% with title_desc=title memberships=elems instance=academic_year %}
+                    {% include 'comite.html' %}
+                {% endwith %}
+            </div>
+        {% endfor %}
+ {% endif %}

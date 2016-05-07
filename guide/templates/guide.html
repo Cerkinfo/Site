@@ -23,14 +23,16 @@
             <div class="row">
                 <div class="guide_menu">
                     {% for item in guide.items %}
-                        <a class="guide_menu_item" href="{% url 'guide' guide.slug %}#{{ item.slug }}">
-                            <div class="guide_item_icon_container"
-                                 style="background: url('{{ item.icon.url }}') no-repeat center center">
-                            </div>
-                            <div class="guide_item_desc">
-                                {{ item.description | safe }}
-                            </div>
-                        </a>
+                        <div class="col-md-3">
+                            <a class="guide_menu_item" href="{% url 'guide' guide.slug %}#{{ item.slug }}">
+                                <div class="guide_item_icon_container"
+                                     style="background: url('{{ item.icon.url }}') no-repeat center center">
+                                </div>
+                                <div class="guide_item_desc" style="height: 10vh">
+                                    {{ item.description | safe }}
+                                </div>
+                            </a>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
