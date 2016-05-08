@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'agenda',
     'welcoming',
     'guide',
-    'tinymce'
+    'tinymce',
+    'pv'
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -1,4 +1,4 @@
-import time
+import django
 
 from django.db import models
 from members.models import AcademicYear
@@ -21,8 +21,9 @@ class PV(models.Model):
     resource = models.FileField(upload_to=determine_name)
     meeting_date = models.DateField(verbose_name="Date de la réunion")
     upload_date = models.DateField(verbose_name="Date de l'upload",
-                                   default=time.now())
+                                   default=django.utils.timezone.now)
     reunion_type = models.CharField(verbose_name="Type de réunion",
+                                    max_length=2,
                                     choices=REUNION_TYPES,
                                     default='N',
                                     blank=True)
