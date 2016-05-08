@@ -9,6 +9,11 @@ REUNION_TYPES = (
     ('AG', 'Assemblée générale élective'),
 )
 
+NICE_TYPE = {'N': u'Réunion',
+             'B': u'Réunion du bureau ',
+             'AG': u'Assemblée générale élective '
+             }
+
 
 def determine_name(obj, filename):
     return "pv/{year}/{date}.pdf".format(
@@ -29,3 +34,9 @@ class PV(models.Model):
                                     blank=True)
     year = models.ForeignKey(AcademicYear,
                              verbose_name='Année de comité du pv')
+
+    def __str__(self):
+        return '{pptype} du {date}'.format(
+            ppttype=NICE_TYPE[self.reunion_type],
+            date=self.meeting_date.strftime('%d/%m/%Y')
+        )

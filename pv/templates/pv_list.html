@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}
+    Listes des pvs
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Liste des pv</h1>
+        </div>
+    </div>
+    <ul>
+    {% for pv in object_list %}
+        <li>
+            {{ pv }}
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
