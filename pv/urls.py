@@ -1,4 +1,4 @@
-from django.conf.urls import patterns
+from django.conf.urls import patterns, url
 from pv.feeds import LatestPVFeed
 from pv.models import PV
 from pv.views import PVList
@@ -11,6 +11,6 @@ pv_dict = {
 
 urlpatterns = patterns(
     '',
-    (r'^$', PVList.as_view()),
-    (r'^rss/$', LatestPVFeed())
+    url(r'^$', PVList.as_view(), name='pv'),
+    url(r'^rss/$', LatestPVFeed())
 )
