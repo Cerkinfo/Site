@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+    Listes des pvs
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Liste des pv</h1>
+        </div>
+    </div>
+    <ul>
+    {% regroup object_list by year as grouped_pv %}
+    {% for pv_group in grouped_pv %}
+        <h3>
+            {{ pv_group.grouper }}
+        </h3>
+        <ul>
+            {% for pv in pv_group.list %}
+                <li>
+                    <a href="{{ pv.ressource.url }}">
+                        {{ pv }}
+                    </a>
+                    ({{  pv.ressource.size|filesizeformat }})
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+    </ul>
+{% endblock %}
