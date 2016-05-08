@@ -4,4 +4,4 @@ from pv.models import PV
 
 @admin.register(PV)
 class PVAdmin(admin.ModelAdmin):
-    fields = ['resource', 'meeting_date', 'reunion_type', 'year']
+    fields = ['ressource', 'meeting_date', 'reunion_type', 'year']
