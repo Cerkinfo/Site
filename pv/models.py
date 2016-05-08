@@ -23,7 +23,7 @@ def determine_name(obj, filename):
 
 
 class PV(models.Model):
-    resource = models.FileField(upload_to=determine_name)
+    ressource = models.FileField(upload_to=determine_name)
     meeting_date = models.DateField(verbose_name="Date de la réunion")
     upload_date = models.DateField(verbose_name="Date de l'upload",
                                    default=django.utils.timezone.now)
@@ -36,7 +36,7 @@ class PV(models.Model):
                              verbose_name='Année de comité du pv')
 
     def __str__(self):
-        return '{pptype} du {date}'.format(
-            ppttype=NICE_TYPE[self.reunion_type],
-            date=self.meeting_date.strftime('%d/%m/%Y')
+        return '{} du {}'.format(
+            NICE_TYPE[self.reunion_type],
+            self.meeting_date.strftime('%d/%m/%Y')
         )

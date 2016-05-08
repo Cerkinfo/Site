@@ -10,10 +10,21 @@
         </div>
     </div>
     <ul>
-    {% for pv in object_list %}
-        <li>
-            {{ pv }}
-        </li>
+    {% regroup object_list by year as grouped_pv %}
+    {% for pv_group in grouped_pv %}
+        <h3>
+            {{ pv_group.grouper }}
+        </h3>
+        <ul>
+            {% for pv in pv_group.list %}
+                <li>
+                    <a href="{{ pv.ressource.url }}">
+                        {{ pv }}
+                    </a>
+                    ({{  pv.ressource.size|filesizeformat }})
+                </li>
+            {% endfor %}
+        </ul>
     {% endfor %}
     </ul>
 {% endblock %}
