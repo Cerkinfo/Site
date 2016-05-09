@@ -74,7 +74,7 @@ class Member(models.Model):
                                  null=True,
                                  verbose_name="date de naissance")
     # Additionnal Info
-    extra_info = models.TextField(default='')
+    extra_info = models.TextField(default='', blank=True
 
     def firstname(self):
         """
