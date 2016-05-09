@@ -10,7 +10,7 @@
         </div>
     </div>
     <ul>
-    {% regroup object_list by year.start.slug as grouped_pv %}
+    {% regroup object_list by year.slug as grouped_pv %}
     {% for pv_group in grouped_pv %}
         <h3>
             {{ pv_group.grouper }}
