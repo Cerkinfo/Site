@@ -9,6 +9,7 @@ script:
   - "./run_tests --cov ."
 
 notifications:
+  email: False
   slack:
     rooms:
       - cerkinfo:YgnjW8o5b5y1zKaqEgMVvp7U#site_infra
