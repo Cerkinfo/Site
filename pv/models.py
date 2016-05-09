@@ -40,3 +40,6 @@ class PV(models.Model):
             NICE_TYPE[self.reunion_type],
             self.meeting_date.strftime('%d/%m/%Y')
         )
+
+    class Meta:
+        ordering = ["meeting_date"]
