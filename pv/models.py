@@ -42,4 +42,4 @@ class PV(models.Model):
         )
 
     class Meta:
-        ordering = ["meeting_date"]
+        ordering = ["-meeting_date"]
