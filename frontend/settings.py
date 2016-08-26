@@ -220,6 +220,7 @@ SUIT_CONFIG = {
 }
 
 try:
-    from local_settings import *  # pragma: no flakes
+    from .local_settings import *  # pragma: no flakes
 except ImportError:
+    print("No local settings !")
     pass
