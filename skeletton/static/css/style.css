@@ -12,6 +12,11 @@ a:hover{
     text-decoration: none;
 }
 
+.glyphicon {
+    padding: 3px;
+    vertical-align:middle;
+}
+
 /* navigation style */
 .navbar-default {
   background-color: #5417a2;
@@ -421,6 +426,13 @@ a {
     display: inline-block;
     text-align: center;
     vertical-align: text-bottom;
+}
+
+.bank-account {
+    display: flex;
+    padding: 15px;
+    text-align: center;
+    vertical-align:middle;
 }
 
 .frater-info .desc {
