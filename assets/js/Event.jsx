@@ -1,8 +1,6 @@
 const React = require('react');
-const ReactDOM = require('react-dom');
-const ReactMarkdown = require('react-markdown');
-const Collapse = require('react-collapse');
 const moment = require('moment');
+require('./Event.scss');
 
 /**
  * Timesheet Bubble
@@ -12,20 +10,24 @@ class Event extends React.Component {
         super(props);
 
         this.state = {
-            clicked: false,
+            checked: this.props.checked,
         };
 
         this.TimeLineLength = this.props.sectionDOM.offsetParent.offsetWidth;
         this.offset = this.props.sectionDOM.offsetLeft;
         this.SectionLength = this.props.sectionDOM.offsetWidth;
 
-        this.handleClick = this.handleClick.bind(this);
+        this.toggle = this.toggle.bind(this);
     }
 
-    handleClick() {
+    toggle() {
         this.setState({
-            clicked: !this.state.clicked,
+            checked: !this.state.checked,
         });
+
+        if (this.state.checked) {
+            this.props.parent.show(this);
+        }
     }
 
     /**
@@ -53,18 +55,6 @@ class Event extends React.Component {
         return this.TimeLineLength * (this.props.event.length / this.props.bounds.length);
     }
 
-    /**
-     * Format the event date according to its duration.
-     */
-    _formatDate () {
-        const event = this.props.event;
-        if (event.end.diff(event.start) > moment.duration(1, 'days')) {
-            return 'Le ' + event.start.format('DD MMMM') + ' de ' + event.start.format('HH:mm') + ' au ' + event.end.format('DD MMMM à HH:mm');
-        } else {
-            return 'Le ' + event.start.format('DD MMMM') + ' de ' + event.start.format('HH:mm') + ' à ' + event.end.format('HH:mm');
-        }
-    }
-
     render () {
         const style = {
             marginLeft: this._getStartOffset() + 'px',
@@ -76,7 +66,7 @@ class Event extends React.Component {
         const summary = this.props.event.summary;
 
         return (
-            <li onClick={this.handleClick}>
+            <li className={this.state.checked ? 'checked' : 'unchecked'} onClick={this.toggle}>
                 <span style={style} className={className} data-duration={duration}></span>
                 <span className="inline-date">
                     {this.props.event.start.format('DD/MM/YY')}
@@ -84,26 +74,21 @@ class Event extends React.Component {
                 <span className="inline-summary">
                     {summary}
                 </span>
-                <Collapse className="event-info" isOpened={this.state.clicked}>
-                    <div className="summary">
-                        {summary}
-                    </div>
-                    <div className="date">
-                        {this._formatDate()}
-                    </div>
-                    <div className="description">
-                        <ReactMarkdown source={this.props.event.description}/>
-                    </div>
-                </Collapse>
             </li>
         );
     }
 }
 
 Event.propTypes = { 
+    parent: React.PropTypes.object.isRequired,
     bounds: React.PropTypes.object.isRequired,
+    checked: React.PropTypes.bool,
     event: React.PropTypes.object.isRequired,
     sectionDOM: React.PropTypes.object.isRequired,
+};
+
+Event.defaultProps = {
+    checked: false,
 };
 
 module.exports = Event;

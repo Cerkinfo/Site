@@ -1,6 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Event = require('./Event.jsx');
+const EventDescription = require('./EventDescription.jsx');
 const moment = require('moment');
 require('./Events.scss');
 
@@ -8,9 +9,14 @@ class Events extends React.Component {
     constructor(props) {
         super(props);
 
-        const raw = this.parse(this.props.data);
-        this.data = raw.data;
-        this.bounds = raw.bounds;
+        this.state = {
+            currentSelected: null,
+        };
+
+        const raw = this._parse(this.props.data);
+        this.data = raw.data || [];
+        this.bounds = raw.bounds || [];
+
     }
 
     componentDidMount () {
@@ -26,11 +32,21 @@ class Events extends React.Component {
         });
     }
 
+    show (ReactEvent) {
+        if (this.state.currentSelected && this.state.currentSelected.state.checked) {
+            this.state.currentSelected.toggle();
+        }
+
+        this.setState({
+            currentSelected: ReactEvent,
+        });
+    }
+
     _getSectionID (section) {
         return 'event-unit-' + section.month()  + '-' + section.year();
     }
 
-    parse (data) {
+    _parse (data) {
         const now = new moment();
         let min = new moment();
         let max = new moment();
@@ -95,6 +111,7 @@ class Events extends React.Component {
         for (let current of this.data) {
             lists.push(
                 <Event 
+                    parent={this}
                     bounds={this.bounds}
                     event={current} 
                     sectionDOM={sectionsDOM[this._getSectionID(current.start)]}
@@ -110,13 +127,16 @@ class Events extends React.Component {
         const className = this.props.className + " " + (this.props.theme || '');
 
         return (
-            <div className={className}>
-                <div className="scale">
-                    {this._buildSections(this.bounds)}
+            <div>
+                <div className={className}>
+                    <div className="scale">
+                        {this._buildSections(this.bounds)}
+                    </div>
+                    <ul className="data">
+                        {this._getEvents()}
+                    </ul>
                 </div>
-                <ul className="data">
-                    {this._getEvents()}
-                </ul>
+                <EventDescription event={this.state.currentSelected ? this.state.currentSelected.props.event : null}/>
             </div>
         );
     }
