@@ -1,0 +1,101 @@
+.data {
+  margin: 28px 0 0 0;
+  padding: 0;
+  text-align: left;
+  list-style-type: none;
+  color: rgba(250, 250, 250, 0.8);
+  font-family: 'Signika Negative';
+  font-size: 13px;
+
+  li {
+    margin: 0 0 3px 0;
+    display: block;
+    cursor: pointer;
+    clear: both;
+    position: relative;
+    white-space: nowrap;
+
+    &:hover {
+      .bubble {
+        opacity: 1;
+      }
+    }
+
+    $checked-font-size: 16px;
+    $checked-font-weight: 500;
+    $checked-opacity: 1;
+    $unchecked-font-size: 14px;
+    $unchecked-font-weight: lighter;
+    $unchecked-opacity: 0.7;
+
+    .checked {
+      .inline-date {
+        font-weight: $checked-font-weight;
+        font-size: $checked-font-weight;
+      }
+
+      .inline-summary {
+        @extend .inline-date;
+      }
+
+      .bubble {
+        opacity: $checked-opacity;
+      }
+    }
+
+    .unchecked {
+      .inline-date {
+        font-weight: $unchecked-font-weight;
+        font-size: $unchecked-font-weight;
+      }
+
+      .inline-summary {
+        @extend .inline-date;
+      }
+
+      .bubble {
+        opacity: $unchecked-opacity;
+      }
+    }
+
+    .inline-date {
+      color: rgba(181, 181, 181, 1);
+    }
+
+    .inline-summary {
+      padding-left: 5px;
+      line-height: 21px;
+      color: rgba(151, 151, 150, 1);
+      white-space: nowrap;
+    }
+
+    .bubble {
+      width: 24px;
+      height: 7px;
+      display: block;
+      float: left;
+      position: relative;
+      top: 7px;
+      border-radius: 4px;
+      margin: 0 10px 0 0;
+    }
+
+    .bubble-default {
+      background-color: rgba(252, 70, 74, 1); // red
+    }
+    .bubble-lorem {
+      background-color: rgba(154, 202, 39, 1); // green
+    }
+    .bubble-ipsum {
+      background-color: rgba(60, 182, 227, 1); // blue
+    }
+    .bubble-dolor {
+      background-color: rgba(244, 207, 48, 1); // yellow
+    }
+    .bubble-sit {
+      background-color: rgba(169, 105, 202, 1); // cyan
+    }
+  }
+}
+
+
