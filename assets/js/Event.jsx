@@ -1,5 +1,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+const ReactMarkdown = require('react-markdown');
 const Collapse = require('react-collapse');
 const moment = require('moment');
 
@@ -64,46 +65,6 @@ class Event extends React.Component {
         }
     }
 
-    _renderText (text) {
-        const resultText = text;
-        const result = []
-
-        const urlRegex = /(\b(https?|http|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-        const pictureRegex = /(\b(https?|http|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]).(?:jpg|gif|png)/ig;
-
-        const urls = text.match(urlRegex) || [];
-        const pictures = text.match(pictureRegex) || [];
-
-        for (let url of urls) {
-            const tmp = resultText.split(url);
-
-            tmp[0] = <span>{tmp[0]}</span>;
-            tmp[1] = <span>{tmp[1]}</span>;
-
-            if (pictures.indexOf(url) === -1) {
-                tmp.splice(1, 0, 
-                    <span>
-                        <a href={url}/>
-                    </span>
-                );
-
-            } else {
-                tmp.splice(1, 0, 
-                    <span>
-                        <img src={url}/>
-                        <br/>
-                    </span>
-                );
-            }
-
-            for (let data of tmp) {
-                result.push(data);
-            }
-        }
-
-        return result;
-    }
-
     render () {
         const style = {
             marginLeft: this._getStartOffset() + 'px',
@@ -131,7 +92,7 @@ class Event extends React.Component {
                         {this._formatDate()}
                     </div>
                     <div className="description">
-                        {this._renderText(this.props.event.description)}
+                        <ReactMarkdown source={this.props.event.description}/>
                     </div>
                 </Collapse>
             </li>
