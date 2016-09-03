@@ -50,18 +50,39 @@
         }
       }
 
-      .date {
+      .inline-date {
         color: rgba(181, 181, 181, 1);
         font-size: 14px;
       }
 
-      .label {
+      .inline-summary {
         font-weight: lighter;
         font-size: 14px;
         padding-left: 5px;
         line-height: 21px;
         color: rgba(151, 151, 150, 1);
         white-space: nowrap;
+      }
+
+      .event-info {
+        display: inline;
+        white-space: normal;
+
+        padding: 20px;
+
+        .summary {
+          padding: 20px;
+          text-align: center;
+          font-size: 26px;
+        }
+        
+        .date {
+          padding: 20px;
+        }
+        
+        .description {
+          padding: 20px;
+        }
       }
 
       .bubble {

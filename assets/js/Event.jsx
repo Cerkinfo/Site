@@ -52,6 +52,18 @@ class Event extends React.Component {
         return this.TimeLineLength * (this.props.event.length / this.props.bounds.length);
     }
 
+    /**
+     * Format the event date according to its duration.
+     */
+    _formatDate () {
+        const event = this.props.event;
+        if (event.end.diff(event.start) > moment.duration(1, 'days')) {
+            return 'Le ' + event.start.format('DD MMMM') + ' de ' + event.start.format('HH:mm') + ' au ' + event.end.format('DD MMMM à HH:mm');
+        } else {
+            return 'Le ' + event.start.format('DD MMMM') + ' de ' + event.start.format('HH:mm') + ' à ' + event.end.format('HH:mm');
+        }
+    }
+
     render () {
         const style = {
             marginLeft: this._getStartOffset() + 'px',
@@ -60,20 +72,27 @@ class Event extends React.Component {
 
         const className = 'bubble bubble-' + (this.props.event.type || 'default');
         const duration = this.props.event.end - this.props.event.start;
-        const date = this.props.event.start.format('DD/MM/YY');
-        const label = this.props.event.summary;
+        const summary = this.props.event.summary;
 
         return (
             <li onClick={this.handleClick}>
                 <span style={style} className={className} data-duration={duration}></span>
-                <span className="date">
-                    {date}
+                <span className="inline-date">
+                    {this.props.event.start.format('DD/MM/YY')}
                 </span>
-                <span className="label">
-                    {label}
+                <span className="inline-summary">
+                    {summary}
                 </span>
-                <Collapse isOpened={this.state.clicked}>
-                    {this.props.event.description}
+                <Collapse className="event-info" isOpened={this.state.clicked}>
+                    <div className="summary">
+                        {summary}
+                    </div>
+                    <div className="date">
+                        {this._formatDate()}
+                    </div>
+                    <div className="description">
+                        {this.props.event.description}
+                    </div>
                 </Collapse>
             </li>
         );
