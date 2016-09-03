@@ -17,17 +17,23 @@ class Event extends React.Component {
         this.offset = this.props.sectionDOM.offsetLeft;
         this.SectionLength = this.props.sectionDOM.offsetWidth;
 
-        this.toggle = this.toggle.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    toggle() {
+    toggle(callback) {
         this.setState({
             checked: !this.state.checked,
-        });
+        }, callback);
+    }
 
-        if (this.state.checked) {
-            this.props.parent.show(this);
-        }
+    handleClick () {
+        this.toggle(() => {
+            if (this.state.checked) {
+                this.props.parent.show(this);
+            } else {
+                this.props.parent.close();
+            }
+        });
     }
 
     /**
@@ -66,7 +72,7 @@ class Event extends React.Component {
         const summary = this.props.event.summary;
 
         return (
-            <li className={this.state.checked ? 'checked' : 'unchecked'} onClick={this.toggle}>
+            <li className={this.state.checked ? 'checked' : 'unchecked'} onClick={this.handleClick}>
                 <span style={style} className={className} data-duration={duration}></span>
                 <span className="inline-date">
                     {this.props.event.start.format('DD/MM/YY')}

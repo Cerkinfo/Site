@@ -32,8 +32,18 @@ class Events extends React.Component {
         });
     }
 
+    close () {
+        this.setState({
+            currentSelected: null,
+        });
+    }
+
     show (ReactEvent) {
-        if (this.state.currentSelected && this.state.currentSelected.state.checked) {
+        if (this.state.currentSelected 
+            && this.state.currentSelected != ReactEvent
+            && this.state.currentSelected.state.checked) 
+        {
+            console.log('toggling');
             this.state.currentSelected.toggle();
         }
 
