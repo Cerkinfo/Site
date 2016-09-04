@@ -43,7 +43,6 @@ class Events extends React.Component {
             && this.state.currentSelected != ReactEvent
             && this.state.currentSelected.state.checked) 
         {
-            console.log('toggling');
             this.state.currentSelected.toggle();
         }
 
@@ -146,7 +145,7 @@ class Events extends React.Component {
                         {this._getEvents()}
                     </ul>
                 </div>
-                <EventDescription event={this.state.currentSelected ? this.state.currentSelected.props.event : null}/>
+                <EventDescription event={this.state.currentSelected}/>
             </div>
         );
     }

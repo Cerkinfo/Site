@@ -13,7 +13,7 @@ class EventDescription extends React.Component {
      * Format the event date according to its duration.
      */
     _formatDate () {
-        const event = this.props.event;
+        const event = this.props.event.props.event;
         if (event.end.diff(event.start) > moment.duration(1, 'days')) {
             return 'Le ' + event.start.format('DD MMMM') + ' de ' + event.start.format('HH:mm') + ' au ' + event.end.format('DD MMMM à HH:mm');
         } else {
@@ -22,9 +22,10 @@ class EventDescription extends React.Component {
     }
 
     render () {
-        if (!this.props.event) {
+        const event = this.props.event ? this.props.event.props.event : null;
+        if (!event) {
             return (
-                <Collapse className="event-info" isOpened={false}>
+                <Collapse isOpened={false}>
                 </Collapse>
             );
         }
@@ -32,13 +33,13 @@ class EventDescription extends React.Component {
         return (
             <Collapse className="event-info" isOpened={true}>
                 <div className="summary">
-                    {this.props.event.summary}
+                    {event.summary}
                 </div>
                 <div className="date">
                     {this._formatDate()}
                 </div>
                 <div className="description">
-                    <ReactMarkdown source={this.props.event.description}/>
+                    <ReactMarkdown source={event.description}/>
                 </div>
             </Collapse>
         );
@@ -46,7 +47,7 @@ class EventDescription extends React.Component {
 }
 
 EventDescription.propTypes = { 
-    event: React.PropTypes.object,
+    event: React.PropTypes.object.isRequired,
 };
 
 module.exports = EventDescription;
