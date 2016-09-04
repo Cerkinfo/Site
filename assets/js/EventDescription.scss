@@ -1,164 +1,50 @@
-/// Returns the opposite direction of each direction in a list
-/// @author Hugo Giraudel
-/// @param {List} $directions - List of initial directions
-/// @return {List} - List of opposite directions
-@function opposite-direction($directions) {
-  $opposite-directions: ();
-  $direction-map: (
-    'top':    'bottom',
-    'right':  'left',
-    'bottom': 'top',
-    'left':   'right',
-    'center': 'center',
-    'ltr':    'rtl',
-    'rtl':    'ltr'
-  );
- 
-  @each $direction in $directions {
-    $direction: to-lower-case($direction);
-    
-    @if map-has-key($direction-map, $direction) { 
-      $opposite-directions: append($opposite-directions, unquote(map-get($direction-map, $direction)));
-    } @else {
-      @warn "No opposite direction can be found for `#{$direction}`. Direction omitted.";
-    }
-  }
- 
-  @return $opposite-directions;
-}
+$border-color: #C0C0C0;
+$background-color: #FFFFF0;
+// $background-color: #F0FFF0;
+$round-size: 5px;
+$border-size: 2px;
 
-// Size helper mixin
-// ---
-// @param [number] $width: width
-// @param [number] $height ($width): height
-// ---
-@mixin size($width, $height: $width) {
-  width: $width;
-  height: $height;
-}
-
-// [Private] 
-// Position helper mixin
-// Article about it: http://hugogiraudel.com/2013/08/05/offsets-sass-mixin/
-// ---
-// @param [string] $position: position type
-// @param [list] $args: list of offsets and values
-// ---
-@mixin _position($position, $args) {
-  @each $o in top right bottom left {
-    $i: index($args, $o);
-    @if $i
-    and $i + 1 <= length($args)
-    and type-of( nth($args, $i + 1) ) == number {
-      #{$o}: nth($args, $i + 1);
-    }
-  }
-  position: $position;
-}
-
-// Absolute positioning helper mixin
-// Article about it: http://hugogiraudel.com/2013/08/05/offsets-sass-mixin/
-// ---
-// @param [list] $args: list of offsets and values
-// ---
-@mixin absolute($args) {
-  @include _position(absolute, $args);
-}
-
-// Arrow helper mixin
-// ---
-// @param [string] $direction: arrow direction
-// @param [list] $position: list of offsets and values
-// @param [number] $size (1em): arrow size
-// @param [color] $color (inherit): arrow color
-// ---
-@mixin triangle($direction, $position, $size, $color: currentColor) {
-  // Make sure the direction is valid
-  @if not index(top right bottom left, $direction) {
-    @warn "Direction must be one of top, right, bottom or left.";
-  } @else {
-    @include absolute($position); // Position
-    @include size(0); // Size
-    content: '';
-    z-index: 2;
-
-    border-#{opposite-position($direction)}: $size * 1.5 solid $color;
-    $perpendicular-borders: $size solid transparent;
-    
-    @if $direction == top or $direction == bottom {
-      border-left:   $perpendicular-borders;
-      border-right:  $perpendicular-borders;
-    } @else if $direction == right or $direction == left {
-      border-bottom: $perpendicular-borders;
-      border-top:    $perpendicular-borders;
-    }
-  }
-}
-
-// Bubble Mixin
-// ---
-// @param [string] $direction: arrow direction.
-// @param [color] $background-color: Color of the background of the bubble.
-// @param [color] $border-color: Color of the border of the bubble.
-// @param [number] $border-size: Size of the border.
-// @param [number] $round-size: Size of the corners.
-// @param [number] $tail-size: Size of the tail.
-// @param [number] $tail-position: Offset of the tail.
-// ---
-@mixin border-bubble($direction, $background-color, $border-color, $border-size, $round-size, $tail-size, $tail-position) {
+.event-info {
   border: $border-size solid $border-color;
   position: relative;
   background-color: $background-color;
   -moz-border-radius: $round-size;
   -webkit-border-radius: $round-size;
   border-radius: $round-size;
-
-  &:before {
-    @include triangle(
-      $direction: $direction,
-      $position: top (- $tail-size) left $tail-position bottom 100%,
-      $size: $tail-size,
-      $color: $background-color
-    );
-  }
-
-  &:after {
-    @include triangle(
-      $direction: $direction,
-      $position: top (- $tail-size + $border-size * 1.5) left $tail-position bottom 100%,
-      $size: $tail-size,
-      $color: $border-color
-    );
-  }
-}
-
-.event-info {
-  @include border-bubble(
-    $direction: top, 
-    $background-color: white,
-    $border-color: black,
-    $border-size: 2px,
-    $round-size: 5px,
-    $tail-size: 15px,
-    $tail-position: 400px
-  );
+  box-shadow: 2px 2px 2px #888888;
 
   margin: .5em;
 
   white-space:pre-wrap;
 
   .summary {
+    background-color: #E6E6FA;
+    border-bottom: $border-size solid $border-color;
     padding: 10px 20px 20px 10px;
     text-align: center;
-    font-size: 26px;
+    font-size: 30px;
   }
   
   .date {
     padding: 10px 20px 20px 10px;
+    border-bottom: $border-size solid $border-color;
+
+    font-size: 16px;
+
+    .text {
+      // To not be sticked to the icon.
+      margin-left: 5px;    
+    }
+
+    .facebook {
+      float: right;
+    }
   }
   
   .description {
     padding: 10px 20px 20px 10px;
+
+    font-size: 16px;
 
     img {
       display: block;

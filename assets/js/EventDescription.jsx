@@ -2,7 +2,9 @@ const React = require('react');
 const ReactMarkdown = require('react-markdown');
 const Collapse = require('react-collapse');
 const moment = require('moment');
-require('./EventDescription.scss');
+const style = require('./EventDescription.scss');
+const CalIcon = require('react-icons/lib/fa/calendar');
+const FacebookIcon = require('react-icons/lib/fa/facebook-official');
 
 class EventDescription extends React.Component {
     constructor (props) {
@@ -21,6 +23,51 @@ class EventDescription extends React.Component {
         }
     }
 
+
+    _formatText (text) {
+        const facebookEventRegex = /(\b(https?|http):\/\/www.facebook.com\/event\/[-A-Z0-9+&@#\/%=~_|]*)/ig;
+        const urlRegex = /(\b(https?|http|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        const pictureRegex = /(\b(https?|http|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]).(?:jpg|gif|png)/ig;
+
+        const facebookEvent = text.match(facebookEventRegex) || [];
+        for (let url of facebookEvent) {
+           text = text.replace(url, '');
+        }
+
+        // const urls = text.match(urlRegex) || [];
+        // const pictures = text.match(pictureRegex) || [];
+        // for (let url of urls) {
+        //     if (pictures.indexOf(url) === -1) {
+        //        text = text.replace(url, '[' + url + '](' + url + ')'); 
+        //     } else {
+        //        text = text.replace(url, '![' + url + '](' + url + ')'); 
+        //     }
+        // }
+
+        return {
+            facebook: facebookEvent,
+            text: text,
+        };
+    } 
+
+     _buildFacebook (eventLinks) {
+         const result = [];
+         for (let url of eventLinks) {
+             result.push(
+                <a href={url}>
+                    <FacebookIcon />
+                </a>
+             );
+         }
+
+         return (
+             <span className="facebook">
+                {result}
+             </span>
+         
+         );
+     }
+
     render () {
         const event = this.props.event ? this.props.event.props.event : null;
         if (!event) {
@@ -30,16 +77,24 @@ class EventDescription extends React.Component {
             );
         }
 
+        const formatted = this._formatText(event.description);
+
+        console.log(JSON.stringify(formatted));
+
         return (
             <Collapse className="event-info" isOpened={true}>
                 <div className="summary">
                     {event.summary}
                 </div>
                 <div className="date">
-                    {this._formatDate()}
+                    <CalIcon />
+                    <span class="text">
+                        {this._formatDate()}
+                    </span>
+                    {this._buildFacebook(formatted.facebook)}
                 </div>
                 <div className="description">
-                    <ReactMarkdown source={event.description}/>
+                    <ReactMarkdown source={formatted.text}/>
                 </div>
             </Collapse>
         );
