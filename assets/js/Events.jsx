@@ -29,8 +29,12 @@ class Events extends React.Component {
             result[this._getSectionID(section)] = ReactDOM.findDOMNode(this.refs[this._getSectionID(section)]);
         }
 
+        const newCurrent = this.reactEvent.length ? this.reactEvent[0] : this.state.currentSelected;
+        const newChecked = Boolean(newCurrent);
         this.setState({
             sectionsDOM: result,
+            currentSelected: newCurrent,
+            checked: newChecked,
         });
     }
 
@@ -138,6 +142,8 @@ class Events extends React.Component {
                 />
             );
         }
+
+        this.reactEvent = lists;
 
         return lists;
     }
