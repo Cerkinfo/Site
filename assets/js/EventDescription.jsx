@@ -79,8 +79,6 @@ class EventDescription extends React.Component {
 
         const formatted = this._formatText(event.description);
 
-        console.log(JSON.stringify(formatted));
-
         return (
             <Collapse className="event-info" isOpened={this.props.checked}>
                 <div className="summary">

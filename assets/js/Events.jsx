@@ -12,16 +12,17 @@ class Events extends React.Component {
         this.state = {
             checked: false,
             currentSelected: null,
+            sectionsDOM: null,
         };
 
         const raw = this._parse(this.props.data);
         this.data = raw.data || [];
         this.bounds = raw.bounds || [];
-
+        this.reactEvent = [];
     }
 
     componentDidMount () {
-        const result = [];
+        const result = {};
 
         const copy = new moment(this.bounds.low);
         for (let section = copy.startOf('month'); section.month() <= this.bounds.up.month(); section.add(1, 'M')) {
@@ -34,10 +35,6 @@ class Events extends React.Component {
     }
 
     /* @desc : Close the <EventDescription/>.
-     *
-     * @note : In this function we change the state of "checked" to prevent 
-     *      to close the <EventDescription/> without any event which will look
-     *      bad.
      */
     close () {
         this.setState({
@@ -51,15 +48,6 @@ class Events extends React.Component {
      * @param {ReactEvent} : <Event/> component to show in <EventDescription/>.
      */
     show (ReactEvent) {
-        if (this.state.currentSelected 
-            && this.state.currentSelected != ReactEvent
-            && this.state.currentSelected.state.checked) 
-        {
-            // Uncheck the last one if it's different from the new
-            // one altough it will toggle two time.
-            this.state.currentSelected.toggle();
-        }
-
         this.setState({
             checked: true,
             currentSelected: ReactEvent,
@@ -127,21 +115,28 @@ class Events extends React.Component {
         return sections; 
     }
 
-    _getEvents () {
+    _buildEvents () {
         const lists = [];
+
         const sectionsDOM = this.state && this.state.sectionsDOM;
-        if(!sectionsDOM) return lists;
 
         for (let current of this.data) {
+            let checked = false;
+            if (this.state.checked && this.state.currentSelected) {
+                if (this.state.currentSelected.props.event == current) {
+                    checked = true;
+                }
+            }
+
             lists.push(
                 <Event 
                     parent={this}
                     bounds={this.bounds}
                     event={current} 
-                    sectionDOM={sectionsDOM[this._getSectionID(current.start)]}
+                    checked={checked}
+                    sectionDOM={sectionsDOM ? sectionsDOM[this._getSectionID(current.start)] : null}
                 />
             );
-
         }
 
         return lists;
@@ -157,7 +152,7 @@ class Events extends React.Component {
                         {this._buildSections(this.bounds)}
                     </div>
                     <ul className="data">
-                        {this._getEvents()}
+                        {this._buildEvents()}
                     </ul>
                 </div>
                 <EventDescription checked={this.state.checked} event={this.state.currentSelected}/>
