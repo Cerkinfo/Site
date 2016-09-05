@@ -20,6 +20,8 @@ class Event extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
+    /* @desc : Change the "checked" state of the component.
+     */
     toggle(callback) {
         this.setState({
             checked: !this.state.checked,
@@ -67,13 +69,12 @@ class Event extends React.Component {
             width: this._getWidth() + 'px'
         };
 
-        const className = 'bubble bubble-' + (this.props.event.type || 'default');
         const duration = this.props.event.end - this.props.event.start;
         const summary = this.props.event.summary;
 
         return (
             <li className={this.state.checked ? 'checked' : 'unchecked'} onClick={this.handleClick}>
-                <span style={style} className={className} data-duration={duration}></span>
+                <span style={style} className="bubble" data-duration={duration}></span>
                 <span className="inline-date">
                     {this.props.event.start.format('DD/MM/YY')}
                 </span>

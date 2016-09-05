@@ -10,6 +10,7 @@ class Events extends React.Component {
         super(props);
 
         this.state = {
+            checked: false,
             currentSelected: null,
         };
 
@@ -32,21 +33,35 @@ class Events extends React.Component {
         });
     }
 
+    /* @desc : Close the <EventDescription/>.
+     *
+     * @note : In this function we change the state of "checked" to prevent 
+     *      to close the <EventDescription/> without any event which will look
+     *      bad.
+     */
     close () {
         this.setState({
-            currentSelected: null,
+            checked: false,
         });
     }
 
+    /* @desc : Show the description from an event in the <EventDescription/>
+     *      component.
+     *
+     * @param {ReactEvent} : <Event/> component to show in <EventDescription/>.
+     */
     show (ReactEvent) {
         if (this.state.currentSelected 
             && this.state.currentSelected != ReactEvent
             && this.state.currentSelected.state.checked) 
         {
+            // Uncheck the last one if it's different from the new
+            // one altough it will toggle two time.
             this.state.currentSelected.toggle();
         }
 
         this.setState({
+            checked: true,
             currentSelected: ReactEvent,
         });
     }
@@ -145,7 +160,7 @@ class Events extends React.Component {
                         {this._getEvents()}
                     </ul>
                 </div>
-                <EventDescription event={this.state.currentSelected}/>
+                <EventDescription checked={this.state.checked} event={this.state.currentSelected}/>
             </div>
         );
     }

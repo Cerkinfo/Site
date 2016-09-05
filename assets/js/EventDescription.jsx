@@ -82,13 +82,13 @@ class EventDescription extends React.Component {
         console.log(JSON.stringify(formatted));
 
         return (
-            <Collapse className="event-info" isOpened={true}>
+            <Collapse className="event-info" isOpened={this.props.checked}>
                 <div className="summary">
                     {event.summary}
                 </div>
                 <div className="date">
                     <CalIcon />
-                    <span class="text">
+                    <span className="text">
                         {this._formatDate()}
                     </span>
                     {this._buildFacebook(formatted.facebook)}
@@ -103,6 +103,7 @@ class EventDescription extends React.Component {
 
 EventDescription.propTypes = { 
     event: React.PropTypes.object.isRequired,
+    checked: React.PropTypes.bool,
 };
 
 module.exports = EventDescription;
