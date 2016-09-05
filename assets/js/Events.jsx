@@ -1,5 +1,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+const utils = require('./data.js');
 const Event = require('./Event.jsx');
 const EventDescription = require('./EventDescription.jsx');
 const moment = require('moment');
@@ -15,7 +16,7 @@ class Events extends React.Component {
             sectionsDOM: null,
         };
 
-        const raw = this._parse(this.props.data);
+        const raw = utils.parse(this.props.data);
         this.data = raw.data || [];
         this.bounds = raw.bounds || [];
         this.reactEvent = [];
@@ -60,49 +61,6 @@ class Events extends React.Component {
 
     _getSectionID (section) {
         return 'event-unit-' + section.month()  + '-' + section.year();
-    }
-
-    _parse (data) {
-        const now = new moment();
-        let min = new moment();
-        let max = new moment();
-
-        let ret = [];
-
-        for (let event of data) {
-            var startFrom = new moment(event.begin);
-            var finishOn = new moment(event.end);
-
-            if (startFrom.isBefore(now)) {
-                continue; 
-            }
-
-            // console.log('Min : ' + min.unix() + '\nMax : ' + max.unix() + '\nNew : [' + startFrom.unix() + ', ' + finishOn.unix() + ']');
-            if (startFrom.isBefore(min)) {
-                min = startFrom;
-            }
-
-            if (max.isBefore(finishOn)) {
-                max = finishOn;
-            }
-
-            ret.push({
-                start: startFrom, 
-                end: finishOn, 
-                length: finishOn.diff(startFrom),
-                summary: event.summary,
-                description: event.description,
-            });
-        }
-
-        return {
-            data: ret,
-            bounds : {
-                low: min,
-                up: max,
-                length: max.diff(min),
-            }
-        };
     }
 
     _buildSections (bounds) {
