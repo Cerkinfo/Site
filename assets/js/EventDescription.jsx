@@ -25,6 +25,13 @@ class EventDescription extends React.Component {
 
 
     _formatText (text) {
+        if (!text) {
+            return {
+                facebook: [],
+                text: '',
+            };
+        }
+
         const facebookEventRegex = /(\b(https?|http):\/\/www.facebook.com\/event\/[-A-Z0-9+&@#\/%=~_|]*)/ig;
         const urlRegex = /(\b(https?|http|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         const pictureRegex = /(\b(https?|http|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]).(?:jpg|gif|png)/ig;
@@ -50,26 +57,38 @@ class EventDescription extends React.Component {
         };
     } 
 
-     _buildFacebook (eventLinks) {
-         const result = [];
-         for (let url of eventLinks) {
-             result.push(
-                <a href={url}>
-                    <FacebookIcon />
-                </a>
-             );
-         }
+    _buildFacebook (eventLinks) {
+        const result = [];
+        for (let url of eventLinks) {
+            result.push(
+               <a href={url}>
+                   <FacebookIcon />
+               </a>
+            );
+        }
 
-         return (
-             <span className="facebook">
-                {result}
-             </span>
-         
-         );
-     }
+        return (
+            <span className="facebook">
+               {result}
+            </span>
+        
+        );
+    }
+
+    _renderText (text) {
+        if (text) {
+            return (
+                <div className="description">
+                    <ReactMarkdown source={text}/>
+                </div>
+            );
+        } else {
+            return null; 
+        }
+    }
 
     render () {
-        const event = this.props.event ? this.props.event.props.event : null;
+        const event = this.props.event && this.props.event.props.event;
         if (!event) {
             return (
                 <Collapse isOpened={false}>
@@ -91,9 +110,7 @@ class EventDescription extends React.Component {
                     </span>
                     {this._buildFacebook(formatted.facebook)}
                 </div>
-                <div className="description">
-                    <ReactMarkdown source={formatted.text}/>
-                </div>
+                {this._renderText(formatted.text)}
             </Collapse>
         );
     }
