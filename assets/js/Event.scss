@@ -1,8 +1,11 @@
-$checked-font-size: 24px;
+$bubble-color: #9C6CD9;
+$checked-bubble-color: #5417A2;
+
+$checked-font-size: 14px;
 $checked-font-weight: 500;
 $checked-opacity: 1;
-$unchecked-font-size: 20px;
-$unchecked-font-weight: lighter;
+$unchecked-font-size: 14px;
+$unchecked-font-weight: 400;
 $unchecked-opacity: 0.7;
 
 .data {
@@ -25,38 +28,9 @@ $unchecked-opacity: 0.7;
     &:hover {
       .bubble {
         opacity: 1;
+        // background-color: $bubble-color;
       }
     }
-
-    // .checked {
-    //   .inline-date {
-    //     font-weight: $checked-font-weight;
-    //     font-size: $checked-font-weight;
-    //   }
-
-    //   .inline-summary {
-    //     @extend .inline-date;
-    //   }
-
-    //   .bubble {
-    //     opacity: $checked-opacity;
-    //   }
-    // }
-
-    // .unchecked {
-    //   .inline-date {
-    //     font-weight: $unchecked-font-weight;
-    //     font-size: $unchecked-font-weight;
-    //   }
-
-    //   .inline-summary {
-    //     @extend .inline-date;
-    //   }
-
-    //   .bubble {
-    //     opacity: $unchecked-opacity;
-    //   }
-    // }
 
     .inline-date {
       font-weight: $unchecked-font-weight;
@@ -80,7 +54,42 @@ $unchecked-opacity: 0.7;
       top: 4px;
       border-radius: 4px;
       margin: 0 10px 0 0;
-      background-color: rgba(252, 70, 74, 1);
+      background-color: $bubble-color;
+    }
+  }
+
+  .checked {
+    .inline-date {
+      font-size: $checked-font-size;
+      font-weight: $checked-font-weight;    
+    }
+
+    .inline-summary {
+      font-size: $checked-font-size;
+      font-weight: $checked-font-weight;    
+    }
+
+    .bubble {
+      opacity: 1;
+      background-color: $checked-bubble-color;
+    }
+  }
+
+  .unchecked {
+    .inline-date {
+      font-size: $unchecked-font-size;
+      font-weight: $unchecked-font-weight;    
+    }
+
+    .inline-summary {
+      font-size: $unchecked-font-size;
+      font-weight: $unchecked-font-weight;    
+    }
+
+
+    .bubble {
+      opacity: 0.5;
+      background-color: $bubble-color;
     }
   }
 }
