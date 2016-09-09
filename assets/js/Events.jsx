@@ -11,23 +11,29 @@ class Events extends React.Component {
     constructor(props) {
         super(props);
 
+        const raw = utils.parse(this.props.data);
         this.state = {
             checked: false,
             currentSelected: null,
             sectionsDOM: null,
+            bounds: raw.bounds || [],
         };
-
-        const raw = utils.parse(this.props.data);
         this.data = raw.data || [];
-        this.bounds = raw.bounds || [];
+
         this.reactEvent = [];
+
+        this.touch = false;
+        this.touchStartOffset = 0;
+        this.touchStart = this.touchStart.bind(this);
+        this.touchMove = this.touchMove.bind(this);
+        this.touchEnd = this.touchEnd.bind(this);
     }
 
     componentDidMount () {
         const result = {};
 
-        const copy = new moment(this.bounds.low);
-        for (let section = copy.startOf('month'); section.month() <= this.bounds.up.month(); section.add(1, 'M')) {
+        const copy = new moment(this.state.bounds.low);
+        for (let section = copy.startOf('month'); section.month() <= this.state.bounds.up.month(); section.add(1, 'M')) {
             result[this._getSectionID(section)] = ReactDOM.findDOMNode(this.refs[this._getSectionID(section)]);
         }
 
@@ -41,6 +47,34 @@ class Events extends React.Component {
         });
 
         // window.addEventListener('resize', this.forceUpdate);
+    }
+
+    touchStart (evt) {
+        this.touchStartOffset = evt.pageX;
+        this.touch = true;
+    }
+
+    touchMove (evt) {
+        if (this.touch) {
+            const size = this.state.DOM.offsetWidth;
+            const diff = this.touchStartOffset - evt.pageX;
+
+            // Switching to time scale
+            const timeScale = (diff / size) * this.state.bounds.length;
+
+            this.touchStartOffset = evt.pageX;
+
+            const bounds = this.state.bounds
+            bounds.low = new moment(bounds.low + timeScale);
+            bounds.up = new moment(bounds.up + timeScale);
+            this.setState({
+                bounds: bounds,
+            });
+        }
+    }
+
+    touchEnd (evt) {
+        this.touch = false;
     }
 
     /* @desc : Close the <EventDescription/>.
@@ -99,10 +133,11 @@ class Events extends React.Component {
             lists.push(
                 <Event 
                     parent={this}
-                    bounds={this.bounds}
+                    bounds={this.state.bounds}
                     event={current} 
                     checked={checked}
                     sectionDOM={sectionsDOM ? sectionsDOM[this._getSectionID(current.start)] : null}
+                    parentDOM={this.state.DOM}
                 />
             );
         }
@@ -116,10 +151,10 @@ class Events extends React.Component {
         const className = this.props.className + " " + (this.props.theme || '');
 
         return (
-            <div>
-                <div className={className}>
+            <div> 
+                <div className={className} onMouseDown={this.touchStart} onMouseMove={this.touchMove} onMouseUp={this.touchEnd} onTouchStart={this.touchStart} onTouchMove={this.touchMove} onTouchEnd={this.touchEnd}>
                     <div className="scale">
-                        {this._buildSections(this.bounds)}
+                        {this._buildSections(this.state.bounds)}
                     </div>
                     <ul className="data">
                         {this._buildEvents()}

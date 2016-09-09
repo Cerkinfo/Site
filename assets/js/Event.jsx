@@ -2,16 +2,15 @@ const React = require('react');
 const moment = require('moment');
 require('./Event.scss');
 
-/**
- * Timesheet Bubble
- */
 class Event extends React.Component {
     constructor (props) {
         super(props);
 
         this.state = {
             checked: this.props.checked,
+            bounds: this.props.bounds,
             sectionDOM: this.props.sectionDOM,
+            parentDOM: this.props.parentDOM,
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -20,7 +19,9 @@ class Event extends React.Component {
     componentWillReceiveProps (nextProps) {
         this.state = {
             checked: nextProps.checked,
+            bounds: nextProps.bounds,
             sectionDOM: nextProps.sectionDOM,
+            parentDOM: nextProps.parentDOM,
         };
     }
 
@@ -36,30 +37,22 @@ class Event extends React.Component {
      * Calculate starting offset for bubble
      */
     _getStartOffset () {
-        if (!this.state.sectionDOM) {
+        if (!(this.state.sectionDOM && this.state.parentDOM)) {
             return 0;
         }
 
-        const copy = new moment(this.props.event.start);
-        const startMonth = new moment(copy.startOf('month'));
-        const endMonth = new moment(copy.endOf('month'));
+        const distanceFromBound = this.props.event.start.diff(this.state.bounds.low);
+        const scaleToPixels = (distanceFromBound / this.state.bounds.length) * this.state.parentDOM.offsetWidth;
+        console.log('hey : ' + scaleToPixels);
 
-        const monthLength = endMonth.diff(startMonth);
-
-        const distanceFromMonthStart = this.props.event.start.diff(startMonth);
-
-        // console.log('monthLength : ' + monthLength + '\ndistanceFromMonthStart : ' + distanceFromMonthStart);
-
-        const offset = this.state.sectionDOM.offsetLeft;
-        const SectionLength = this.state.sectionDOM.offsetWidth;
-        return offset + (SectionLength * (distanceFromMonthStart / monthLength));
+        return scaleToPixels;
     }
 
     /**
      * Get bubble's width in pixel
      */
     _getWidth () {
-        if (!this.state.sectionDOM) {
+        if (!(this.state.sectionDOM && this.state.parentDOM)) {
             return 0; 
         }
 
@@ -97,6 +90,7 @@ Event.propTypes = {
     checked: React.PropTypes.bool,
     event: React.PropTypes.object.isRequired,
     sectionDOM: React.PropTypes.object,
+    parentDOM: React.PropTypes.object,
 };
 
 Event.defaultProps = {
