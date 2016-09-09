@@ -3,6 +3,7 @@ const ReactDOM = require('react-dom');
 const utils = require('./data.js');
 const Event = require('./Event.jsx');
 const EventDescription = require('./EventDescription.jsx');
+const TimeLineNow = require('./TimeLineNow.jsx');
 const moment = require('moment');
 require('./Events.scss');
 
@@ -34,9 +35,12 @@ class Events extends React.Component {
         const newChecked = Boolean(newCurrent);
         this.setState({
             sectionsDOM: result,
+            DOM: ReactDOM.findDOMNode(this),
             currentSelected: newCurrent,
             checked: newChecked,
         });
+
+        // window.addEventListener('resize', this.forceUpdate);
     }
 
     /* @desc : Close the <EventDescription/>.
@@ -69,7 +73,9 @@ class Events extends React.Component {
         for (let section = copy.startOf('month'); section.month() <= bounds.up.month(); section.add(1, 'M')) {
             sections.push(
                 <section ref={this._getSectionID(section)}>
-                    {section.format('MMMM')}
+                    <div className="title">
+                        {section.format('MMMM')}
+                    </div>
                 </section>
             );
         }
@@ -133,7 +139,7 @@ Events.propTypes = {
 };
 
 Events.defaultProps = {
-    className: 'timesheet'
+    className: 'events-timeline'
 };
 
 module.exports = Events;

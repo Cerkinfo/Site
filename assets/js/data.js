@@ -65,7 +65,7 @@ module.exports.parse = (data) => {
         var startFrom = new moment(event.begin);
         var finishOn = new moment(event.end);
 
-        if (startFrom.isBefore(now)) {
+        if (startFrom.isBefore(now) && finishOn.isBefore(now)) {
             continue; 
         }
 
@@ -87,10 +87,13 @@ module.exports.parse = (data) => {
     }
 
     const bounds = {
-        low: min,
-        up: max,
-        length: max.diff(min),
+        first: new moment(min),
+        last: new moment(max),
+        low: new moment(min).startOf('month'),
+        up: new moment(max).endOf('month'),
+        length: 0,
     };
+    bounds.length = bounds.up.diff(bounds.low);
     
     analyze(ret, bounds);
 
