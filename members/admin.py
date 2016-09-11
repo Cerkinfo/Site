@@ -13,7 +13,7 @@ class SurNameInline(admin.TabularInline):
 class ComiteMembershipInline(admin.TabularInline):
     model = ComiteMembership
     extra = 0
-    fields = ['year', 'poste']
+    fields = ['year']
 
 
 class MemberInline(admin.StackedInline):
@@ -44,8 +44,8 @@ class ComitePosteAdmin(admin.ModelAdmin):
 
 @admin.register(ComiteMembership)
 class ComiteMembershipAdmin(admin.ModelAdmin):
-    list_display = ['year', 'member', 'poste']
-    list_filter = ['year', 'poste__is_bapteme', 'poste']
+    list_display = ['year', 'member']
+    list_filter = ['year']
     raw_id_fields = ['member']
 
 admin.site.register(AcademicYear)

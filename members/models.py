@@ -231,7 +231,7 @@ class ComiteMembership(models.Model):
     """
     year = models.ForeignKey(AcademicYear, verbose_name='year')
     member = models.ForeignKey(Member, null=True, blank=True)
-    poste = models.ForeignKey(ComitePoste, null=True)
+    postes = models.ManyToManyField(ComitePoste)
     card_id = models.IntegerField(default=-1)
     paid = models.BooleanField(blank=False, default=False)
 
