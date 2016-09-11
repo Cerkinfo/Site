@@ -235,6 +235,9 @@ class ComiteMembership(models.Model):
     card_id = models.IntegerField(default=-1)
     paid = models.BooleanField(blank=False, default=False)
 
+    class Meta:
+        ordering = ['year']
+
 
 class CustomPermission(models.Model):
     name = models.CharField(max_length=50)
