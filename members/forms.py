@@ -29,7 +29,7 @@ class MemberForm(forms.ModelForm):
 class ComiteMForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ComiteMForm, self).__init__(*args, **kwargs)
-        self.fields['poste'].queryset = ComitePoste.objects.filter(
+        self.fields['postes'].queryset = ComitePoste.objects.filter(
             is_bapteme=False
         )
 
@@ -37,7 +37,7 @@ class ComiteMForm(forms.ModelForm):
         model = ComiteMembership
         fields = [
             'year',
-            'poste'
+            'postes'
         ]
 
 
@@ -52,20 +52,20 @@ class FolkloMForm(forms.ModelForm):
         model = ComiteMembership
         fields = [
             'year',
-            'poste'
+            'postes'
         ]
 
 
 ComiteListFormset = inlineformset_factory(AcademicYear,
                                           ComiteMembership,
-                                          fields=('member', 'poste'),
+                                          fields=('member', 'postes'),
                                           can_delete=True,
                                           extra=1)
 
 ComiteItemFormset = inlineformset_factory(Member,
                                           ComiteMembership,
                                           form=ComiteMForm,
-                                          fields=('year', 'poste'),
+                                          fields=('year', 'postes'),
                                           can_delete=True,
                                           extra=1)
 
@@ -73,7 +73,7 @@ ComiteItemFormset = inlineformset_factory(Member,
 FolkloItemFormset = inlineformset_factory(Member,
                                           ComiteMembership,
                                           form=FolkloMForm,
-                                          fields=('year', 'poste'),
+                                          fields=('year', 'postes'),
                                           can_delete=True,
                                           extra=1)
 
