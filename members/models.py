@@ -225,9 +225,15 @@ class ComitePoste(models.Model):
 
 
 class ComiteMembership(models.Model):
-    year = models.ForeignKey(AcademicYear, verbose_name='année')
+    """
+    Link a user to his member card, his post in the comite during
+    that year and weither or not he has paid his year fee.
+    """
+    year = models.ForeignKey(AcademicYear, verbose_name='year')
     member = models.ForeignKey(Member, null=True, blank=True)
-    poste = models.ForeignKey(ComitePoste)
+    poste = models.ForeignKey(ComitePoste, null=True)
+    card_id = models.IntegerField(default=-1)
+    paid = models.BooleanField(blank=False, default=False)
 
 
 class CustomPermission(models.Model):
