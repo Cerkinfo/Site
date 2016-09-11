@@ -3,10 +3,14 @@ from django.contrib.auth import login, logout, authenticate
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, UpdateView, CreateView, ListView
+from rest_framework import filters
+from rest_framework import viewsets
+
 from frontend.settings import LOGIN_REDIRECT_URL
 from members.forms import MemberForm, ComiteItemFormset, FolkloItemFormset, \
     YearForm, ComiteListFormset, MemberImportForm, UserCreationForm
 from members.models import Member, ComiteMembership, AcademicYear
+from members.serializers import MemberSerializer
 
 
 class MemberDetailView(DetailView):
@@ -260,8 +264,15 @@ def login_member(request):
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect(LOGIN_REDIRECT_URL)
-
     return auth.views.login(
             request,
             extra_context={'username': username, 'password': password}
     )
+
+
+class MemberViewSet(viewsets.ModelViewSet):
+    queryset = Member.objects.all()
+    serializer_class = MemberSerializer
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter)
+    search_fields = ('user__email',)

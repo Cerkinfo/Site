@@ -70,6 +70,8 @@ INSTALLED_APPS = [
     'tinymce',
     'pv',
     'webpack_loader',
+    'api',
+    'rest_framework'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -145,6 +147,10 @@ AUTH_PASSWORD_VALIDATORS = [
             'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+}
 
 
 logging.config.dictConfig({
