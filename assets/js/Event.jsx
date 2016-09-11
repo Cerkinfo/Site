@@ -37,13 +37,12 @@ class Event extends React.Component {
      * Calculate starting offset for bubble
      */
     _getStartOffset () {
-        if (!(this.state.sectionDOM && this.state.parentDOM)) {
+        if (!this.state.parentDOM) {
             return 0;
         }
 
         const distanceFromBound = this.props.event.start.diff(this.state.bounds.low);
         const scaleToPixels = (distanceFromBound / this.state.bounds.length) * this.state.parentDOM.offsetWidth;
-        console.log('hey : ' + scaleToPixels);
 
         return scaleToPixels;
     }
@@ -52,12 +51,11 @@ class Event extends React.Component {
      * Get bubble's width in pixel
      */
     _getWidth () {
-        if (!(this.state.sectionDOM && this.state.parentDOM)) {
-            return 0; 
+        if (!this.state.parentDOM) {
+            return 0;
         }
 
-        // console.log('Width: ' + (this.TimeLineLength * (this.event.length / this.bounds.length)));
-        const TimeLineLength = this.state.sectionDOM.offsetParent.offsetWidth;
+        const TimeLineLength = this.state.parentDOM.offsetWidth;
         return TimeLineLength * (this.props.event.length / this.props.bounds.length);
     }
 

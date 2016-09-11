@@ -20,11 +20,6 @@ $round-size: 5px;
 
     section {
       height: 100%;
-      flex-grow: 1;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      flex-basis: 33%;
-      justify-content: space-around;
       border-left: 1px dashed rgba(50, 50, 50, 0.4);
 
       .title {

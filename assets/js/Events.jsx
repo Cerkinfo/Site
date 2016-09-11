@@ -15,9 +15,9 @@ class Events extends React.Component {
         this.state = {
             checked: false,
             currentSelected: null,
-            sectionsDOM: null,
             bounds: raw.bounds || [],
         };
+
         this.data = raw.data || [];
 
         this.reactEvent = [];
@@ -30,17 +30,9 @@ class Events extends React.Component {
     }
 
     componentDidMount () {
-        const result = {};
-
-        const copy = new moment(this.state.bounds.low);
-        for (let section = copy.startOf('month'); section.month() <= this.state.bounds.up.month(); section.add(1, 'M')) {
-            result[this._getSectionID(section)] = ReactDOM.findDOMNode(this.refs[this._getSectionID(section)]);
-        }
-
         const newCurrent = this.reactEvent.length ? this.reactEvent[0] : this.state.currentSelected;
         const newChecked = Boolean(newCurrent);
         this.setState({
-            sectionsDOM: result,
             DOM: ReactDOM.findDOMNode(this),
             currentSelected: newCurrent,
             checked: newChecked,
@@ -97,21 +89,33 @@ class Events extends React.Component {
         });
     }
 
-    _getSectionID (section) {
-        return 'event-unit-' + section.month()  + '-' + section.year();
-    }
-
     _buildSections (bounds) {
+        if (!this.state.DOM) {
+            return null;
+        }
+
         const sections = [];
-        const copy = new moment(bounds.low);
-        for (let section = copy.startOf('month'); section.month() <= bounds.up.month(); section.add(1, 'M')) {
+
+        let section = new moment(bounds.low);
+        const sectionDOM = {};
+        while (section < bounds.up) {
+            const lowBound = new moment(section);
+            section = new moment(Math.min(section.endOf('month'), bounds.up)); // upper bound
+
+            const style = {
+                width: (((section - lowBound) / bounds.length) * this.state.DOM.offsetWidth),
+            };
+
             sections.push(
-                <section ref={this._getSectionID(section)}>
+                <section style={style}>
                     <div className="title">
                         {section.format('MMMM')}
                     </div>
                 </section>
             );
+
+            // Switch to next month.
+            section.add(1, 'second');
         }
 
         return sections; 
@@ -119,8 +123,6 @@ class Events extends React.Component {
 
     _buildEvents () {
         const lists = [];
-
-        const sectionsDOM = this.state && this.state.sectionsDOM;
 
         for (let current of this.data) {
             let checked = false;
@@ -136,7 +138,6 @@ class Events extends React.Component {
                     bounds={this.state.bounds}
                     event={current} 
                     checked={checked}
-                    sectionDOM={sectionsDOM ? sectionsDOM[this._getSectionID(current.start)] : null}
                     parentDOM={this.state.DOM}
                 />
             );
