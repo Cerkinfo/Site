@@ -231,7 +231,7 @@ class ComiteMembership(models.Model):
     """
     year = models.ForeignKey(AcademicYear, verbose_name='year')
     member = models.ForeignKey(Member, null=True, blank=True)
-    postes = models.ManyToManyField(ComitePoste)
+    postes = models.ManyToManyField(ComitePoste, related_name='membership')
     card_id = models.IntegerField(default=-1)
     paid = models.BooleanField(blank=False, default=False)
 
@@ -254,7 +254,6 @@ class CustomPermissionsManager(models.Model):
     users = models.ManyToManyField(User, blank=True)
     expiration_date = models.DateTimeField(null=True, blank=True)
     permission = models.ForeignKey(CustomPermission)
-
     def __str__(self):
         return "%s" % self.permission.name
 

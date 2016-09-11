@@ -26,6 +26,7 @@ admin.autodiscover()
 urlpatterns = i18n_patterns(
     '',
     url(r'^', include('welcoming.urls'), name="home"),
+    url(r'api/v1/', include('api.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^auth', include('django.contrib.auth.urls')),
     url(r'^cipedia/', include('members.urls')),
