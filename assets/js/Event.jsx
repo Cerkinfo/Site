@@ -60,17 +60,20 @@ class Event extends React.Component {
     }
 
     render () {
+        const bubbleStyle = {
+            width: this._getWidth() + 'px'
+        };
+
         const style = {
             marginLeft: this._getStartOffset() + 'px',
-            width: this._getWidth() + 'px'
         };
 
         const duration = this.props.event.end - this.props.event.start;
         const summary = this.props.event.summary;
 
         return (
-            <li className={this.state.checked ? 'checked' : 'unchecked'} onClick={this.handleClick}>
-                <span style={style} className="bubble" data-duration={duration}></span>
+            <li style={style} className={this.state.checked ? 'checked' : 'unchecked'} onClick={this.handleClick}>
+                <span style={bubbleStyle} className="bubble" data-duration={duration}></span>
                 <span className="inline-date">
                     {this.props.event.start.format('DD/MM/YY')}
                 </span>
