@@ -16,13 +16,13 @@ $round-size: 5px;
     top: 0;
     left: 0;
     display: flex;
-    // border-bottom: 1px dashed rgba(50, 50, 50, 0.8);
 
     section {
       height: 100%;
       border-left: 1px dashed rgba(50, 50, 50, 0.4);
 
       .title {
+        overflow: hidden;
         border-bottom: 1px solid rgba(50, 50, 50, 0.4);
         text-align: center;
         color: rgba(50, 50, 50, 0.8);
