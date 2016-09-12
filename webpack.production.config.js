@@ -36,6 +36,9 @@ module.exports = {
         keep_fnames: false,
       }
     }),
+    new ExtractTextPlugin('public/style.css', {
+      allChunks: true
+    }),
   ],
 
   module: {
@@ -48,7 +51,7 @@ module.exports = {
         },
       }, {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style', 'css', 'sass', ExtractTextPlugin.extract('css!sass')]
       }, {
         test: /\.json$/,
         loader: 'json'        
