@@ -24,6 +24,7 @@ $unchecked-opacity: 0.7;
     clear: both;
     position: relative;
     white-space: nowrap;
+    overflow: hidden;
 
     &:hover {
       .bubble {
