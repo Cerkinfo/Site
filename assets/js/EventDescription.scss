@@ -1,6 +1,5 @@
 $border-color: #C0C0C0;
 $background-color: #FFFFF0;
-// $background-color: #F0FFF0;
 $round-size: 5px;
 $border-size: 2px;
 
@@ -19,14 +18,16 @@ $border-size: 2px;
 
   .summary {
     background-color: #E6E6FA;
+    vertical-align: middle;
     border-bottom: $border-size solid $border-color;
-    padding: 10px 20px 20px 10px;
+    padding: 10px 20px 10px 20px;
     text-align: center;
     font-size: 30px;
   }
   
   .date {
-    padding: 10px 20px 20px 10px;
+    vertical-align: middle;
+    padding: 10px 20px 10px 20px;
     border-bottom: $border-size solid $border-color;
 
     font-size: 16px;
@@ -42,7 +43,8 @@ $border-size: 2px;
   }
   
   .description {
-    padding: 10px 20px 20px 10px;
+    vertical-align: middle;
+    padding: 10px 20px 10px 20px;
 
     font-size: 16px;
 
