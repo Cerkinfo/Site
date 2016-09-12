@@ -11,7 +11,10 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        guide = Guide.objects.filter(active=True).get()
+        try:
+            guide = Guide.objects.filter(active=True).get()
+        except:
+            guide = None
         events = Event.objects.filter(displayed=True).all()
         try:
             year_active = AcademicYear.objects.filter(active=True).get()
