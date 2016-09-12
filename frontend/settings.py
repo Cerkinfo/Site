@@ -29,6 +29,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -61,7 +68,8 @@ INSTALLED_APPS = [
     'welcoming',
     'guide',
     'tinymce',
-    'pv'
+    'pv',
+    'webpack_loader',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -202,6 +210,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'skeletton', 'static'),
+    os.path.join(BASE_DIR, 'assets'),
 )
 LOGIN_REDIRECT_URL = '/cipedia/profile'
 
