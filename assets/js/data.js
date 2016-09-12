@@ -62,7 +62,7 @@ module.exports.parse = (data) => {
 
     let ret = [];
     for (let event of data) {
-        var startFrom = new moment(event.begin);
+        var startFrom = new moment(event.start);
         var finishOn = new moment(event.end);
 
         if (startFrom.isBefore(now) && finishOn.isBefore(now)) {
