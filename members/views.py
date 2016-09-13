@@ -4,13 +4,16 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, UpdateView, CreateView, ListView
 from rest_framework import filters
+from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.decorators import detail_route
+from rest_framework.response import Response
 
 from frontend.settings import LOGIN_REDIRECT_URL
 from members.forms import MemberForm, ComiteItemFormset, FolkloItemFormset, \
     YearForm, ComiteListFormset, MemberImportForm, UserCreationForm
 from members.models import Member, ComiteMembership, AcademicYear
-from members.serializers import MemberSerializer
+from members.serializers import MemberSerializer, MemberCardSerializer
 
 
 class MemberDetailView(DetailView):
@@ -268,4 +271,20 @@ class MemberViewSet(viewsets.ModelViewSet):
     serializer_class = MemberSerializer
     filter_backends = (filters.SearchFilter,
                        filters.OrderingFilter)
-    search_fields = ('user__email',)
+    search_fields = ('user__email', 'comitemembership__card_id')
+
+    @detail_route(methods=['post'])
+    def register_member_card(self, request, pk=None):
+        serializer = MemberCardSerializer(data=request.data)
+        if serializer.is_valid():
+            ms = ComiteMembership.objects.get_or_create(
+                member_id=serializer.data['member'],
+                year__slug=serializer.data['year']
+            )[0]
+            ms.card_id = serializer.data['id']
+            ms.paid = serializer.data['paid']
+            ms.save()
+            return Response({'status': 'card id registered'})
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
