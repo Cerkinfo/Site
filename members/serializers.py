@@ -24,13 +24,19 @@ class MembershipSerializer(serializers.ModelSerializer):
         model = ComiteMembership
 
 
+class MemberCardSerializer(serializers.BaseSerializer):
+    id = serializers.IntegerField(required=True)
+    member = serializers.IntegerField(required=True)
+    year = serializers.IntegerField(required=True)
+    paid = serializers.BooleanField(default=False)
+
+
 class MemberSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     surnames = serializers.StringRelatedField(many=True)
     memberships = MembershipSerializer(source='comitemembership_set', read_only=True, many=True)
 
     class Meta:
-        depth = 2
         model = Member
         fields = (
             'id',
