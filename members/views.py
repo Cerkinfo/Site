@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
+from rest_framework.authentication import SessionAuthentication
 
 from frontend.settings import LOGIN_REDIRECT_URL
 from members.forms import MemberForm, ComiteItemFormset, FolkloItemFormset, \
@@ -91,9 +92,11 @@ class YearDetailView(DetailView):
     template_name = 'year_detail.html'
     slug_field = 'slug'
 
+
 class YearListView(ListView):
     model = AcademicYear
     template_name = "year_list.html"
+
 
 class YearEditView(UpdateView):
     model = AcademicYear
@@ -266,14 +269,20 @@ def login_member(request):
     return auth.views.login(request, extra_context={'username': username, 'password': password})
 
 
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    def enforce_csrf(self, request):
+        return  # To not perform the csrf check previously happening
+
+
 class MemberViewSet(viewsets.ModelViewSet):
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
     filter_backends = (filters.SearchFilter,
                        filters.OrderingFilter)
     search_fields = ('user__email', 'comitemembership__card_id')
+    authentication_classes = CsrfExemptSessionAuthentication,
 
-    @detail_route(methods=['post'])
+    @detail_route(methods=['POST'])
     def register_member_card(self, request, pk=None):
         serializer = MemberCardSerializer(data=request.data)
         if serializer.is_valid():
