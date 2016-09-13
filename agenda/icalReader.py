@@ -1,25 +1,12 @@
 # -*- coding: utf-8 -*-
 import datetime
+from django.utils import timezone
 import urllib.request as urllib
 
 import icalendar
 import os
 
 FILENAME = "tmp.ics"
-
-
-class Event(object):
-    def __init__(self, title, date, link, orderer):
-        self.title = title
-        self.date = date
-        self.link = link
-        self.orderer = orderer
-
-    def __repr__(self):
-        return "[ title='{0}' date='{1}' link='{2}' orderer='{3}' ]".format(
-            self.title, self.date, self.link,
-            self.orderer)
-
 
 class IcalReader(object):
     def __init__(self, feed):
@@ -57,20 +44,33 @@ class IcalReader(object):
             events = []
             for event in gcal.walk():
                 if event.name == "VEVENT":
-                    now = datetime.datetime.now().replace()
-                    now = [now.year, now.month, now.day]
-                    endDate = event.get("DTEND").dt
-                    orderer = [endDate.year, endDate.month, endDate.day]
-                    if orderer < now:
+                    summary = str(event.get("SUMMARY"))
+                    location = str(event.get("LOCATION"))
+                    start = event.decoded("DTSTART")
+                    end = event.decoded("DTEND")
+                    description = str(event.get("DESCRIPTION"))
+
+                    if type(end) == datetime.date:
+                        now = datetime.date.today()
+                    else:
+                        now = timezone.now()
+                    if end < now:
                         continue
 
-                    startDate = event.get("DTSTART").dt
-                    link = event.get("DESCRIPTION")
-                    name = event.get("SUMMARY")
-                    date = IcalReader._format(startDate, endDate)
-                    events.append(Event(name, date, link, orderer))
+                    events.append(dict({
+                        'summary': summary,
+                        'location': location,
+                        'start': start.isoformat(),
+                        'pStart': start,
+                        'end': end.isoformat(),
+                        'pEnd': end,
+                        'description': description
+                    }))
             f.close()
             os.remove(FILENAME)
-            return sorted(events, key=lambda event: event.orderer)
+            return sorted(
+                    events,
+                    key=lambda e: e['start']
+            )
         except IOError:
             return []

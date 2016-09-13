@@ -1,0 +1,59 @@
+$border-color: #C0C0C0;
+$background-color: #FFFFF0;
+$round-size: 5px;
+$border-size: 2px;
+
+.event-info {
+  border: $border-size solid $border-color;
+  position: relative;
+  background-color: $background-color;
+  -moz-border-radius: $round-size;
+  -webkit-border-radius: $round-size;
+  border-radius: $round-size;
+  box-shadow: 2px 2px 2px #888888;
+
+  margin: .5em;
+
+  white-space:pre-wrap;
+
+  .summary {
+    background-color: #E6E6FA;
+    vertical-align: middle;
+    border-bottom: $border-size solid $border-color;
+    padding: 10px 20px 10px 20px;
+    text-align: center;
+    font-size: 30px;
+  }
+  
+  .date {
+    vertical-align: middle;
+    padding: 10px 20px 10px 20px;
+    border-bottom: $border-size solid $border-color;
+
+    font-size: 16px;
+
+    .text {
+      // To not be sticked to the icon.
+      margin-left: 5px;    
+    }
+
+    .facebook {
+      float: right;
+    }
+  }
+  
+  .description {
+    vertical-align: middle;
+    padding: 10px 20px 10px 20px;
+
+    font-size: 16px;
+
+    img {
+      width: 100%;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+}
+
+

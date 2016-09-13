@@ -1,6 +1,8 @@
 django>=1.9,<1.10
 Pillow
 
+django-webpack-loader
+
 # For testing
 pytest
 pytest-flakes
