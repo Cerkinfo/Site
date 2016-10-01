@@ -7,7 +7,10 @@ module.exports = {
 
   entry: {
     events: [
-      './assets/js/index',
+      './assets/js/event/index',
+    ],
+    spaceapi: [
+      './assets/js/spaceapi/index',
     ],
   },
 
@@ -22,7 +25,8 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /\.jsx?$/,
+      { 
+        test: /\.jsx?$/,
         exclude: /node_modules/, 
         loader: 'babel-loader',
         query: {
