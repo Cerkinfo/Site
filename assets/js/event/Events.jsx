@@ -3,7 +3,6 @@ const ReactDOM = require('react-dom');
 const utils = require('./data.js');
 const Event = require('./Event.jsx');
 const EventDescription = require('./EventDescription.jsx');
-const TimeLineNow = require('./TimeLineNow.jsx');
 const moment = require('moment');
 require('./Events.scss');
 

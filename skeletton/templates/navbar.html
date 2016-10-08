@@ -2,6 +2,8 @@
 {% load bootstrap3 %}
 {% load sekizai_tags metron_tags %}
 {% load i18n %}
+{% load render_bundle from webpack_loader %}
+
 <div id="nav">
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -158,8 +160,10 @@
                         <a href="http://urlab.be">UrLab</a>
                     </li>
                 </ul>
-
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+    <div id="react-space-api-pin">
+    </div>
+    {% render_bundle 'spaceapi' %}
 </div>

@@ -8,7 +8,10 @@ module.exports = {
 
   entry: {
     events: [
-      './assets/js/index',
+      './assets/js/event/index',
+    ],
+    spaceapi: [
+      './assets/js/spaceapi/index',
     ],
   },
 
