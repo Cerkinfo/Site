@@ -7,7 +7,10 @@ from members.models import AcademicYear
 import json
 import pprint
 
-CAL_URL = "https://calendar.google.com/calendar/ical/b6s2tn7vm5mr8cl4sdq1m9qp0o%40group.calendar.google.com/public/basic.ics"
+CALS_URL = [
+        "https://calendar.google.com/calendar/ical/b6s2tn7vm5mr8cl4sdq1m9qp0o%40group.calendar.google.com/public/basic.ics",
+        "https://wallflux.com/events/370305636381641",
+]
 
 class HomeView(TemplateView):
     template_name = "home.html"
@@ -24,6 +27,7 @@ class HomeView(TemplateView):
             year_active = None
 
         context['guide'] = guide
-        context['events_dict'] = IcalReader.jsonify(IcalReader(CAL_URL).read())
+        context['events_dict'] = json.dumps(IcalReader(CALS_URL).get())
         context['academic_year'] = year_active
+
         return context

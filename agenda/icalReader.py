@@ -5,17 +5,24 @@ import urllib.request as urllib
 from icalendar import Calendar
 
 class IcalReader(object):
-    def __init__(self, calendarUrl):
+    def __init__(self, url):
         super(IcalReader, self).__init__()
-        self.url = calendarUrl
-        self.calendar = ""
-        try:
-            self.calendar = urllib.urlopen(self.url)
-        except Exception as e:
-            print(e)
+        self.url = url
+        self.events = []
+        for ical in IcalReader.fetch_ical(list(url)):
+            self.events += IcalReader.read(ical)
 
     @staticmethod
-    def jsonify(events):
+    def fetch_ical(urls):
+        """
+        """
+        for u in urls:
+            try:
+                yield urllib.urlopen(u).read()# .decode('iso-8859-1')
+            except Exception as e:
+                print(e)
+
+    def jsonify(self):
         """
         @desc: Change a batch of event into a json (readable by javascript
             unlike the python json library).
@@ -24,31 +31,35 @@ class IcalReader(object):
         """
 
         res = ''
-        for event in events:
+        for event in self.events:
             res += '{"summary": "%s", "start": "%s", "end": "%s", "description": "%s", "location": "%s", "geo": "%s", "url": "%s", "attach": "%s"},' % (
-                repr(event['summary'])[1:-1] if event['summary'] else event['summary'],
-                repr(event['start'])[1:-1] if event['start'] else event['start'],
-                repr(event['end'])[1:-1] if event['end'] else event['end'],
-                repr(event['description'])[1:-1] if event['description'] else event['description'],
-                repr(event['location'])[1:-1] if event['location'] else event['location'],
-                repr(event['geo'])[1:-1] if event['geo'] else event['geo'],
-                repr(event['url'])[1:-1] if event['url'] else event['url'],
-                repr(event['attach'])[1:-1] if event['attach'] else event['attach'],
+                event['summary'],
+                event['start'],
+                event['end'],
+                event['description'],
+                event['location'],
+                event['geo'],
+                event['url'],
+                event['attach'],
             )
 
-        # res = res[:-1]
-        res = '[%s]' % (res)
+        res = res[:-1] # Erase last ","
 
-        res = res.replace("\\", "\\\\")
-        res = res.replace("'", "\\'")
+
+        res = repr('[%s]' % (res))[1:-1]
+        res = res.replace('\\\\"', '\\"')
 
         return res
 
-    def read(self):
+    def get(self):
+        return self.events
+
+    @staticmethod
+    def read(ical):
         """
         @desc: Read the ical file and parse into a dict.
         """
-        gcal = Calendar.from_ical(self.calendar.read().decode('iso-8859-1'))
+        gcal = Calendar.from_ical(ical)
         events = []
         for event in gcal.walk('VEVENT'):
             end = event.decoded('DTEND')

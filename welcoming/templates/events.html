@@ -10,6 +10,6 @@
     <div id="react-events-timeline"></div>
     {% render_bundle 'events' %}
     <script>
-        eventsRender(JSON.parse('{{ events_dict | safe }}'));
+        eventsRender({{ events_dict | safe }});
     </script>
 </div>
