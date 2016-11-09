@@ -25,19 +25,19 @@ $border-size: 2px;
     font-size: 30px;
   }
   
-  .date {
+  .highlights {
     vertical-align: middle;
     padding: 10px 20px 10px 20px;
     border-bottom: $border-size solid $border-color;
 
     font-size: 16px;
 
-    .text {
+    .date {
       // To not be sticked to the icon.
       margin-left: 5px;    
     }
 
-    .facebook {
+    .extern {
       float: right;
     }
   }
