@@ -77,13 +77,11 @@ module.exports.parse = (data) => {
             max = finishOn;
         }
 
-        ret = insert({
-            start: startFrom, 
-            end: finishOn, 
-            length: finishOn.diff(startFrom),
-            summary: event.summary,
-            description: event.description,
-        }, ret);
+        event.start = startFrom;
+        event.end = finishOn;
+        event.length = finishOn.diff(startFrom);
+
+        ret = insert(event, ret);
     }
 
     const bounds = {

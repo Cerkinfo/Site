@@ -10,17 +10,6 @@
     <div id="react-events-timeline"></div>
     {% render_bundle 'events' %}
     <script>
-        eventsRender([
-        {% for event in instance %}
-            {
-                summary: "{{ event.summary }}",
-                start: "{{ event.start }}",
-                end: "{{ event.end  }}",
-                description: "{{ event.description }}",
-                location: "{{ event.location }}",
-            },
-        {% endfor %}
-                
-        ]);
+        eventsRender({{ events_dict | safe }});
     </script>
 </div>

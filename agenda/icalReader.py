@@ -2,75 +2,91 @@
 import datetime
 from django.utils import timezone
 import urllib.request as urllib
-
-import icalendar
-import os
-
-FILENAME = "tmp.ics"
+from icalendar import Calendar
 
 class IcalReader(object):
-    def __init__(self, feed):
+    def __init__(self, url):
         super(IcalReader, self).__init__()
-        self.feed = feed
-        try:
-            urllib.urlretrieve(self.feed, FILENAME)
-        except:
-            pass
+        self.url = url
+        self.events = []
+        for ical in IcalReader.fetch_ical(list(url)):
+            self.events += IcalReader.read(ical)
 
     @staticmethod
-    def _format(startDate, endDate):
-        res = startDate.strftime("%d %B %Y")
-        if startDate.year == endDate.year and \
-                        startDate.month == endDate.month and \
-                        startDate.day == endDate.day:
-            if type(startDate) != datetime.date:
-                res += " de "
-                res += startDate.strftime("%H:%M")
-                res += " à "
-                res += endDate.strftime("%H:%M")
-        else:
-            if type(startDate) != datetime.date:
-                res += ' ' + startDate.strftime("%H:%M")
-            res += " au "
-            res += endDate.strftime("%d %B %Y %H:%M") if type(
-                endDate) != datetime.date else endDate.strftime(
-                "%d %B %Y")
+    def fetch_ical(urls):
+        """
+        """
+        for u in urls:
+            try:
+                yield urllib.urlopen(u).read()# .decode('iso-8859-1')
+            except Exception as e:
+                print(e)
+
+    def jsonify(self):
+        """
+        @desc: Change a batch of event into a json (readable by javascript
+            unlike the python json library).
+
+        @param{events}: Lists of events.
+        """
+
+        res = ''
+        for event in self.events:
+            res += '{"summary": "%s", "start": "%s", "end": "%s", "description": "%s", "location": "%s", "geo": "%s", "url": "%s", "attach": "%s"},' % (
+                event['summary'],
+                event['start'],
+                event['end'],
+                event['description'],
+                event['location'],
+                event['geo'],
+                event['url'],
+                event['attach'],
+            )
+
+        res = res[:-1] # Erase last ","
+
+
+        res = repr('[%s]' % (res))[1:-1]
+        res = res.replace('\\\\"', '\\"')
+
         return res
 
-    def read(self):
-        try:
-            f = open(FILENAME, "r")
-            gcal = icalendar.Calendar.from_ical(f.read())
-            events = []
-            for event in gcal.walk():
-                if event.name == "VEVENT":
-                    summary = str(event.get("SUMMARY"))
-                    location = str(event.get("LOCATION"))
-                    start = event.decoded("DTSTART")
-                    end = event.decoded("DTEND")
-                    description = str(event.get("DESCRIPTION"))
+    def get(self):
+        return self.events
 
-                    if type(end) == datetime.date:
-                        now = datetime.date.today()
-                    else:
-                        now = timezone.now()
-                    if end < now:
-                        continue
+    @staticmethod
+    def read(ical):
+        """
+        @desc: Read the ical file and parse into a dict.
+        """
+        gcal = Calendar.from_ical(ical)
+        events = []
+        for event in gcal.walk('VEVENT'):
+            end = event.decoded('DTEND')
+            if type(end) == datetime.date:
+                now = datetime.date.today()
+            else:
+                now = timezone.now()
 
-                    events.append(dict({
-                        'summary': summary,
-                        'location': location,
-                        'start': start.isoformat(),
-                        'pStart': start,
-                        'end': end.isoformat(),
-                        'pEnd': end,
-                        'description': description
-                    }))
-            f.close()
-            os.remove(FILENAME)
-            return sorted(
-                    events,
-                    key=lambda e: e['start']
-            )
-        except IOError:
-            return []
+            if end < now:
+                continue
+
+            summary = event.get('SUMMARY')
+            description = event.get('DESCRIPTION')
+            location = event.get('LOCATION')
+            geo = event.get('GEO')
+            url = event.get('URL')
+            attach = event.get('ATTACH')
+
+            events.append(dict({
+                "summary": str(summary) if summary else str(),
+                "start": event.decoded('DTSTART').isoformat(),
+                "end": event.decoded('DTEND').isoformat(),
+                "description": str(description) if description else str(),
+                "location": str(location) if location else str(),
+                "geo": str(geo) if geo else str(),
+                "url": str(url) if url else str(),
+                "attach": str(attach) if attach else str(),
+            }))
+
+        return events
