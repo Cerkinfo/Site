@@ -15,40 +15,56 @@
 
 <!-- Not logged form -->
 <div id="no-auth-modal" class="modal">
-    <div class="modal-content">
-        <form class="form" role="form" method="post"
+    <div class="row">
+        <form class="form col s6" role="form" method="post"
                 action="{% url 'login' %}"
                 id="login-nav"
                 enctype="multipart/form-data">
-            {% if next %}
-                <input type="hidden" name="next" value="{{ next }}"/>
-            {% endif %}
-            {% csrf_token %}
-            <div class="form-group">
-                <label class="sr-only" for="id_u">Nom d'utilisateur</label>
-                <input type="text" class="form-control" id="id_u"
-                        placeholder="Nom d'utilisateur" name="id_username" required>
-            </div>
-            <div class="form-group">
-                <label class="sr-only" for="id_p">Mot de Passe</label>
-                <input type="password" class="form-control" id="id_p"
-                        placeholder="Mot de Passe" name="id_password" required>
+            <div class="modal-content">
+                {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                {% endif %}
+                {% csrf_token %}
+                <div class="input-field">
+                    <label class="sr-only" for="id_u">Nom d'utilisateur</label>
+                    <input type="text" class="form-control" id="id_u"
+                            placeholder="Nom d'utilisateur" name="id_username" required>
+                </div>
+                <div class="input-field">
+                    <label class="sr-only" for="id_p">Mot de Passe</label>
+                    <input type="password" class="form-control" id="id_p"
+                            placeholder="Mot de Passe" name="id_password" required>
+                </div>
 
-                <div class="help-block text-right">
-                    <a href="{% url "password_reset" %}">
-                        Mot de passe oublié?
-                    </a>
+                <div class="modal-footer row valign-wrapper">
+                    <div class="valign col s6">
+                        <a href="{% url "password_reset" %}">
+                            Mot de passe oublié?
+                        </a>
+                    </div>
+                    <div class="valign col s6">
+                        <button class="btn waves-effect waves-light" type="submit" name="action">
+                            Connexion
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">
-                    Connexion
-                </button>
-            </div>
         </form>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        <div class="col s6">
+            <div class="card">
+                <div class="card-image">
+                    <img src="http://cdn2.hubspot.net/hubfs/360031/main_register.jpg">
+                    <span class="card-title">S'inscrire</span>
+                </div>
+                <div class="card-content">
+                  <p>Rejoignez nous et éditer votre CIpédia</p>
+                </div>
+                <div class="card-action">
+                    <a href={% url "register" %} class="waves-effect waves-light btn">S'inscrire</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
