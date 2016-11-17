@@ -1,0 +1,15 @@
+body, html {
+   height:100%;
+}
+
+.profile-overview {
+    position: relative;
+    height: 100%;
+    font-size: 30px;
+    text-align: center;
+}
+
+li {
+    color: white;
+    margin-right: 10px;
+}
