@@ -3,14 +3,25 @@
 
 <!-- Logged side bar -->
 <ul id="slide-out" class="side-nav">
+    <li>
+        <div class="userView">
+            <div class="background purple darken-4">
+            </div>
+            <!-- <img class="circle responsive-img" src=""> -->
+            <a href="{% url "profile" %}">
+                <span class="name  white-text">
+                    {{ request.user.username }}
+                </span>
+            </a>
+        </div>
+    </li>
     <li><a href="{% url "profile" %}">Profil</a></li>
+    <li><a href="{% url "password_change" %}">Changer de mot de passe</a></li>
+    <li><a href="{% url "logout" %}?next=/">Déconnexion</a></li>
     {% if request.user.is_staff %}
         <li><div class="divider"></div></li>
         <li><a href="/admin">Administration</a></li>
     {% endif %}
-    <li><div class="divider"></div></li>
-    <li><a href="{% url "password_change" %}">Changer de mot de passe</a></li>
-    <li><a href="{% url "logout" %}?next=/">Déconnexion</a></li>
 </ul>
 
 <!-- Not logged form -->
@@ -69,7 +80,7 @@
 </div>
 
 <nav>
-    <div class="nav-wrapper">
+    <div class="nav-wrapper purple darken-4">
         <a href={% url "home" %} class="brand-logo">
             <!-- <img class="responsive-img brand-logo" src="{% static "img/nav_brand.png" %}"> -->
             Cercle Informatique
@@ -114,7 +125,7 @@
             </li>
             {% if request.user.is_authenticated %}
                 <li>
-                    <a data-activates="slide-out" class="waves-effect waves-light btn button-collapse" href="#">
+                    <a href="#" id="user_actions" data-activates="slide-out" class="waves-effect waves-light btn">
                         {{ request.user.username }}
                     </a>
                 </li>
@@ -132,10 +143,10 @@
 <script>
   $(document).ready(function(){
     $('.modal').modal();
-    $('.button-collapse').sideNav();
+    $('#user_actions').sideNav();
   });
 </script>
 
-<!-- <div id="react-space-api-pin"> -->
-<!-- </div> -->
-<!-- {-% render_bundle 'spaceapi' %} -->
+<div id="react-space-api-pin">
+</div>
+{% render_bundle 'spaceapi' %}
