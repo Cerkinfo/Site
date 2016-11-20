@@ -33,16 +33,20 @@ class MemberEditView(UpdateView):
         comite_poste_form = ComiteItemFormset(
             instance=self.object,
             queryset=ComiteMembership.objects.filter(poste__is_bapteme=False),
-            prefix='comite')
+            prefix='comite'
+        )
         folklo_poste_form = FolkloItemFormset(
             instance=self.object,
             queryset=ComiteMembership.objects.filter(poste__is_bapteme=True),
-            prefix='folklo')
+            prefix='folklo'
+        )
         return self.render_to_response(
             self.get_context_data(
                 form=form,
                 comite_form=comite_poste_form,
-                folklo_form=folklo_poste_form))
+                folklo_form=folklo_poste_form
+            )
+        )
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -256,4 +260,8 @@ def login_member(request):
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect(LOGIN_REDIRECT_URL)
-    return auth.views.login(request, extra_context={'username': username, 'password': password})
+
+    return auth.views.login(
+            request,
+            extra_context={'username': username, 'password': password}
+    )
