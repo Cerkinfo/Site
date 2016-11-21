@@ -1,14 +1,23 @@
 {% extends "base.html" %}
 
+{% load static %}
+{% load sekizai_tags metron_tags %}
+
 {% block title %}
     Connexion
 {% endblock %}
 
 {% block content %}
 
+{% addtoblock "css" %}
+    <link href="{% static "css/full.css" %}" rel="stylesheet" type="text/css">
+{% endaddtoblock %}
+
 <div class="row">
-    <div class="col s6 valign-wrapper">
-        <form class="form valign" role="form" method="post"
+    <div class="col s2"></div>
+    <div class="col s4">
+        <h3>Se connecter</h3>
+        <form class="form" role="form" method="post"
                 action="{% url 'login' %}"
                 id="login-nav"
                 enctype="multipart/form-data">
@@ -27,25 +36,32 @@
                         placeholder="Mot de Passe" name="id_password" required>
             </div>
 
-            <div class="valign col s6">
-                <a href="{% url "password_reset" %}">
-                    Mot de passe oublié?
-                </a>
-            </div>
-            <div class="valign col s6">
-                <button class="btn waves-effect waves-light" type="submit" name="action">
-                    Connexion
-                    <i class="material-icons right">send</i>
-                </button>
+            <div class="row valign-wrapper">
+                <div class="valign col s6">
+                    <a href="{% url "password_reset" %}">
+                        Mot de passe oublié?
+                    </a>
+                </div>
+                <div class="valign col s6">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">
+                        Connexion
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
             </div>
         </form>
     </div>
-    <div class="col s6 valign-wrapper">
-        <div class="valign full purple darken-4">
-            <img class="circle" src="http://cdn2.hubspot.net/hubfs/360031/main_register.jpg">
-            <h5>S'inscrire</h5>
-            <h6>Rejoignez nous et éditer votre CIpédia</h6>
-            <a href={% url "register" %} class="waves-effect waves-light btn">S'inscrire</a>
+    <div class="col s2"></div>
+    <div class="col s4 center-align">
+        <div class="valign full-4 white-text purple darken-4">
+            <img class="responsive-img circle" src="{% static "img/register.jpg" %}">
+            <div class="row">
+                <h5 style="display: inline-block; padding-right: 10px">Besoin d'un compte ?</h5>
+                <a href={% url "register" %} class="waves-effect waves-light btn">Inscris toi</a>
+            </div>
+            <h6>
+                Créez un compte et rejoignez nous en éditant votre CIpédia.
+            </h6>
         </div>
     </div>
 </div>

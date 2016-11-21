@@ -98,13 +98,6 @@ a:hover{
     background-color: transparent;
 }
 
-.full {
-    position: absolute;
-    min-height: 100%;
-    height:100%;
-    width: 100%;
-}
-
 /* login form */
 #login-dp{
     min-width: 250px;
