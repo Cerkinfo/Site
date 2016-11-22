@@ -1,63 +1,62 @@
 {% extends "base.html" %}
-{% load i18n %}
 {% load staticfiles  %}
-{% load mathfilters %}
+{% load sekizai_tags metron_tags %}
+
 {% block title %}
     {{ guide }}
 {% endblock %}
 
 {% block content %}
-        <div class="guide_menu_container">
-            <div class="guide_menu_box row">
-                <div class="carousel">
-                    <div>
-                        {{ guide.description | safe }}
-                    </div>
+
+{% addtoblock "css" %}
+    <link href="{% static "css/guide.css" %}" rel="stylesheet" type="text/css">
+{% endaddtoblock %}
+
+<div class="container">
+    <div class="row">
+        <div class="guide_menu">
+            {% for item in guide.items %}
+                <div class="col 3">
+                    <a class="guide_menu_item" href="#{{ item.slug }}">
+                        <div class="guide_item_icon_container"
+                                style="background: url('{{ item.icon.url }}') no-repeat center center">
+                        </div>
+                        <div class="guide_item_desc" style="height: 10vh">
+                            {{ item.description | safe }}
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="row">
-                <p style="font-size:0.7em;">
-                    {{ guide.disclaimer | safe }}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% for item in guide.items %}
+        <div id="{{ item.slug }}" class="guide_content">
+            <h1>{{ item.title }}</h1>
+        </div>
+        {% if item.remarq %}
+            <div class="card-panel red lighten-1">
+                <h5>Remarque</h5>
+                <p style="padding-left: 25px;">
+                    {{ item.remarq | safe }}
                 </p>
             </div>
-            <div class="row">
-                <div class="guide_menu">
-                    {% for item in guide.items %}
-                        <div class="col-md-3">
-                            <a class="guide_menu_item" href="{% url 'guide' guide.slug %}#{{ item.slug }}">
-                                <div class="guide_item_icon_container"
-                                     style="background: url('{{ item.icon.url }}') no-repeat center center">
-                                </div>
-                                <div class="guide_item_desc" style="height: 10vh">
-                                    {{ item.description | safe }}
-                                </div>
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
+        {% endif %}
+        {{ item.content | safe }}
+        {% if item.advice %}
+            <div class="card-panel green lighten-1">
+                <h5>Conseil</h5>
+                {{ item.advice | safe }}
             </div>
-        </div>
-        {% for item in guide.items %}
-            <div class="guide_content_container">
-                <div class="guide_content">
-                    <a class="separator" name="{{ item.slug }}"></a>
-                    <h1>{{ item.title }}</h1>
-                </div>
-                {% if item.remarq %}
-                    <fieldset class="tune_up">
-                        <legend></legend>
-                        <p style="padding-left: 25px;">
-                            {{ item.remarq | safe }}
-                        </p>
-                    </fieldset>
-                {% endif %}
-                {{ item.content | safe }}
-                {% if item.advice %}
-                    <fieldset class="advice">
-                        <legend></legend>
-                        {{ item.advice | safe }}
-                    </fieldset>
-                {% endif %}
-            </div>
-        {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="row">
+        <p style="font-size:0.7em;">
+            {{ guide.disclaimer | safe }}
+        </p>
+    </div>
+</div>
+
+
 {% endblock %}
