@@ -8,50 +8,60 @@
 {% endblock %}
 
 {% block content %}
-    {% addtoblock "css" %}
-        <link href="{% static "css/profile.css" %}" rel="stylesheet" type="text/css">
-    {% endaddtoblock %}
 
-    <div class="row">
-        <div class="col s3">
-            <div class="profile-overview full purple darken-4">
-                <ul>
-                    <li>
-                        <div class="background">
-                        </div>
-                        <img src="{{ object.image_url }}" alt="{{ object }}" class=" circle responsive-img"/>
-                    </li>
-                    <li>
-                        {% if object.user == user %}
-                            {% if object.firstName or object.lastName %}
-                                <a href="{% url 'user_edit' %}">
-                                    {{ object.firstName }} {{ object.lastName }}
-                                    <span class="new badge red" data-badge-caption="edit"></span>
-                                </a>
-                            {% else %}
-                                <a href="{% url 'user_edit' %}">
-                                    {{ object.username }}
-                                    <span class="new badge red" data-badge-caption="edit"></span>
-                                </a>
-                            {% endif %}
-                        {% else %}
-                            {% if object.firstName or object.lastName %}
+{% addtoblock "css" %}
+    <link href="{% static "css/full.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "css/profile.css" %}" rel="stylesheet" type="text/css">
+{% endaddtoblock %}
+
+<div class="row">
+    <div class="col s3 white-text purple">
+        <div class="full-3 purple darken-4">
+            <ul class="profile-overview center-align">
+                <li>
+                    <div class="background">
+                    </div>
+                    <img src="{{ object.image_url }}" alt="{{ object }}" class="circle responsive-img"/>
+                </li>
+                <li>
+                    {% if object.user == user %}
+                        {% if object.firstName or object.lastName %}
+                            <a href="{% url 'user_edit' %}">
                                 {{ object.firstName }} {{ object.lastName }}
-                            {% else %}
+                                <span class="new badge red" data-badge-caption="edit"></span>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'user_edit' %}">
                                 {{ object.username }}
-                            {% endif %}
+                                <span class="new badge red" data-badge-caption="edit"></span>
+                            </a>
                         {% endif %}
-                    </li>
-                    <li>
-                        {{ object.birthdate }}
-                    </li>
+                    {% else %}
+                        {% if object.firstName or object.lastName %}
+                            {{ object.firstName }} {{ object.lastName }}
+                        {% else %}
+                            {{ object.username }}
+                        {% endif %}
+                    {% endif %}
+                </li>
+                <li>
+                    {{ object.birthdate }}
+                </li>
+            </ul>
+            {% if object.surname_set.all %}
+                <div class="divider grey"></div>
+                <h5>Surnoms</h5>
+                <ul class="nickname left-align">
+                    {% for surname in object.surname_set.all %}
+                        <li>{{ surname }}</li>
+                    {% endfor %}
                 </ul>
-            </div>
-            {% for surname in object.surname_set.all %}
-                <li>{{ surname }}</li>
-            {% endfor %}
+            {% endif %}
         </div>
-        <div class="col s9">
+    </div>
+    <div class="col s1"></div>
+    <div class="col s7">
+        <div class="career">
             <h2>Comités de Cercle</h2>
             <ul>
                 {% for cm in object.cercle_carreer %}
@@ -61,15 +71,15 @@
 
             <div class="divider"></div>
 
-            <div class="row">
-                <h2>Parcours Folklorique</h2>
-                <ul>
-                    {% for cm in object.bapteme_carreer %}
-                        <li><a href="{% url 'year_detail' cm.year.slug %}"> {{cm.year }} </a> : {{ cm.poste }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+            <h2>Parcours Folklorique</h2>
+            <ul>
+                {% for cm in object.bapteme_carreer %}
+                    <li><a href="{% url 'year_detail' cm.year.slug %}"> {{cm.year }} </a> : {{ cm.poste }}</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
+    <div class="col s1"></div>
+</div>
 
 {% endblock %}

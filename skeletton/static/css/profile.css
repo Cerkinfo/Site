@@ -1,15 +1,31 @@
-body, html {
-   height:100%;
-}
-
 .profile-overview {
-    position: relative;
-    height: 100%;
     font-size: 30px;
-    text-align: center;
 }
 
-li {
-    color: white;
-    margin-right: 10px;
+.nickname {
+    margin-left: 10px;
+    font-size: 15px;
+}
+
+.nickname h5 {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.nickname li {
+    margin-left: 20px;
+}
+
+.divider {
+    margin: 20px;
+}
+
+.career {
+    /* margin: 20px; */
+    color: black;
+}
+
+.career ul {
+    color: black;
+    margin-left: 20px;
 }
