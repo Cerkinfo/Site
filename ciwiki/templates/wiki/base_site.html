@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load sekizai_tags i18n wiki_tags static %}<!DOCTYPE html>
+
+
+{% block content %}
+
+{% addtoblock "css" %}
+    <link href="{% static "wiki/bootstrap/css/wiki-bootstrap.min.css" %}" rel="stylesheet">
+{% endaddtoblock %}
+
+{% addtoblock "js" %}
+    <script src="{% static "wiki/js/jquery.min.js" %}"></script>
+    <script src="{% static "wiki/js/core.js" %}"></script>
+    <script src="{% static "wiki/bootstrap/js/bootstrap.min.js" %}"></script>
+    <!-- Optionally enable responsive features in IE8 -->
+    <script src="{% static "wiki/js/respond.min.js" %}"></script>
+{% endaddtoblock %}
+
+{% block wiki_body %}
+    <div class="container" style="margin-top: 60px;">
+        <!-- Reserved for breadcrumbs -->
+        {% block wiki_breadcrumbs %}{% endblock %}
+
+        <!-- Main page contents go here -->
+        {% block wiki_contents %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% endblock %}
