@@ -5,11 +5,9 @@
 <head>
     {% render_block "css" %}
 
-    <title>{% block title %}Cercle Informatique{% endblock %}</title>
+    <title>{% block title %}CI - {% endblock %}</title>
 
     <link rel="icon" type="image/png" href="{{ MEDIA_URL }}images/icon/icon.png">
-
-    {% render_block "js" %}
 
     <meta property="og:title" content="Cercle Informatique"/>
     <meta property="og:type" content="website"/>
@@ -20,23 +18,25 @@
 </head>
 
 <body>
-{% include 'navbar.html' %}
-<div class="content">
-    {% if messages %}
-        <!-- Messages for this instance -->
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                <a class="close" data-dismiss="alert" href="#">&times;</a>
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
+    {% include 'navbar.html' %}
+    <div class="content">
+        {% if messages %}
+            <!-- Messages for this instance -->
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    <a class="close" data-dismiss="alert" href="#">&times;</a>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
-    {% block content %}
-    {% endblock %}
-</div>
-<a name="bottom" class="separator"></a>
-{% analytics %}
+        {% block content %}
+        {% endblock %}
+    </div>
+    <a name="bottom" class="separator"></a>
+    {% analytics %}
+
+    {% render_block "js" %}
 </body>
 </html>
 

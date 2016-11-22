@@ -4,7 +4,8 @@
 {% load staticfiles %}                                                
 
 {% block title %}
-    Profil de {{ object.username }}
+    {{ block.super }}
+    {{ object.username }}
 {% endblock %}
 
 {% block content %}
