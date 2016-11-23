@@ -1,0 +1,30 @@
+{% load staticfiles %}
+
+<footer class="page-footer purple darken-4">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12 center-align">
+                <h5 class="white-text">Cerkinfo ASBL</h5>
+                <p class="grey-text text-lighten-4"></p>
+                <img class="responsive-img" src="{% static "img/nav_brand.png" %}">
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Nos projets</h5>
+                <ul>
+                    <li><a class="grey-text text-lighten-3" href="https://urlab.be">Urlab</a></li>
+                    <li><a class="grey-text text-lighten-3" href="https://github.com/Cerkinfo/">Github</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            <span class="left grey-text text-lighten-4">
+                © <script>document.write(new Date().getFullYear())</script> Cerkinfo ASBL
+            </span>
+            <a class="right grey-text text-lighten-4" href="{% url 'home' %}">
+                Accueil
+            </a>
+        </div>
+    </div>
+</footer>
