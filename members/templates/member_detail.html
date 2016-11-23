@@ -22,8 +22,8 @@
             </div>
             <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4">
-                    {% if object.firstName or object.lastName %}
-                        {{ object.firstName }} {{ object.lastName }}
+                    {% if object.user.firstName or object.user.lastName %}
+                        {{ object.user.firstName }} {{ object.user.lastName }}
                     {% else %}
                         {{ object.username }}
                     {% endif %}
@@ -55,7 +55,7 @@
             <h2>Comités de Cercle</h2>
             <ul>
                 {% for cm in object.cercle_carreer %}
-                    <li><a href="{% url 'year_detail' cm.year.slug %}"> {{cm.year }} </a> : {{ cm.poste }}</li>
+                    <li><a href="{% url 'year_detail' cm.year.slug %}"> {{ cm.year }} </a> : {{ cm.poste.name }}</li>
                 {% endfor %}
             </ul>
 
@@ -64,7 +64,7 @@
             <h2>Parcours Folklorique</h2>
             <ul>
                 {% for cm in object.bapteme_carreer %}
-                    <li><a href="{% url 'year_detail' cm.year.slug %}"> {{cm.year }} </a> : {{ cm.poste }}</li>
+                    <li><a href="{% url 'year_detail' cm.year.slug %}"> {{ cm.year }} </a> : {{ cm.poste.name }}</li>
                 {% endfor %}
             </ul>
         </div>

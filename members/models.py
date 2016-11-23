@@ -19,22 +19,50 @@ class AcademicYear(models.Model):
         return self.active
 
     def get_comite(self):
-        return self.comitemembership_set.filter(
-            poste__is_bapteme=False).order_by('-poste__weight')
+        comite = self.comitemembership_set.filter(
+            postes__is_bapteme=False
+        ).order_by('-postes__weight')
+
+        for c in comite:
+            c.poste = c.postes.get(is_bapteme=False)
+
+        return comite
 
     def get_toge_bapteme(self):
-        return self.comitemembership_set.filter(poste__is_bapteme=True).exclude(
-            poste__slug__in=['bleu', 'TC']).order_by('-poste__weight')
+        comite = self.comitemembership_set.filter(
+            postes__is_bapteme=True
+        ).exclude(
+            postes__slug__in=['bleu', 'TC']
+        ).order_by('-postes__weight')
+
+        for c in comite:
+            c.poste = c.postes.get(is_bapteme=True)
+
+        return comite
 
     def get_toge_cercle(self):
-        return self.comitemembership_set.filter(poste__is_bapteme=True).exclude(
-            poste__slug__in=['bleu', 'TB', 'PDB', 'VP']).order_by(
-            '-poste__weight')
+        comite = self.comitemembership_set.filter(
+            postes__is_bapteme=True
+        ).exclude(
+            postes__slug__in=['bleu', 'TB', 'PDB', 'VP']
+        ).order_by('-postes__weight')
+
+        for c in comite:
+            c.poste = c.postes.first()
+
+        return comite
 
     def get_bleu(self):
-        return self.comitemembership_set.filter(poste__is_bapteme=True).exclude(
-            poste__slug__in=['TB', 'PDB', 'VP', 'TC']).order_by(
-            '-poste__weight')
+        comite = self.comitemembership_set.filter(
+            postes__is_bapteme=True
+        ).exclude(
+            postes__slug__in=['TB', 'PDB', 'VP', 'TC']
+        ).order_by('-postes__weight')
+
+        for c in comite:
+            c.poste = c.postes.get(is_bapteme=True)
+
+        return comite
 
     def get_all_cat(self):
         vals = []
@@ -78,17 +106,13 @@ class Member(models.Model):
 
     def firstname(self):
         """
-
         Returns: the user firstname
-
         """
         return "" if not self.user else self.user.first_name
 
     def lastname(self):
         """
-
         Returns: the user lastname
-
         """
         return "" if not self.user else self.user.last_name
 
@@ -112,18 +136,27 @@ class Member(models.Model):
         """
         Returns: the list of role taken in the comite by the member
         """
-        return self.comitemembership_set.filter(
-            poste__is_bapteme=False
+        comite = self.comitemembership_set.filter(
+            postes__is_bapteme=False,
         ).order_by('year__start')
 
+        for c in comite:
+            c.poste = c.postes.get(is_bapteme=False)
+
+        return comite
 
     def bapteme_carreer(self):
         """
         Returns: the list of role taken in the bapteme by the member
         """
-        return self.comitemembership_set.filter(
-            poste__is_bapteme=True
+        comite = self.comitemembership_set.filter(
+            postes__is_bapteme=True,
         ).order_by('year__start')
+
+        for c in comite:
+            c.poste = c.postes.get(is_bapteme=True)
+
+        return comite
 
     def admin_image(self):
         """Returns: an html element to display an image in the admin"""
@@ -136,7 +169,7 @@ class Member(models.Model):
         Wether the member is in the current comite or not
         """
         poste = self.comitemembership_set.filter(
-            poste__is_bapteme=False
+            postes__is_bapteme=False
         ).filter(
             year__active=True
         )
@@ -235,9 +268,14 @@ class ComiteMembership(models.Model):
     card_id = models.IntegerField(default=-1)
     paid = models.BooleanField(blank=False, default=False)
 
+    def get_bureau(self):
+        return self.postes.get(is_bureau=True)
+
+    def get_bapteme(self):
+        return self.postes.get(is_bapteme=True)
+
     class Meta:
         ordering = ['year']
-
 
 class CustomPermission(models.Model):
     name = models.CharField(max_length=50)
@@ -259,4 +297,3 @@ class CustomPermissionsManager(models.Model):
 
     class Meta:
         verbose_name = "Permissions Manager"
-
