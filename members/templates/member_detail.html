@@ -15,49 +15,39 @@
     <link href="{% static "css/profile.css" %}" rel="stylesheet" type="text/css">
 {% endaddtoblock %}
 
-<div class="row">
-    <div class="col s3 white-text purple">
-        <div class="full-3 purple darken-4">
-            <ul class="profile-overview center-align">
-                <li>
-                    <div class="background">
-                    </div>
-                    <img src="{{ object.image_url }}" alt="{{ object }}" class="circle responsive-img"/>
-                </li>
-                <li>
-                    {% if object.user == user %}
-                        {% if object.firstName or object.lastName %}
-                            <a href="{% url 'user_edit' %}">
-                                {{ object.firstName }} {{ object.lastName }}
-                                <span class="new badge red" data-badge-caption="edit"></span>
-                            </a>
-                        {% else %}
-                            <a href="{% url 'user_edit' %}">
-                                {{ object.username }}
-                                <span class="new badge red" data-badge-caption="edit"></span>
-                            </a>
-                        {% endif %}
+<div class="row profile_content">
+    <div class="col s3">
+        <div class="card hoverable">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img src="{{ object.image_url }}" alt="{{ object }}" class="activator"/>
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">
+                    {% if object.firstName or object.lastName %}
+                        {{ object.firstName }} {{ object.lastName }}
                     {% else %}
-                        {% if object.firstName or object.lastName %}
-                            {{ object.firstName }} {{ object.lastName }}
-                        {% else %}
-                            {{ object.username }}
-                        {% endif %}
+                        {{ object.username }}
                     {% endif %}
-                </li>
-                <li>
+                    {% if object.user == user %}
+                        (
+                        <a href="{% url 'user_edit' %}">
+                            editer
+                            <i class="material-icons">mode_edit</i>
+                        </a>
+                        )
+                    {% endif %}
+                    <i class="material-icons right">more_vert</i>
+                </span>
+                <p class="grey-text text-darken-4">
                     {{ object.birthdate }}
-                </li>
-            </ul>
-            {% if object.surname_set.all %}
-                <div class="divider grey"></div>
-                <h5>Surnoms</h5>
-                <ul class="nickname left-align">
-                    {% for surname in object.surname_set.all %}
-                        <li>{{ surname }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+                </p>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Surnoms<i class="material-icons right">close</i></span>
+                {% for surname in object.surname_set.all %}
+                    <p class="grey-text text-darken-4">{{ surname }}</p>
+                {% endfor %}
+            </div>
         </div>
     </div>
     <div class="col s1"></div>
