@@ -8,6 +8,10 @@ __pycache__/
 
 # Database
 *.db
+media/
+
+# pip
+src/
 
 # Distribution / packaging
 .Python
@@ -94,3 +98,8 @@ ENV/
 .ropeproject
 
 .idea/
+
+# Node
+node_modules/
+assets_bundles/
+
