@@ -5,6 +5,8 @@
 <head>
     {% render_block "css" %}
 
+    {% render_block "js" %}
+
     <title>{% block title %}CI - {% endblock %}</title>
 
     <link rel="icon" type="image/png" href="{{ MEDIA_URL }}images/icon/icon.png">
@@ -36,7 +38,7 @@
     <a name="bottom" class="separator"></a>
     {% analytics %}
 
-    {% render_block "js" %}
+    {% include 'footer.html' %}
 </body>
 </html>
 

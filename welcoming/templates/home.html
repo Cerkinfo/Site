@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load staticfiles %}
+{% load sekizai_tags %}
+
 {% block title %}
     {{ block.super }}
     Accueil
 {% endblock %}
+
 {% block content %}
+    {% addtoblock "css" %}
+        <link href="{% static 'css/home.css' %}" rel="stylesheet" type="text/css">
+    {% endaddtoblock %}
+
     <div class="header_container">
         <div class="header_container" style="
             background-size: cover;
@@ -36,16 +43,4 @@
     {% include 'events.html' %}
     {% include 'contact.html' %}
     {% include 'team.html' %}
-    <section>
-        <div class="footer">
-            <p>
-                <span class="glyphicon glyphicon-copyright-mark"></span>
-                <script>document.write(new Date().getFullYear())</script>
-                - Cerkinfo ASBL - BE02 0014 0193 5340 -
-                <a href="{% url 'home' %}#top">
-                    Return to the top
-                </a>
-            </p>
-        </div>
-    </section>
 {% endblock %}
