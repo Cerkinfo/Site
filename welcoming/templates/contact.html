@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load sekizai_tags %}
 
 <style type="text/css">
     #map-canvas {
@@ -6,6 +7,10 @@
         width: 100%;
     }
 </style>
+
+{% addtoblock "css" %}
+    <link href="{% static "css/contact.css" %}" rel="stylesheet" type="text/css">
+{% endaddtoblock %}
 
 <a name="contact" class="separator"></a>
 <div class="frater-info">
