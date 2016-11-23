@@ -1,10 +1,15 @@
-/* # css element # */
-
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     width: 100%;
     height: 100%;
     margin: 0px;
     padding: 0px;
+}
+
+.content {
+    flex: 1;
 }
 
 a:hover{
@@ -16,201 +21,15 @@ a:hover{
     vertical-align:middle;
 }
 
-/* navigation style */
-.navbar-default {
-  background-color: #5417a2;
-  border-color: #5417a2;
-}
-.navbar-default .navbar-brand {
-  color: #ecf0f1;
-}
-.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
-  color: white;
-}
-.navbar-default .navbar-text {
-  color: #ecf0f1;
-}
-.navbar-default .navbar-nav > li > a {
-    font-style: normal;
-    font-weight: 200;
-    color: white;
-    font-size: 20px;
-    padding-left: 6px;
-    padding-right: 6px;
-}
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  color: white;
-}
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  color: white;
-  background-color: #5417a2;
-}
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-  color: white;
-  background-color: #5417a2;
-}
-.navbar-default .navbar-toggle {
-  border-color: #5417a2;
-}
-.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-  background-color: #5417a2;
-}
-.navbar-default .navbar-toggle .icon-bar {
-  background-color: #ecf0f1;
-}
-.navbar-default .navbar-collapse,
-.navbar-default .navbar-form {
-  border-color: #ecf0f1;
-}
-.navbar-default .navbar-link {
-  color: #ecf0f1;
-}
-.navbar-default .navbar-link:hover {
-  color: white;
-}
-
-.navbar-brand {
-    padding: 5px;
-}
-
-.navbar-brand img {
-    width: 45px;
-}
-.navbar-nav li {
-    display: inline;
-    list-style-type: none;
-    text-decoration: none;
-}
-
-.navbar-nav li a::before {
-    content: "#";
-    color: transparent;
-    transition: color 500ms ease-in-out;
-}
-
-.navbar-nav li a:hover::before {
-    content: "#";
-    color: white;
-    transition: color 500ms ease-in-out;
-}
-
-.navbar-nav li a:hover {
-    background-color: transparent;
-}
-
-/* login form */
-#login-dp{
-    min-width: 250px;
-    padding: 14px 14px 0;
-    overflow:hidden;
-    background-color:rgba(255,255,255,.8);
-}
-#login-dp .help-block{
-    font-size:12px
-}
-#login-dp .bottom{
-    background-color:rgba(255,255,255,.8);
-    border-top:1px solid #ddd;
-    clear:both;
-    padding:14px;
-}
-#login-dp .social-buttons{
-    margin:12px 0
-}
-#login-dp .social-buttons a{
-    width: 49%;
-}
-#login-dp .form-group {
-    margin-bottom: 10px;
-}
-
-/* header style */
-/* header style */
-.header-container {
-    background-size: cover;
-    background-repeat:no-repeat;
-    -webkit-background-size:cover;
-    -moz-background-size:cover;
-    -o-background-size:cover;
-    background-position:center;
-}
-
-
-.header-logo {
+/* footer style */
+.footer {
+    width: 100%;
     text-align: center;
-    vertical-align: middle;
-    padding-top: 40px;
-    height: 100vh;
+    color: gray;
 }
 
-img.header {
-    width: 95vh;
-    transition: width 1s ease-in-out;
-    -webkit-transition: width 1s ease-in-out;
-    margin: 0 auto;
-}
-
-img.header:hover {
-    width: 100vh;
-    transition: width 1s ease-in-out;
-    -webkit-transition: width 1s ease-in-out;
-}
-
-/* Open tag style */
-.state-box {
-    position: fixed;
-    top: 50px;
-    left: 10px;
-    background-color: rgba(128, 128, 128, 0.7);
-    z-index: 20;
-    padding: 3px 8px;
-    text-transform: capitalize;
-    color: white;
-    border-radius: 0px 0px 4px 4px;
-}
-
-.show-hide-state:not(:checked) ~ .show-hide {
-    display: none;
-}
-
-.show-hide-state:not(:checked) ~ .trigger::before {
-    background: rgba(0, 0, 0, 0) url("images/guide_plugin/collapse.png") no-repeat local center center;
-    color: transparent;
-    content: "++";
-    margin-right: 5px;
-}
-
-.trigger {
-    font-size: 1em;
-    font-weight: 400;
+a {
     cursor: pointer;
-    background-color: whitesmoke;
-    border-radius: 0 0 5px 5px;
-    display: block;
-    border-radius: 3px;
-    padding: 4px 10px;
-}
-
-.show-hide-state:checked ~ .trigger::before {
-    background: rgba(0, 0, 0, 0) url("images/guide_plugin/expand.png") no-repeat local center center;
-    color: transparent;
-    content: "++";
-    margin-right: 5px;
-}
-
-.show-hide-state {
-    display: none;
-}
-
-.show-hide-container {
-    margin: 20px 40px;
-}
-
-.show-hide {
-    padding: 0 30px;
-}
-
-.surname_list ul {
-    padding: 0;
-    list-style-type: none;
+    color: cornflowerblue;
+    text-decoration: none;
 }
