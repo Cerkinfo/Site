@@ -13,10 +13,6 @@
 
 {% block content %}
 
-{% addtoblock "css" %}
-    <link href="{% static "css/full.css" %}" rel="stylesheet" type="text/css">
-{% endaddtoblock %}
-
 <form action="{% url "user_edit" %}" method="post" class="form" enctype="multipart/form-data" >
     <div class="row">
         {% csrf_token %}
