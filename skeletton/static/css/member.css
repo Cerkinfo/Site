@@ -1,0 +1,23 @@
+.member-widget {
+    color: darkgray;
+    display: inline-block;
+    font-size: 0.8em;
+    text-align: center;
+    text-decoration: none;
+    margin: 25px;
+    text-align: center;
+}
+
+.member-widget .circle {
+    border-radius: 70px;
+    height: 140px;
+    width: 140px;
+}
+
+.member-widget .member-name {
+    padding: 5px 0px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+

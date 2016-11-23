@@ -1,3 +1,10 @@
+{% load staticfiles %}
+{% load sekizai_tags %}
+
+{% addtoblock "css" %}
+    <link href="{% static "css/member.css" %}" rel="stylesheet" type="text/css">
+{% endaddtoblock %}
+
 <a name="team" class="separator"></a>
 <section style="text-align:center;">
     <div class="comite_desc"> {{ title_desc }}</div>
