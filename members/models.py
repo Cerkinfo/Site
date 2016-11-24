@@ -1,6 +1,8 @@
 from logging import getLogger
 
 import hashlib
+import random
+import uuid
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.utils import timezone
@@ -24,6 +26,8 @@ class Member(models.Model):
     birthdate = models.DateField(blank=True,
                                  null=True,
                                  verbose_name="date de naissance")
+    # card_id
+    card_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=True)
     # Additionnal Info
     extra_info = models.TextField(default='', blank=True)
 
@@ -53,7 +57,7 @@ class Member(models.Model):
         Check weither the member is baptised or not
         Returns: A boolean value
         """
-        return True if self.baptised_year else False
+        return bool(self.baptised_year)
 
     def cercle_carreer(self):
         """
@@ -82,7 +86,9 @@ class Member(models.Model):
         return comite
 
     def admin_image(self):
-        """Returns: an html element to display an image in the admin"""
+        """
+        Returns: an html element to display an image in the admin
+        """
         return "<img src={} style='width: 60px;' >".format(self.image_url)
 
     admin_image.allow_tags = True
@@ -99,6 +105,8 @@ class Member(models.Model):
         return len(poste) > 0
 
     def has_custom_permission(self, permission):
+        """
+        """
         # first we get all the permissions_linked
         permission_set = CustomPermissionsManager.objects.filter(
             permission=permission)
@@ -126,10 +134,8 @@ class Member(models.Model):
     @property
     def image_url(self):
         """
-
         Returns: The picture of the user, a custom one, a gravatar, or the
         default one
-
         """
         if self.avatar:
             return self.avatar.url
@@ -156,7 +162,7 @@ class SurName(models.Model):
     and can chose which of them is his preferred
     """
     # The member which it belongs
-    member = models.ForeignKey(Member)
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
     value = models.CharField(max_length=250)
     is_prefered = models.BooleanField(default=False)
 
@@ -308,10 +314,9 @@ class ComiteMembership(models.Model):
         * Les postes folklorique ou non.
         * Le membership si il l'a payé.
     """
-    year = models.ForeignKey(AcademicYear, verbose_name='year')
-    member = models.ForeignKey(Member, null=True, blank=True)
+    member = models.ForeignKey(Member, null=True, blank=True, on_delete=models.CASCADE)
+    year = models.ForeignKey(AcademicYear, verbose_name='year', on_delete=models.CASCADE)
     postes = models.ManyToManyField(ComitePoste, related_name='membership')
-    card_id = models.IntegerField(default=-1)
     paid = models.BooleanField(blank=False, default=False)
 
     def get_bureau(self):
@@ -350,7 +355,7 @@ class CustomPermissionsManager(models.Model):
     groups = models.ManyToManyField(Group, blank=True)
     users = models.ManyToManyField(User, blank=True)
     expiration_date = models.DateTimeField(null=True, blank=True)
-    permission = models.ForeignKey(CustomPermission)
+    permission = models.ForeignKey(CustomPermission, on_delete=models.CASCADE)
     def __str__(self):
         return "%s" % self.permission.name
 
