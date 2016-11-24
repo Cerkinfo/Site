@@ -12,6 +12,9 @@ module.exports = {
     spaceapi: [
       './assets/js/spaceapi/index',
     ],
+    barcode: [
+      './assets/js/barcode_render/index',
+    ],
   },
 
   output: {
