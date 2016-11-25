@@ -1,0 +1,18 @@
+{% load render_bundle from webpack_loader %}
+
+<div id="{{ modal_id | default:"barcode_modal" }}" class="modal">
+    <div class="modal-content center-align">
+        <h4>Carte de membre</h4>
+        <svg id="barcode"></svg>
+        {% render_bundle 'barcode' %}
+        <script>
+            $(document).ready(function(){
+                $('.modal').modal();
+                barcodeRender("{{ object.card_id }}");
+            });
+        </script>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
+    </div>
+</div>

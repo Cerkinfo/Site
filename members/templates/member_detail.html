@@ -2,7 +2,6 @@
 {% load i18n %}
 {% load sekizai_tags metron_tags %}                                                
 {% load staticfiles %}                                                
-{% load render_bundle from webpack_loader %}
 
 {% block title %}
     {{ block.super }}
@@ -15,22 +14,7 @@
     <link href="{% static "css/profile.css" %}" rel="stylesheet" type="text/css">
 {% endaddtoblock %}
 
-<div id="barcode_modal" class="modal">
-    <div class="modal-content center-align">
-        <h4>Carte de membre</h4>
-        <svg id="barcode"></svg>
-        {% render_bundle 'barcode' %}
-        <script>
-            $(document).ready(function(){
-                $('.modal').modal();
-                barcodeRender("{{ object.card_id }}");
-            });
-        </script>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Fermer</a>
-    </div>
-</div>
+{% include 'card.html' %}
 
 <div class="row profile_content">
     <div class="col s3">
