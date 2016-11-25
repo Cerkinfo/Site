@@ -22,8 +22,8 @@
             </div>
             <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4">
-                    {% if object.user.firstName or object.user.lastName %}
-                        {{ object.user.firstName }} {{ object.user.lastName }}
+                    {% if object.user.first_name or object.user.last_name %}
+                        {{ object.user.first_name }} {{ object.user.last_name }}
                     {% else %}
                         {{ object.username }}
                     {% endif %}
