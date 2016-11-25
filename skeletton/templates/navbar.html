@@ -2,7 +2,7 @@
 {% load sekizai_tags metron_tags %}
 {% load render_bundle from webpack_loader %}
 
-{% include 'card.html' %}
+{% include 'card.html' with card_id=request.user.member.card_id %}
 
 <!-- Logged side bar -->
 <ul id="slide-out" class="side-nav">
@@ -10,12 +10,8 @@
         <div class="userView">
             <div class="background purple darken-4">
             </div>
-            <!-- <img class="circle responsive-img" src=""> -->
-            <a href="{% url "profile" %}">
-                <span class="name  white-text">
-                    {{ request.user.username }}
-                </span>
-            </a>
+            <img class="circle responsive-img" src="{{ request.user.member.image_url }}">
+            <br>
         </div>
     </li>
     <li><a href="{% url "profile" %}"><i class="material-icons">perm_identity</i>Profil</a></li>
