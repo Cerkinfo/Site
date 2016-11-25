@@ -41,9 +41,11 @@
                     {{ object.birthdate }}
                 </p>
             </div>
-            <div class="card-action">
-                <a class="waves-effect waves-light btn" href="#barcode_modal">Carte membre</a>
-            </div>
+            {% if object.user == user %}
+                <div class="card-action">
+                    <a class="waves-effect waves-light btn" href="#barcode_modal">Carte membre</a>
+                </div>
+            {% endif %}
             <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4">Surnoms<i class="material-icons right">close</i></span>
                 {% for surname in object.surname_set.all %}
