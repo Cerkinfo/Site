@@ -1,7 +1,9 @@
 from django.contrib import auth
 from django.contrib.auth import login, logout, authenticate
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
+from rest_framework.views import APIView
 from django.views.generic import DetailView, UpdateView, CreateView, ListView
 from rest_framework import filters
 from rest_framework import status
@@ -13,7 +15,7 @@ from frontend.settings import LOGIN_REDIRECT_URL
 from members.forms import MemberForm, ComiteItemFormset, FolkloItemFormset, \
     YearForm, ComiteListFormset, MemberImportForm, UserCreationForm
 from members.models import Member, ComiteMembership, AcademicYear
-from members.serializers import MemberSerializer, MemberCardSerializer
+from members.serializers import MemberSerializer, MemberCardSerializer, MemberMembershipQuerySerializer
 
 
 class MemberDetailView(DetailView):
@@ -95,9 +97,11 @@ class YearDetailView(DetailView):
     template_name = 'year_detail.html'
     slug_field = 'slug'
 
+
 class YearListView(ListView):
     model = AcademicYear
     template_name = "year_list.html"
+
 
 class YearEditView(UpdateView):
     model = AcademicYear
@@ -295,3 +299,24 @@ class MemberViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
+class MemberMembershipQuery(APIView):
+    def get(self, request, card_id):
+        serializer = None
+        try:
+            user = Member.objects.get(card_id=card_id)
+        except ObjectDoesNotExist as e:
+            serializer = MemberMembershipQuerySerializer(data=dict(status=False, error="Not a user"))
+        except ValueError as e:
+            serializer = MemberMembershipQuerySerializer(data=dict(status=False, error=e))
+        else:
+            current_year = AcademicYear.objects.get(active=True)
+
+            try:
+                membership = ComiteMembership.objects.get(member=user, year=current_year)
+                serializer = MemberMembershipQuerySerializer(data=dict(status=membership.paid))
+            except ObjectDoesNotExist:
+                serializer = MemberMembershipQuerySerializer(data=dict(status=False))
+
+        serializer.is_valid()
+        return Response(serializer.data)

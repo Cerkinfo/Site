@@ -47,3 +47,7 @@ class MemberSerializer(serializers.ModelSerializer):
             'surnames',
             'memberships'
         )
+
+class MemberMembershipQuerySerializer(serializers.Serializer):
+    status = serializers.BooleanField(required=True)
+    error = serializers.CharField(required=False, max_length=100, allow_blank=True)
