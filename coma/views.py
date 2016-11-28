@@ -3,7 +3,6 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.db.models import F
 from django.http import HttpResponseForbidden
-from django.db import transaction
 from django.contrib.auth.decorators import login_required
 
 import Mollie
@@ -62,19 +61,20 @@ def finish_payment(request, id):
     api_payment = get_api().payments.get(payment.mollie_id)
 
     if api_payment.isPaid():
-        payment.confirmed = True
-        Transaction.objects.create(
+        transaction = Transaction.objects.create(
             user=request.user,
             quantity=0,
-            price=payment.amount
+            price=payment.amount,
+            comment="Mollie transaction"
         )
 
+        payment.confirmed = True
+        payment.transaction = transaction
         payment.save()
 
-        with transaction.atomic():
-            member = Member.objects.get(user=request.user)
-            member.balance = F('balance') + payment.amount
-            member.save()
+        member = Member.objects.get(user=request.user)
+        member.balance = F('balance') + payment.amount
+        member.save()
 
         return render(request, 'top_up_success.html', {'amount': payment.amount})
     else:
