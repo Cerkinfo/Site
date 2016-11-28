@@ -241,10 +241,10 @@ class ImportMemberView(UpdateView):
             member = Member()
         member.user = self.object
         member.save()
-        return HttpResponseRedirect(reverse('user_edit'));
+        return HttpResponseRedirect(reverse('user_edit'))
 
     def form_valid(self, form):
-        return HttpResponseRedirect(reverse('user_edit'));
+        return HttpResponseRedirect(reverse('user_edit'))
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
@@ -266,8 +266,7 @@ class RegisterView(CreateView):
             if form.is_import():
                 return HttpResponseRedirect(reverse('retrieve_member'))
             else:
-                Member(user=user).save()
-                return HttpResponseRedirect(reverse('user_edit'));
+                return HttpResponseRedirect(reverse('user_edit'))
         return ret
 
 
