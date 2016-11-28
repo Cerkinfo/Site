@@ -13,7 +13,7 @@ class SurNameInline(admin.TabularInline):
 class ComiteMembershipInline(admin.TabularInline):
     model = ComiteMembership
     extra = 0
-    fields = ['year', 'postes', 'card_id', 'paid']
+    fields = ['year', 'postes', 'paid']
     filter_horizontal = ['postes']
 
 
