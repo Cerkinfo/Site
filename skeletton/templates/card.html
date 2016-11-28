@@ -8,7 +8,7 @@
         <script>
             $(document).ready(function(){
                 $('.modal').modal();
-                barcodeRender("{{ card_id }}");
+                barcodeRender("{{ card_id }}", "{{ request.user|capfirst }}");
             });
         </script>
     </div>
