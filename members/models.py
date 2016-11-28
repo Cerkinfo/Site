@@ -36,6 +36,8 @@ class Member(models.Model):
     # Additionnal Info
     extra_info = models.TextField(default='', blank=True)
 
+    balance = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+
     def firstname(self):
         """
         Returns: the user firstname
