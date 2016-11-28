@@ -41,12 +41,12 @@ class MemberEditView(UpdateView):
         form = self.get_form(form_class)
         comite_poste_form = ComiteItemFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(poste__is_bapteme=False),
+            queryset=ComiteMembership.objects.filter(postes__is_bapteme=False),
             prefix='comite'
         )
         folklo_poste_form = FolkloItemFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(poste__is_bapteme=True),
+            queryset=ComiteMembership.objects.filter(postes__is_bapteme=True),
             prefix='folklo'
         )
         return self.render_to_response(
@@ -114,36 +114,47 @@ class YearEditView(UpdateView):
         self.object = self.get_object()
         form_class = self.get_form_class()
         form = self.get_form(form_class)
+
         comite_cercle_form = ComiteListFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(
-                poste__is_bapteme=False).order_by('-poste__weight'),
-            prefix='cercle')
+            queryset=ComiteMembership.objects
+                .filter(postes__is_bapteme=False)
+                .order_by('-postes__weight'),
+            prefix='cercle'
+        )
         comite_bapteme_form = ComiteListFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(
-                poste__is_bapteme=True).exclude(
-                poste__slug='bleu').exclude(
-                poste__slug='TC').order_by('-poste__weight'),
-            prefix='bapteme')
+            queryset=ComiteMembership.objects
+                .filter(postes__is_bapteme=True)
+                .exclude(postes__slug='bleu')
+                .exclude(postes__slug='TC')
+                .order_by('-postes__weight'),
+            prefix='bapteme'
+        )
         bapt_cercle_form = ComiteListFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(
-                poste__is_bapteme=True).filter(
-                poste__slug='TC'),
-            prefix='tc')
+            queryset=ComiteMembership.objects
+                .filter(postes__is_bapteme=True)
+                .filter(postes__slug='TC'),
+            prefix='tc'
+        )
         bleu_form = ComiteListFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(
-                poste__is_bapteme=True).filter(
-                poste__slug='bleu'),
-            prefix='bleu')
+            queryset=ComiteMembership.objects
+                .filter(postes__is_bapteme=True)
+                .filter(postes__slug='bleu'),
+            prefix='bleu'
+        )
+
         return self.render_to_response(
-            self.get_context_data(form=form,
-                                  comite_cercle_form=comite_cercle_form,
-                                  comite_bapteme_form=comite_bapteme_form,
-                                  bapt_cercle_form=bapt_cercle_form,
-                                  bleu_form=bleu_form))
+            self.get_context_data(
+                form=form,
+                comite_cercle_form=comite_cercle_form,
+                comite_bapteme_form=comite_bapteme_form,
+                bapt_cercle_form=bapt_cercle_form,
+                bleu_form=bleu_form
+            )
+        )
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
