@@ -8,14 +8,6 @@
     Modifier votre profil
 {% endblock %}
 
-{% block head %}
-    {{ form.media }}
-    <link rel='stylesheet' type='text/css' href='{% static 'css/jquery-ui/smoothness/jquery-ui.css' %}'/>
-    <script type='text/javascript' src='{% static 'js/jquery-ui.js' %}'></script>
-{% endblock %}
-
-
-
 {% block content %}
 
 <form action="{% url "user_edit" %}" method="post" class="form" enctype="multipart/form-data" >
@@ -27,7 +19,6 @@
                 <h4 style="display: inline-block">{{ request.user.username }}</h1>
                 Modification du profil
             </div>
-
 
             <h5>Informations</h5>
             <div class="row">
