@@ -3,7 +3,7 @@
 <div id="{{ modal_id | default:"barcode_modal" }}" class="modal">
     <div class="modal-content center-align">
         <h4>Carte de membre</h4>
-        <svg id="barcode"></svg>
+        <img id="barcode"></img>
         {% render_bundle 'barcode' %}
         <script>
             $(document).ready(function(){
