@@ -44,7 +44,7 @@ class ComiteMForm(forms.ModelForm):
 class FolkloMForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FolkloMForm, self).__init__(*args, **kwargs)
-        self.fields['poste'].queryset = ComitePoste.objects.filter(
+        self.fields['postes'].queryset = ComitePoste.objects.filter(
             is_bapteme=True
         )
 
