@@ -1,3 +1,4 @@
+node_modules
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -8,12 +9,14 @@ __pycache__/
 
 # Database
 *.db*
+media/
+
+# pip
+src/
+>>>>>>> master
 
 # Distribution / packaging
 .Python
-env/
-.ve
-venv
 build/
 develop-eggs/
 dist/
@@ -28,6 +31,8 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+assets/bundles/
+webpack-stats.json
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -86,6 +91,10 @@ celerybeat-schedule
 # virtualenv
 venv/
 ENV/
+env/
+ve3/
+.ve
+venv
 
 # Spyder project settings
 .spyderproject
@@ -95,5 +104,7 @@ ENV/
 
 .idea/
 
-# JS Stuff
+# Node
+node_modules/
+assets_bundles/
 webpack-stats.json
