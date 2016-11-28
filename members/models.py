@@ -2,13 +2,18 @@ from logging import getLogger
 
 import hashlib
 import random
-import uuid
+import string
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.utils import timezone
 from frontend.settings import MEDIA_URL
 
 logger = getLogger(__name__)
+
+
+def card_generator():
+    pool = string.ascii_letters + string.digits
+    return ''.join([random.choice(pool) for _ in range(6)])
 
 
 class Member(models.Model):
@@ -27,7 +32,7 @@ class Member(models.Model):
                                  null=True,
                                  verbose_name="date de naissance")
     # card_id
-    card_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=True)
+    card_id = models.CharField(default=card_generator, unique=True, editable=True, max_length=6)
     # Additionnal Info
     extra_info = models.TextField(default='', blank=True)
 
@@ -356,6 +361,7 @@ class CustomPermissionsManager(models.Model):
     users = models.ManyToManyField(User, blank=True)
     expiration_date = models.DateTimeField(null=True, blank=True)
     permission = models.ForeignKey(CustomPermission, on_delete=models.CASCADE)
+
     def __str__(self):
         return "%s" % self.permission.name
 
