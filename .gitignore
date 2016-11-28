@@ -12,6 +12,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
+ve3/
 .ve
 venv
 build/
@@ -28,6 +29,8 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+assets/bundles/
+webpack-stats.json
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
