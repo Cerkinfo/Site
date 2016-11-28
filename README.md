@@ -33,3 +33,7 @@ Also don't forget to bundle the javascript.
  $ npm run watch # To dev
  $ npm run build # For prod
 ```
+
+## License
+
+This code is under the GPL license (Giant Penis License). The complete text is in the `LICENSE.txt` file.
