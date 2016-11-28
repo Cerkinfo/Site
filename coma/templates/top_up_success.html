@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load sekizai_tags metron_tags %}
+{% load staticfiles %}
+
+{% block content %}
+    {% if amount > 0 %}
+        <h1>Payement réussi</h1>
+        Pour la somme de {{amount}}€.
+    {% else %}
+        <h1>Problème inconnu</h1>
+        <p>En gros, échec.</p>
+    {% endif %}
+{% endblock %}

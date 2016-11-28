@@ -3,6 +3,9 @@ Pillow
 
 django-webpack-loader
 
+# Payments
+mollie-api-python
+
 # For testing
 pytest
 pytest-flakes

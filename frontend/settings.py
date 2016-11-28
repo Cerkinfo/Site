@@ -234,6 +234,8 @@ SUIT_CONFIG = {
     'ADMIN_NAME': 'Cerkinfo',
 }
 
+MOLLIE_API_KEY = ""
+
 try:
     from .local_settings import *  # pragma: no flakes
 except ImportError:

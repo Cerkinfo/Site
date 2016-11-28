@@ -33,8 +33,10 @@ urlpatterns = i18n_patterns(
     url(r'^wiki/', include('ciwiki.urls')),
     url(r'^guide/', include('guide.urls')),
     url(r'^pv/', include('pv.urls')),
+    url(r'^coma/', include('coma.urls')),
     url(r'^register/', RegisterView.as_view(), name="register"),
     url(r'^login/', login_member, name="login"),
+
     url(
         r'^retrieve_member/',
         login_required(ImportMemberView.as_view()),
