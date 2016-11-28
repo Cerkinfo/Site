@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+from members.models import Member
 import members.models
 
 
@@ -12,8 +13,21 @@ class Migration(migrations.Migration):
         ('members', '0008_remove_member_card_id'),
     ]
 
+    def gen_cid(apps, schema_editor):
+        for row in Member.objects.all():
+            row.card_id = members.models.card_generator()
+            row.save()
+
     operations = [
         migrations.AddField(
+            model_name='member',
+            name='card_id',
+            field=models.CharField(default=members.models.card_generator, max_length=6, unique=False),
+        ),
+
+        migrations.RunPython(gen_cid),
+
+        migrations.AlterField(
             model_name='member',
             name='card_id',
             field=models.CharField(default=members.models.card_generator, max_length=6, unique=True),
