@@ -235,9 +235,10 @@ SUIT_CONFIG = {
 }
 
 MOLLIE_API_KEY = ""
+MINIMAL_TOP_UP_AMOUNT = 5.0
 
 try:
-    from .local_settings import *  # pragma: no flakes
+    from .local_settings import *  # pragma: no flakes # NOQA
 except ImportError:
     print("No local settings !")
     pass

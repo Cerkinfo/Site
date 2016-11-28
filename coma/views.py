@@ -2,7 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.db.models import F
+from django.http import HttpResponseForbidden
 from django.db import transaction
+from django.contrib.auth.decorators import login_required
+
 import Mollie
 
 from coma.models import MolliePayment, Transaction
@@ -16,6 +19,7 @@ def get_api():
     return mollie
 
 
+@login_required
 def start_payment(request):
     if request.method == 'POST':
         form = PaymentForm(request.POST)
@@ -46,10 +50,15 @@ def start_payment(request):
     return render(request, 'top_up.html', {'form': form})
 
 
+@login_required
 def finish_payment(request, id):
     payment = get_object_or_404(MolliePayment, pk=id)
-    if payment.confirmed or payment.user != request.user:
-        return None
+
+    if payment.confirmed:
+        return HttpResponseForbidden("This payment already has been confirmed")
+    if payment.user != request.user:
+        return HttpResponseForbidden("You may not get the payment of somebody else !")
+
     api_payment = get_api().payments.get(payment.mollie_id)
 
     if api_payment.isPaid():
