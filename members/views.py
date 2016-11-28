@@ -317,17 +317,37 @@ class MemberMembershipQuery(APIView):
         try:
             user = Member.objects.get(card_id=card_id)
         except ObjectDoesNotExist as e:
-            serializer = MemberMembershipQuerySerializer(data=dict(status=False, error="Not a user"))
+            serializer = MemberMembershipQuerySerializer(
+                data=dict(
+                    status=False,
+                    error="Not a user",
+                )
+            )
         except ValueError as e:
-            serializer = MemberMembershipQuerySerializer(data=dict(status=False, error=e))
+            serializer = MemberMembershipQuerySerializer(
+                data=dict(
+                    status=False,
+                    error=e,
+                )
+            )
         else:
             current_year = AcademicYear.objects.get(active=True)
 
             try:
                 membership = ComiteMembership.objects.get(member=user, year=current_year)
-                serializer = MemberMembershipQuerySerializer(data=dict(status=membership.paid))
+                serializer = MemberMembershipQuerySerializer(
+                    data=dict(
+                        status=membership.paid,
+                        member=MemberSerializer(user).data,
+                    )
+                )
             except ObjectDoesNotExist:
-                serializer = MemberMembershipQuerySerializer(data=dict(status=False))
+                serializer = MemberMembershipQuerySerializer(
+                    data=dict(
+                        status=False,
+                        member=MemberSerializer(user).data,
+                    )
+                )
 
         serializer.is_valid()
         return Response(serializer.data)

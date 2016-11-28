@@ -49,5 +49,8 @@ class MemberSerializer(serializers.ModelSerializer):
         )
 
 class MemberMembershipQuerySerializer(serializers.Serializer):
+    """
+    """
     status = serializers.BooleanField(required=True)
     error = serializers.CharField(required=False, max_length=100, allow_blank=True)
+    member = MemberSerializer(required=False) # TODO Not well rendered
