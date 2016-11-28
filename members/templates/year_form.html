@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
-{% load bootstrap_dynamic_formsets %}
+{% load material_dynamic_formsets %}
 {% load static %}
 
 {% block title %}
@@ -27,38 +26,35 @@
             </div>
             <div class="col-md-10">
                 <form action="{% url "year_edit" object.slug %}" method="post" class="form">
-                    {% bootstrap_form form %}
+                    {-% bootstrap_form form %}
                     {% csrf_token %}
                     <div class="row">
                         <h2>Comité de Cercle</h2>
-                        {% bootstrap_dynamic_formset comite_cercle_form can_delete=True layout="horizontal" id_formset='cercle'%}
+                        {% material_dynamic_formset comite_cercle_form can_delete=True layout="horizontal" id_formset='cercle'%}
                         {% for hidden in comite_cercle_form.hidden_fields %}
                             {{ hidden }}
                         {% endfor %}
                         <h2>Comité de Baptême</h2>
-                        {% bootstrap_dynamic_formset comite_bapteme_form can_delete=True layout="horizontal" %}
+                        {% material_dynamic_formset comite_bapteme_form can_delete=True layout="horizontal" %}
                         {% for hidden in comite_bapteme_form.hidden_fields %}
                             {{ hidden }}
                         {% endfor %}
                         <h2>Toges de cercle</h2>
-                        {% bootstrap_dynamic_formset bapt_cercle_form can_delete=True layout="horizontal" %}
+                        {% material_dynamic_formset bapt_cercle_form can_delete=True layout="horizontal" %}
                         {% for hidden in bapt_cercle_form.hidden_fields %}
                             {{ hidden }}
                         {% endfor %}
                         <h2>Bleus</h2>
-                        {% bootstrap_dynamic_formset bleu_form can_delete=True layout="horizontal" %}
+                        {% material_dynamic_formset bleu_form can_delete=True layout="horizontal" %}
                         {% for hidden in bleu_form.hidden_fields %}
                             {{ hidden }}
                         {% endfor %}
                     </div>
                     <div class="row">
-                        {% buttons %}
-                            <button type="submit" class="btn btn-primary">
-                                Submit
-                            </button>
-                        {% endbuttons %}
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
                     </div>
-
                 </form>
             </div>
             <div class="col-md-1">
