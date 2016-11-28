@@ -94,3 +94,6 @@ ENV/
 .ropeproject
 
 .idea/
+
+# JS Stuff
+webpack-stats.json
