@@ -1,12 +1,21 @@
 from django.contrib import auth
 from django.contrib.auth import login, logout, authenticate
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
+from rest_framework.views import APIView
 from django.views.generic import DetailView, UpdateView, CreateView, ListView
+from rest_framework import filters
+from rest_framework import status
+from rest_framework import viewsets
+from rest_framework.decorators import detail_route
+from rest_framework.response import Response
+
 from frontend.settings import LOGIN_REDIRECT_URL
 from members.forms import MemberForm, ComiteItemFormset, FolkloItemFormset, \
     YearForm, ComiteListFormset, MemberImportForm, UserCreationForm
 from members.models import Member, ComiteMembership, AcademicYear
+from members.serializers import MemberSerializer, MemberCardSerializer, MemberMembershipQuerySerializer
 
 
 class MemberDetailView(DetailView):
@@ -32,12 +41,12 @@ class MemberEditView(UpdateView):
         form = self.get_form(form_class)
         comite_poste_form = ComiteItemFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(poste__is_bapteme=False),
+            queryset=ComiteMembership.objects.filter(postes__is_bapteme=False),
             prefix='comite'
         )
         folklo_poste_form = FolkloItemFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(poste__is_bapteme=True),
+            queryset=ComiteMembership.objects.filter(postes__is_bapteme=True),
             prefix='folklo'
         )
         return self.render_to_response(
@@ -88,9 +97,11 @@ class YearDetailView(DetailView):
     template_name = 'year_detail.html'
     slug_field = 'slug'
 
+
 class YearListView(ListView):
     model = AcademicYear
     template_name = "year_list.html"
+
 
 class YearEditView(UpdateView):
     model = AcademicYear
@@ -103,36 +114,47 @@ class YearEditView(UpdateView):
         self.object = self.get_object()
         form_class = self.get_form_class()
         form = self.get_form(form_class)
+
         comite_cercle_form = ComiteListFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(
-                poste__is_bapteme=False).order_by('-poste__weight'),
-            prefix='cercle')
+            queryset=ComiteMembership.objects
+                .filter(postes__is_bapteme=False)
+                .order_by('-postes__weight'),
+            prefix='cercle'
+        )
         comite_bapteme_form = ComiteListFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(
-                poste__is_bapteme=True).exclude(
-                poste__slug='bleu').exclude(
-                poste__slug='TC').order_by('-poste__weight'),
-            prefix='bapteme')
+            queryset=ComiteMembership.objects
+                .filter(postes__is_bapteme=True)
+                .exclude(postes__slug='bleu')
+                .exclude(postes__slug='TC')
+                .order_by('-postes__weight'),
+            prefix='bapteme'
+        )
         bapt_cercle_form = ComiteListFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(
-                poste__is_bapteme=True).filter(
-                poste__slug='TC'),
-            prefix='tc')
+            queryset=ComiteMembership.objects
+                .filter(postes__is_bapteme=True)
+                .filter(postes__slug='TC'),
+            prefix='tc'
+        )
         bleu_form = ComiteListFormset(
             instance=self.object,
-            queryset=ComiteMembership.objects.filter(
-                poste__is_bapteme=True).filter(
-                poste__slug='bleu'),
-            prefix='bleu')
+            queryset=ComiteMembership.objects
+                .filter(postes__is_bapteme=True)
+                .filter(postes__slug='bleu'),
+            prefix='bleu'
+        )
+
         return self.render_to_response(
-            self.get_context_data(form=form,
-                                  comite_cercle_form=comite_cercle_form,
-                                  comite_bapteme_form=comite_bapteme_form,
-                                  bapt_cercle_form=bapt_cercle_form,
-                                  bleu_form=bleu_form))
+            self.get_context_data(
+                form=form,
+                comite_cercle_form=comite_cercle_form,
+                comite_bapteme_form=comite_bapteme_form,
+                bapt_cercle_form=bapt_cercle_form,
+                bleu_form=bleu_form
+            )
+        )
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -260,8 +282,72 @@ def login_member(request):
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect(LOGIN_REDIRECT_URL)
-
     return auth.views.login(
             request,
             extra_context={'username': username, 'password': password}
     )
+
+
+class MemberViewSet(viewsets.ModelViewSet):
+    queryset = Member.objects.all()
+    serializer_class = MemberSerializer
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter)
+    search_fields = ('user__email', 'comitemembership__card_id')
+
+    @detail_route(methods=['post'])
+    def register_member_card(self, request, pk=None):
+        serializer = MemberCardSerializer(data=request.data)
+        if serializer.is_valid():
+            ms = ComiteMembership.objects.get_or_create(
+                member_id=serializer.data['member'],
+                year__slug=serializer.data['year']
+            )[0]
+            ms.card_id = serializer.data['id']
+            ms.paid = serializer.data['paid']
+            ms.save()
+            return Response({'status': 'card id registered'})
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+class MemberMembershipQuery(APIView):
+    def get(self, request, card_id):
+        serializer = None
+        try:
+            user = Member.objects.get(card_id=card_id)
+        except ObjectDoesNotExist as e:
+            serializer = MemberMembershipQuerySerializer(
+                data=dict(
+                    status=False,
+                    error="Not a user",
+                )
+            )
+        except ValueError as e:
+            serializer = MemberMembershipQuerySerializer(
+                data=dict(
+                    status=False,
+                    error=e,
+                )
+            )
+        else:
+            current_year = AcademicYear.objects.get(active=True)
+
+            try:
+                membership = ComiteMembership.objects.get(member=user, year=current_year)
+                serializer = MemberMembershipQuerySerializer(
+                    data=dict(
+                        status=membership.paid,
+                        member=MemberSerializer(user).data,
+                    )
+                )
+            except ObjectDoesNotExist:
+                serializer = MemberMembershipQuerySerializer(
+                    data=dict(
+                        status=False,
+                        member=MemberSerializer(user).data,
+                    )
+                )
+
+        serializer.is_valid()
+        return Response(serializer.data)

@@ -13,12 +13,8 @@ pyflakes
 coverage
 
 # frontend
-django-bootstrap3
 django-extra-views
-django-bootstrap3-datetimepicker-2
-django-jquery
-django-jquery-ui
--e git+git://github.com/loispostula/django-bootstrap-dynamic-formsets.git#egg=django-bootstrap-dynamic-formsets
+-e git+git://github.com/thomacer/django-material-dynamic-formsets.git#egg=django-material-dynamic-formsets
 fuzzywuzzy
 djangorestframework
 metron

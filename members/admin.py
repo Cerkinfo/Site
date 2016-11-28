@@ -13,7 +13,8 @@ class SurNameInline(admin.TabularInline):
 class ComiteMembershipInline(admin.TabularInline):
     model = ComiteMembership
     extra = 0
-    fields = ['year', 'poste']
+    fields = ['year', 'postes', 'paid']
+    filter_horizontal = ['postes']
 
 
 class MemberInline(admin.StackedInline):
@@ -26,16 +27,19 @@ class UserAdmin(BaseUserAdmin):
         MemberInline,
     ]
 
+
 @admin.register(Member)
-class MembreAdmin(admin.ModelAdmin):
+class MemberAdmin(admin.ModelAdmin):
     list_display = ['admin_image', 'username', 'firstname', 'lastname']
     inlines = [
         SurNameInline,
         ComiteMembershipInline
     ]
+    search_fields = ['user__first_name']
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+
 
 @admin.register(ComitePoste)
 class ComitePosteAdmin(admin.ModelAdmin):
@@ -44,8 +48,9 @@ class ComitePosteAdmin(admin.ModelAdmin):
 
 @admin.register(ComiteMembership)
 class ComiteMembershipAdmin(admin.ModelAdmin):
-    list_display = ['year', 'member', 'poste']
-    list_filter = ['year', 'poste__is_bapteme', 'poste']
+    list_display = ['year', 'member']
+    list_filter = ['year']
     raw_id_fields = ['member']
+    filter_horizontal = ['postes']
 
 admin.site.register(AcademicYear)

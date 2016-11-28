@@ -22,8 +22,8 @@
             </div>
             <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4">
-                    {% if object.firstName or object.lastName %}
-                        {{ object.firstName }} {{ object.lastName }}
+                    {% if object.user.first_name or object.user.last_name %}
+                        {{ object.user.first_name }} {{ object.user.last_name }}
                     {% else %}
                         {{ object.username }}
                     {% endif %}
@@ -41,6 +41,11 @@
                     {{ object.birthdate }}
                 </p>
             </div>
+            {% if object.user == user %}
+                <div class="card-action">
+                    <a class="waves-effect waves-light btn" href="#barcode_modal">Carte membre</a>
+                </div>
+            {% endif %}
             <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4">Surnoms<i class="material-icons right">close</i></span>
                 {% for surname in object.surname_set.all %}
@@ -55,7 +60,7 @@
             <h2>Comités de Cercle</h2>
             <ul>
                 {% for cm in object.cercle_carreer %}
-                    <li><a href="{% url 'year_detail' cm.year.slug %}"> {{cm.year }} </a> : {{ cm.poste }}</li>
+                    <li><a href="{% url 'year_detail' cm.year.slug %}"> {{ cm.year }} </a> : {{ cm.poste.name }}</li>
                 {% endfor %}
             </ul>
 
@@ -64,7 +69,7 @@
             <h2>Parcours Folklorique</h2>
             <ul>
                 {% for cm in object.bapteme_carreer %}
-                    <li><a href="{% url 'year_detail' cm.year.slug %}"> {{cm.year }} </a> : {{ cm.poste }}</li>
+                    <li><a href="{% url 'year_detail' cm.year.slug %}"> {{ cm.year }} </a> : {{ cm.poste.name }}</li>
                 {% endfor %}
             </ul>
         </div>

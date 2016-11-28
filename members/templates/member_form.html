@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 {% load sekizai_tags metron_tags %}
 {% load static %}
+{% load material_dynamic_formsets %}
 
 {% block title %}
     {{ block.super }}
     Modifier votre profil
-{% endblock %}
-
-{% block head %}
-    {{ form.media }}
 {% endblock %}
 
 {% block content %}
@@ -19,10 +16,9 @@
         <div class="col s1"></div>
         <div class="col s6">
             <div class="page-header">
-                <h4 style="display: inline-block">{{ request.user.username.capitalize }}</h1>
+                <h4 style="display: inline-block">{{ request.user.username }}</h1>
                 Modification du profil
             </div>
-
 
             <h5>Informations</h5>
             <div class="row">
@@ -41,13 +37,15 @@
             </div>
 
             <h5>Comité de Cercle</h5>
-            {% for hidden in comite_form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
+            {% material_dynamic_formset comite_form can_delete=True layout="horizontal" %}
+            <!-- {% for hidden in comite_form.hidden_fields %} -->
+            <!--     {{ hidden }} -->
+            <!-- {% endfor %} -->
             <h5>Parcours Folklorique</h5>
-            {% for hidden in folklo_form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
+            {% material_dynamic_formset folklo_form can_delete=True layout="horizontal" %}
+            <!-- {% for hidden in folklo_form.hidden_fields %} -->
+            <!--     {{ hidden }} -->
+            <!-- {% endfor %} -->
             <button type="submit" class="btn btn-primary">
                 Envoyer
                 <i class="material-icons right">send</i>

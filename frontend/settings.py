@@ -51,8 +51,7 @@ INSTALLED_APPS = [
     'mathfilters',
     'django_nyt',
     'mptt',
-    'bootstrap3',
-    'django_bootstrap_dynamic_formsets',
+    'django_material_dynamic_formsets',
     'metron',
     'sekizai',
     'sorl.thumbnail',
@@ -70,6 +69,8 @@ INSTALLED_APPS = [
     'tinymce',
     'pv',
     'webpack_loader',
+    'api',
+    'rest_framework'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -145,6 +146,10 @@ AUTH_PASSWORD_VALIDATORS = [
             'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+}
 
 
 logging.config.dictConfig({
