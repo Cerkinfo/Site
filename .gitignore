@@ -104,7 +104,11 @@ venv
 
 .idea/
 
+<<<<<<< HEAD
 # Node
 node_modules/
 assets_bundles/
+=======
+# JS Stuff
+>>>>>>> 0b203cb14f733f6ddc1463ce33574a9f635e66db
 webpack-stats.json
