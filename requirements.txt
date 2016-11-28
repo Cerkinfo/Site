@@ -14,8 +14,6 @@ coverage
 
 # frontend
 django-extra-views
-django-jquery
-django-jquery-ui
 -e git+git://github.com/thomacer/django-material-dynamic-formsets.git#egg=django-material-dynamic-formsets
 fuzzywuzzy
 djangorestframework
