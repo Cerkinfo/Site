@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.db.models import F
+from django.db import transaction
 import Mollie
 
 from coma.models import MolliePayment, Transaction
@@ -61,9 +62,10 @@ def finish_payment(request, id):
 
         payment.save()
 
-        member = Member.objects.get(user=request.user)
-        member.count = F('balance') + payment.amount
-        member.save()
+        with transaction.atomic():
+            member = Member.objects.get(user=request.user)
+            member.balance = F('balance') + payment.amount
+            member.save()
 
         return render(request, 'top_up_success.html', {'amount': payment.amount})
     else:
