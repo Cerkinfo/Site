@@ -70,7 +70,8 @@ INSTALLED_APPS = [
     'pv',
     'webpack_loader',
     'api',
-    'rest_framework'
+    'rest_framework',
+    'coma',
 ]
 
 MIDDLEWARE_CLASSES = [
