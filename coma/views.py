@@ -7,16 +7,23 @@ import Mollie
 from coma.models import MolliePayment, Transaction
 from coma.forms import PaymentForm
 from coma.serializers import TransactionSerializer
-from rest_framework import generics
+from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework.authentication import BasicAuthentication, TokenAuthentication
+from members.permissions import IsOwner, IsOwnerOrBar
 from members.models import Member
 
-class MakeTransaction(generics.ListCreateAPIView):
+class TransactionView(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
+    # authentication_classes = BasicAuthentication
     permission_classes = (
         permissions.IsAuthenticated,
+        IsOwner,
     )
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.member)
 
 
 def get_api():
