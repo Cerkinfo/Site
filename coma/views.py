@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.db.models import F
+from django.http import HttpResponseForbidden
+from django.contrib.auth.decorators import login_required
+
 import Mollie
 
 from coma.models import MolliePayment, Transaction
@@ -32,6 +35,7 @@ def get_api():
     return mollie
 
 
+@login_required
 def start_payment(request):
     if request.method == 'POST':
         form = PaymentForm(request.POST)
@@ -62,24 +66,31 @@ def start_payment(request):
     return render(request, 'top_up.html', {'form': form})
 
 
+@login_required
 def finish_payment(request, id):
     payment = get_object_or_404(MolliePayment, pk=id)
-    if payment.confirmed or payment.user != request.user:
-        return None
+
+    if payment.confirmed:
+        return HttpResponseForbidden("This payment already has been confirmed")
+    if payment.user != request.user:
+        return HttpResponseForbidden("You may not get the payment of somebody else !")
+
     api_payment = get_api().payments.get(payment.mollie_id)
 
     if api_payment.isPaid():
-        payment.confirmed = True
-        Transaction.objects.create(
+        transaction = Transaction.objects.create(
             user=request.user,
             quantity=0,
-            price=payment.amount
+            price=payment.amount,
+            comment="Mollie transaction"
         )
 
+        payment.confirmed = True
+        payment.transaction = transaction
         payment.save()
 
         member = Member.objects.get(user=request.user)
-        member.count = F('balance') + payment.amount
+        member.balance = F('balance') + payment.amount
         member.save()
 
         return render(request, 'top_up_success.html', {'amount': payment.amount})

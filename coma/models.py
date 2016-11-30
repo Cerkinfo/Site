@@ -10,6 +10,9 @@ class Transaction(models.Model):
     comment = models.CharField(null=True, default="", max_length=255)
     date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return "Transaction with %s, %.2f€, %i items on %s" % (self.user, self.price, self.quantity, self.date)
+
 
 class MolliePayment(models.Model):
     confirmed = models.BooleanField(default=False)
@@ -17,3 +20,6 @@ class MolliePayment(models.Model):
     transaction = models.ForeignKey(Transaction, null=True)
     mollie_id = models.CharField(max_length=255, null=True)
     user = models.ForeignKey(Member)
+
+    def __str__(self):
+        return "Payment from %s (%.2f€, %s)" % (self.user, self.amount, "confirmed" if self.confirmed else "unconfirmed")
