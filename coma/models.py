@@ -1,9 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
+from members.models import Member
 
 
 class Transaction(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(Member)
+    # from = models.ForeignKey(Member)
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
     comment = models.CharField(null=True, default="", max_length=255)
@@ -15,4 +16,4 @@ class MolliePayment(models.Model):
     amount = models.DecimalField(max_digits=5, decimal_places=2)
     transaction = models.ForeignKey(Transaction, null=True)
     mollie_id = models.CharField(max_length=255, null=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(Member)
