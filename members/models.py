@@ -8,6 +8,8 @@ from django.db import models
 from django.utils import timezone
 from frontend.settings import MEDIA_URL
 
+# from coma.models import Transaction
+
 logger = getLogger(__name__)
 
 
@@ -156,6 +158,11 @@ class Member(models.Model):
                             "media%2F%2Fimages%2Fmembers%2Fdefault-person.png"
             return gravatar_url
         return MEDIA_URL + "/images/members/default-person.png"
+
+    def get_transaction(self):
+        """
+        """
+        return self.transaction_set.all()
 
     def __str__(self):
         if self.user:

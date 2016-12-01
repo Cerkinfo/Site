@@ -76,6 +76,18 @@
                 {% endfor %}
             </ul>
         </div>
+        <div class="transactions">
+            <h2>Transactions</h2>
+            <ul>
+                {% for transaction in object.get_transaction %}
+                    {% if transaction.comment %}
+                        <li>{{ transaction.date }}: {{ transaction.quantity }} {{ transaction.comment }} pour {{ transaction.price }}</li>
+                    {% else %}
+                        <li>{{ transaction.date }}: {{ transaction.price }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
     </div>
     <div class="col s1"></div>
 </div>
