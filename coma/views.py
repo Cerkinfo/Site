@@ -5,12 +5,15 @@ from django.db.models import F
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 
+from django.core.exceptions import PermissionDenied
+from rest_framework.exceptions import ValidationError
+from coma.errors import InsufficientBalance
+
 import Mollie
 
 from coma.models import MolliePayment, Transaction
 from coma.forms import PaymentForm
 from coma.serializers import TransactionSerializer
-from coma.errors import InsufficientBalance
 from rest_framework import viewsets
 from rest_framework import permissions
 from members.models import Member
@@ -19,17 +22,21 @@ from members.models import Member
 class TransactionView(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
-    # authentication_classes = BasicAuthentication
     # permission_classes = (
     #     TransactionPermission,
     # )
 
     def perform_create(self, serializer):
+        if not self.request.user.has_perm('coma.add_transaction'):
+            raise PermissionDenied("Il faut faire parti du bar pour faire des transactions")
+
         if serializer.is_valid():
             if (float(self.request.user.member.balance) + float(serializer.validated_data['price'])) < 0:
                 raise InsufficientBalance()
             else:
-               serializer.save(user=self.request.user.member)
+                serializer.save(user=self.request.user.member)
+        else:
+            raise ValidationError()
 
 
 def get_api():
