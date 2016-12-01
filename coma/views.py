@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.db.models import F
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
+from rest_framework.response import Response
 
 from django.core.exceptions import PermissionDenied
 from rest_framework.exceptions import ValidationError
@@ -15,16 +15,30 @@ from coma.models import MolliePayment, Transaction
 from coma.forms import PaymentForm
 from coma.serializers import TransactionSerializer
 from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import mixins
 from members.models import Member
+from rest_framework import permissions
+from members.permissions import IsOwner
 
 
-class TransactionView(viewsets.ModelViewSet):
+class TransactionView(mixins.CreateModelMixin,
+        mixins.RetrieveModelMixin,
+        mixins.ListModelMixin,
+        viewsets.GenericViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
-    # permission_classes = (
-    #     TransactionPermission,
-    # )
+    permission_classes = (
+        permissions.IsAuthenticated,
+        IsOwner,
+    )
+
+    def list(self, request):
+        queryset = Transaction.objects.all()
+        if not request.user.has_perm('coma.add_transaction'):
+            queryset = queryset.filter(user=request.user.member)
+
+        serializer = TransactionSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def perform_create(self, serializer):
         if not self.request.user.has_perm('coma.add_transaction'):
