@@ -25,7 +25,11 @@ def transaction_execute(sender, instance, created, *args, **kwargs):
     """
     if created:
         instance.user.balance += instance.price
-        instance.user.save()
+        if instance.user.balance >= 0:
+            instance.user.save()
+        else:
+            # Return error
+            pass
 signals.post_save.connect(transaction_execute, sender=Transaction)
 
 

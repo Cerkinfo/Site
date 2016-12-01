@@ -36,7 +36,9 @@ class Member(models.Model):
     # Additionnal Info
     extra_info = models.TextField(default='', blank=True)
 
-    balance = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    balance = models.DecimalField(null=True, max_digits=5, decimal_places=2, default=0)
+
+    is_bar = models.BooleanField(default=False)
 
     def firstname(self):
         """
@@ -369,15 +371,3 @@ class CustomPermissionsManager(models.Model):
 
     class Meta:
         verbose_name = "Permissions Manager"
-
-
-from django.db.models import signals
-
-
-def create_member_for_user(sender, instance, created, **kwargs):
-    try:
-        instance.member
-    except User.member.RelatedObjectDoesNotExist:
-        Member.objects.create(user=instance)
-
-signals.post_save.connect(create_member_for_user, sender=User, weak=False)

@@ -10,23 +10,26 @@ import Mollie
 from coma.models import MolliePayment, Transaction
 from coma.forms import PaymentForm
 from coma.serializers import TransactionSerializer
+from coma.errors import InsufficientBalance
 from rest_framework import viewsets
 from rest_framework import permissions
-from rest_framework.authentication import BasicAuthentication, TokenAuthentication
-from members.permissions import IsOwner, IsOwnerOrBar
 from members.models import Member
+
 
 class TransactionView(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
     # authentication_classes = BasicAuthentication
-    permission_classes = (
-        permissions.IsAuthenticated,
-        IsOwner,
-    )
+    # permission_classes = (
+    #     TransactionPermission,
+    # )
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.member)
+        if serializer.is_valid():
+            if (float(self.request.user.member.balance) + float(serializer.validated_data['price'])) < 0:
+                raise InsufficientBalance()
+            else:
+               serializer.save(user=self.request.user.member)
 
 
 def get_api():
@@ -79,7 +82,7 @@ def finish_payment(request, id):
 
     if api_payment.isPaid():
         transaction = Transaction.objects.create(
-            user=request.user,
+            user=request.user.member,
             quantity=0,
             price=payment.amount,
             comment="Mollie transaction"
@@ -88,10 +91,6 @@ def finish_payment(request, id):
         payment.confirmed = True
         payment.transaction = transaction
         payment.save()
-
-        member = Member.objects.get(user=request.user)
-        member.balance = F('balance') + payment.amount
-        member.save()
 
         return render(request, 'top_up_success.html', {'amount': payment.amount})
     else:
