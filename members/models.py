@@ -40,8 +40,6 @@ class Member(models.Model):
 
     balance = models.DecimalField(null=True, max_digits=5, decimal_places=2, default=0)
 
-    is_bar = models.BooleanField(default=False)
-
     def firstname(self):
         """
         Returns: the user firstname
