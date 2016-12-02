@@ -4,8 +4,8 @@ from members.models import Member
 
 
 class Transaction(models.Model):
-    user = models.ForeignKey(Member, on_delete=models.CASCADE)
-    # fromWho = models.ForeignKey(Member, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="transaction_user")
+    fromWho = models.ForeignKey(Member, on_delete=models.CASCADE, null=True, related_name="transaction_from")
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
     comment = models.CharField(null=True, default="", max_length=255)

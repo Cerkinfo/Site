@@ -8,8 +8,6 @@ from django.db import models
 from django.utils import timezone
 from frontend.settings import MEDIA_URL
 
-# from coma.models import Transaction
-
 logger = getLogger(__name__)
 
 
@@ -160,7 +158,7 @@ class Member(models.Model):
     def get_transaction(self):
         """
         """
-        return self.transaction_set.all()
+        return self.transaction_user.all()
 
     def __str__(self):
         if self.user:

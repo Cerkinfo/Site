@@ -4,4 +4,4 @@ from coma.models import Transaction
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ('quantity', 'price', 'comment', 'date')
+        fields = ('user', 'fromWho', 'quantity', 'price', 'comment', 'date')

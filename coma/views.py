@@ -44,13 +44,13 @@ class TransactionView(mixins.CreateModelMixin,
         if not self.request.user.has_perm('coma.add_transaction'):
             raise PermissionDenied("Il faut faire parti du bar pour faire des transactions")
 
-        if serializer.is_valid():
-            if (float(self.request.user.member.balance) + float(serializer.validated_data['price'])) < 0:
-                raise InsufficientBalance()
-            else:
-                serializer.save(user=self.request.user.member)
-        else:
+        if not serializer.is_valid():
             raise ValidationError()
+
+        if (float(self.request.user.member.balance) + float(serializer.validated_data['price'])) < 0:
+            raise InsufficientBalance()
+        else:
+            serializer.save(fromWho=self.request.user.member)
 
 
 def get_api():
