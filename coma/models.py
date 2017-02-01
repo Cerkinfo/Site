@@ -4,6 +4,18 @@ from members.models import Member
 
 
 class Transaction(models.Model):
+    """
+    @desc: Model used to store a transaction.
+
+    @field{user}: User who made a purchase. This field is set by the one who
+        made the transaction, with the buyer barcode or username.
+    @field{fromWho}: User who made the transaction possible. This section is
+        set automatically one the transaction is made.
+    @field{quantity}: Number of thing bought at the {price}.
+    @field{price}: Price of a unit bought in the transaction.
+    @field{comment}: Optionnal field but usually used to name the purchase (eg: beer, water).
+    """
+
     user = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="transaction_user")
     fromWho = models.ForeignKey(Member, on_delete=models.CASCADE, null=True, related_name="transaction_from")
     quantity = models.PositiveIntegerField()
@@ -17,14 +29,13 @@ class Transaction(models.Model):
 
 def transaction_execute(sender, instance, created, *args, **kwargs):
     """
-    Argument explanation:
-
-    sender - The model class. (Transaction)
-    instance - The actual instance being saved.
-    created - Boolean; True if a new record was created.
+    @args{sender}: The model class, here {Transaction}.
+    @args{instance}: The actual instance being saved.
+    @args{created}: A boolean set to "True" if a new record has been created.
     """
+
     if created:
-        instance.user.balance += instance.price
+        instance.user.balance -= instance.price
         if instance.user.balance >= 0:
             instance.user.save()
         else:
@@ -33,7 +44,27 @@ def transaction_execute(sender, instance, created, *args, **kwargs):
 signals.post_save.connect(transaction_execute, sender=Transaction)
 
 
+class Product(models.Model):
+    """
+    @desc: Table to store "Product" for transaction purpose.
+        This table can be changed when particular event happen to match
+        the products sold at the time.
+
+    @field{name}: Name used to describe the purchase (e.g: Beer).
+    @field{price}: Unit price of the purchase.
+    """
+
+    name = models.CharField(max_length=64)
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return "%s: %i" % (self.name, self.price)
+
+
 class MolliePayment(models.Model):
+    """
+    @desc: Table used for Mollie Transaction
+    """
     user = models.ForeignKey(Member)
     transaction = models.ForeignKey(Transaction, null=True)
     confirmed = models.BooleanField(default=False)

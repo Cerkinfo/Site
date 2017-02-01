@@ -3,6 +3,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import CreateView
 from rest_framework.response import Response
 
 from django.core.exceptions import PermissionDenied
@@ -11,9 +12,9 @@ from coma.errors import InsufficientBalance
 
 import Mollie
 
-from coma.models import MolliePayment, Transaction
-from coma.forms import PaymentForm
-from coma.serializers import TransactionSerializer
+from coma.models import MolliePayment, Transaction, Product
+from coma.forms import PaymentForm, PurchaseForm
+from coma.serializers import TransactionSerializer, ProductSerializer
 from rest_framework import viewsets
 from rest_framework import mixins
 from members.models import Member
@@ -33,8 +34,10 @@ class TransactionView(mixins.CreateModelMixin,
     )
 
     def list(self, request):
-        queryset = Transaction.objects.all()
-        if not request.user.has_perm('coma.add_transaction'):
+        queryset = None
+        if request.user.has_perm('coma.add_transaction'):
+            queryset = Transaction.objects.all()
+        else:
             queryset = queryset.filter(user=request.user.member)
 
         serializer = TransactionSerializer(queryset, many=True)
@@ -52,6 +55,23 @@ class TransactionView(mixins.CreateModelMixin,
         else:
             serializer.save(fromWho=self.request.user.member)
 
+
+# TODO Add delete
+class ProductView(mixins.CreateModelMixin,
+        mixins.RetrieveModelMixin,
+        mixins.ListModelMixin,
+        viewsets.GenericViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+    def perform_create(self, serializer):
+        if not self.request.user.has_perm('coma.add_transaction'):
+            raise PermissionDenied("Il faut faire parti du bar pour ajouter des produits")
+
+        if not serializer.is_valid():
+            raise ValidationError()
+
+        serializer.save()
 
 def get_api():
     mollie = Mollie.API.Client()
@@ -116,3 +136,9 @@ def finish_payment(request, id):
         return render(request, 'top_up_success.html', {'amount': payment.amount})
     else:
         return render(request, 'top_up_success.html', {'amount': -1})
+
+
+class TransactionMakerView(CreateView):
+    template_name = 'reader.html'
+    success_url = "/"
+    form_class = PurchaseForm

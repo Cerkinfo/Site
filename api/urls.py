@@ -7,6 +7,7 @@ import coma.views  as coma_views
 router = routers.DefaultRouter()
 router.register(r'member', member_views.MemberViewSet)
 router.register(r'transaction', coma_views.TransactionView)
+router.register(r'product', coma_views.ProductView)
 # router.register(r'check_membership/(?P<card_id>.+)', member_views.MemberMembershipQuery)
 
 urlpatterns = [
