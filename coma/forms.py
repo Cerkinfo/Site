@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.conf import settings
 
+from coma.models import Transaction
 
 def validate_top_up(value):
     if value < 0:
@@ -14,3 +15,13 @@ def validate_top_up(value):
 
 class PaymentForm(forms.Form):
     amount = forms.FloatField(validators=[validate_top_up])
+
+class PurchaseForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = (
+            'user',
+            'quantity',
+            'price',
+            'comment',
+        )

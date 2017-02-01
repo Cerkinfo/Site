@@ -15,6 +15,9 @@ module.exports = {
     barcode: [
       './assets/js/barcode_render/index',
     ],
+    buy_form: [
+      './assets/js/buy_form/index',
+    ],
   },
 
   output: {
