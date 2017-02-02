@@ -1,4 +1,3 @@
-from rest_framework import views
 from rest_framework import mixins
 from rest_framework import filters
 from rest_framework import status
@@ -12,6 +11,9 @@ from members.serializers import MemberSerializer, FullMemberSerializer, MemberCa
 class MemberViewSet(mixins.RetrieveModelMixin,
         mixins.ListModelMixin,
         viewsets.GenericViewSet):
+    """
+    @desc: API to visualize cerkinfo's members.
+    """
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
     filter_backends = (
@@ -23,6 +25,9 @@ class MemberViewSet(mixins.RetrieveModelMixin,
 class FullMemberViewSet(mixins.RetrieveModelMixin,
         mixins.ListModelMixin,
         viewsets.GenericViewSet):
+    """
+    @desc: API to visualize cerkinfo's members with full details.
+    """
     queryset = Member.objects.all()
     serializer_class = FullMemberSerializer
     filter_backends = (
@@ -49,44 +54,19 @@ class FullMemberViewSet(mixins.RetrieveModelMixin,
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-# TODO Change to search
-class MemberMembershipQuery(views.APIView):
-    def get(self, request, card_id):
-        serializer = None
-        try:
-            user = Member.objects.get(card_id=card_id)
-        except ObjectDoesNotExist as e:
-            serializer = MemberMembershipQuerySerializer(
-                data=dict(
-                    status=False,
-                    error="Not a user",
-                )
-            )
-        except ValueError as e:
-            serializer = MemberMembershipQuerySerializer(
-                data=dict(
-                    status=False,
-                    error=e,
-                )
-            )
-        else:
-            current_year = AcademicYear.objects.get(active=True)
 
-            try:
-                membership = ComiteMembership.objects.get(member=user, year=current_year)
-                serializer = MemberMembershipQuerySerializer(
-                    data=dict(
-                        status=membership.paid,
-                        member=FullMemberSerializer(user).data,
-                    )
-                )
-            except ObjectDoesNotExist:
-                serializer = MemberMembershipQuerySerializer(
-                    data=dict(
-                        status=False,
-                        member=FullMemberSerializer(user).data,
-                    )
-                )
+class MemberMembershipQuery(mixins.RetrieveModelMixin,
+        mixins.ListModelMixin,
+        viewsets.GenericViewSet):
+    """
+    @desc: API endpoint to verify if a card_id is one of a member.
 
-        serializer.is_valid()
-        return Response(serializer.data)
+    @args{card_id}: A {card_id} argument is passed in the url to verify if the
+        {card_id} is one of a member.
+    """
+    queryset = Member.objects.all()
+    serializer_class = FullMemberSerializer
+
+    def get_queryset(self):
+        cid = self.kwargs.get('card_id', None)
+        return Member.objects.filter(card_id=cid)
