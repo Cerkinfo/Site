@@ -1,6 +1,7 @@
 const React = require('react')
-const BuyerForm = require('./buyer/index.jsx');
 const ProductForm = require('./product/index.jsx');
+const QuantityForm = require('./quantity/index.jsx');
+const BuyerForm = require('./buyer/index.jsx');
 
 class Form extends React.Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class Form extends React.Component {
         return (
             <div>
                 <ProductForm/>
+                <QuantityForm/>
                 <BuyerForm/>
                 <button className="waves-effect waves-light btn" type="submit" name="action">
                     Envoyer

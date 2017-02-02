@@ -8,7 +8,6 @@ class ProductForm extends React.Component {
         this.state = {
             name: "",
             price: null, 
-            quantity: 1,
             showDetails: false,
         };
 
@@ -30,6 +29,11 @@ class ProductForm extends React.Component {
         });
     }
 
+    bindState(property) {                                                                                                                                                      
+        return (event) => { this.setState({ [property]: event.target.value }); };
+    }
+
+
     render () {
         const styleDisplay = {
             display: this.state.showDetails ? 'block' : 'none',
@@ -37,6 +41,10 @@ class ProductForm extends React.Component {
 
         return (
             <div>
+                <h4>
+                    <i className="material-icons prefix">shopping_cart</i>
+                    Produit
+                </h4>
                 <div className="row">
                     <div className="col s4">
                         <Select onValueChange={this.changeValue}/>
@@ -46,18 +54,30 @@ class ProductForm extends React.Component {
                             <i className="material-icons">settings</i>
                         </a>
                     </div>
-                    <div className="input-field col s6">
-                        <input name="quantity" id="id_quantity" type="number" className="validate"/>
-                        <label htmlFor="id_quantity">Quantitée</label>
-                    </div>
                 </div>
                 <div className="row">
                     <div className="input-field col s6">
-                        <input style={styleDisplay} value={this.state.name} name="comment" id="comment" type="text" className="validate"/>
+                        <input 
+                            style={styleDisplay} 
+                            value={this.state.name} 
+                            onChange={this.bindState('comment')}
+                            name="comment" 
+                            id="comment" 
+                            type="text" 
+                            className="validate"
+                        />
                         <label style={styleDisplay} htmlFor="comment">Produit</label>
                     </div>
                     <div className="input-field col s6">
-                        <input style={styleDisplay} value={this.state.price} name="price" id="price" type="number" className="validate"/>
+                        <input 
+                            style={styleDisplay} 
+                            value={this.state.price} 
+                            onChange={this.bindState('price')}
+                            name="price" 
+                            id="price" 
+                            type="number" 
+                            className="validate"
+                        />
                         <label style={styleDisplay} htmlFor="price">Prix</label>
                     </div>
                 </div>

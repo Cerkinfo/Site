@@ -22,6 +22,10 @@ class Entry extends React.Component {
                         users: json.data,
                     });
                 });
+        } else {
+            this.setState({
+                users: [],    
+            });
         }
     }
 
@@ -36,11 +40,10 @@ class Entry extends React.Component {
 
         return (
             <div className="input-field">
-                <i className="material-icons prefix">account_circle</i>
                 <SimpleSelect
                     name="user"
                     options={options}
-                    placeholder = {this.state.users.length ? "Choisir l'utilisateur" : "Chargement..."}                                                                        
+                    placeholder = {this.loading ? "Choisir l'utilisateur" : "Chargement..."}                                                                        
                     theme = "material"
                     transitionEnter = {true}
                     onSearchChange = {this.searchMember}

@@ -28,8 +28,7 @@ class Select extends React.Component {
     }
 
     render () {
-        const self = this;
-        const options = this.state.products.map((p, i) => {
+        const options = this.state.products.map(p => {
             return {label: String(p.name + ": " + p.price + " €"), value: p}
         });
 

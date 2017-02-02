@@ -32,7 +32,13 @@ class BuyerForm extends React.Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col s9">
+                    <h4>
+                        <i className="material-icons prefix">account_circle</i>
+                        Acheteur
+                    </h4>
+                </div>
+                <div className="row">
+                    <div className="col s4">
                         <Entry barcode={this.state.barcode}/>
                     </div>
                     <div className="col s3">
