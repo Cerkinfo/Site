@@ -26,6 +26,12 @@ class Transaction(models.Model):
     comment = models.CharField(null=True, default="", max_length=255)
     date = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        permissions = (
+            ("create_purchase", u"Permission to create purchase for anyone."),
+            ("add_money", u"Permission to add money to account."),
+        )
+
     def __str__(self):
         return "Transaction with %s, %.2f€, %i items on %s" % (self.user, self.price, self.quantity, self.date)
 
@@ -38,7 +44,7 @@ def transaction_execute(instance, *args, **kwargs):
 
     @args{instance}: The actual instance being saved.
     """
-    if (instance.price >= 0) and (not instance.fromWho.user.has_perm('coma.make_purchase')):
+    if (instance.price >= 0) and (not instance.fromWho.user.has_perm('coma.create_purchase')):
         # If (instance.price >= 0) the transaction is made to buy something.
         # Checking if the user who made the transaction can make purchases.
         raise PermissionDenied("Il faut avoir la permission d'acheter pour passer une transaction.")
