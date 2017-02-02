@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from rest_framework import routers
 import members.api as member_views
-import coma.views  as coma_views
+import coma.api as coma_views
 
 
 router = routers.DefaultRouter()
