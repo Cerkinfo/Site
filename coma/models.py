@@ -33,9 +33,10 @@ class Transaction(models.Model):
 @receiver(signals.pre_save, sender=Transaction)
 def transaction_execute(instance, *args, **kwargs):
     """
-    @args{sender}: The model class, here {Transaction}.
+    @desc: Change la balance de l'utilisateur lors d'une transaction et vérifie
+        aussi que celui qui a fait la transaction en a bien la permission.
+
     @args{instance}: The actual instance being saved.
-    @args{created}: A boolean set to "True" if a new record has been created.
     """
     if (instance.price >= 0) and (not instance.fromWho.user.has_perm('coma.make_purchase')):
         # If (instance.price >= 0) the transaction is made to buy something.
