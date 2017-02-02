@@ -6,9 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 from rest_framework.response import Response
 
-from django.core.exceptions import PermissionDenied
 from rest_framework.exceptions import ValidationError
-from coma.errors import InsufficientBalance
 
 import Mollie
 
@@ -44,16 +42,10 @@ class TransactionView(mixins.CreateModelMixin,
         return Response(serializer.data)
 
     def perform_create(self, serializer):
-        if not self.request.user.has_perm('coma.add_transaction'):
-            raise PermissionDenied("Il faut faire parti du bar pour faire des transactions")
-
         if not serializer.is_valid():
             raise ValidationError()
 
-        if (float(self.request.user.member.balance) + float(serializer.validated_data['price'])) < 0:
-            raise InsufficientBalance()
-        else:
-            serializer.save(fromWho=self.request.user.member)
+        serializer.save(fromWho=self.request.user.member)
 
 
 # TODO Add delete
@@ -72,6 +64,7 @@ class ProductView(mixins.CreateModelMixin,
             raise ValidationError()
 
         serializer.save()
+
 
 def get_api():
     mollie = Mollie.API.Client()

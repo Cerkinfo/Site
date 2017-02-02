@@ -1,5 +1,8 @@
 from django.db import models
 from django.db.models import signals
+from django.core.exceptions import PermissionDenied
+from coma.errors import InsufficientBalance
+from django.dispatch import receiver
 from members.models import Member
 
 
@@ -27,22 +30,26 @@ class Transaction(models.Model):
         return "Transaction with %s, %.2f€, %i items on %s" % (self.user, self.price, self.quantity, self.date)
 
 
-def transaction_execute(sender, instance, created, *args, **kwargs):
+@receiver(signals.pre_save, sender=Transaction)
+def transaction_execute(instance, *args, **kwargs):
     """
     @args{sender}: The model class, here {Transaction}.
     @args{instance}: The actual instance being saved.
     @args{created}: A boolean set to "True" if a new record has been created.
     """
-
-    if created:
-        instance.user.balance -= instance.price
-        if instance.user.balance >= 0:
+    if (instance.price >= 0) and (not instance.fromWho.user.has_perm('coma.make_purchase')):
+        # If (instance.price >= 0) the transaction is made to buy something.
+        # Checking if the user who made the transaction can make purchases.
+        raise PermissionDenied("Il faut avoir la permission d'acheter pour passer une transaction.")
+    elif (instance.price < 0) and (not instance.fromWho.user.has_perm('coma.add_money')):
+        raise PermissionDenied("Vous n'avez pas la permission d'ajouter de l'argent")
+    else:
+        new_balance = instance.user.balance - instance.price
+        if new_balance >= 0:
+            instance.user.balance = new_balance
             instance.user.save()
         else:
-            # Return error
-            pass
-signals.post_save.connect(transaction_execute, sender=Transaction)
-
+            raise InsufficientBalance()
 
 class Product(models.Model):
     """
