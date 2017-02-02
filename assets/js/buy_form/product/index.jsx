@@ -6,7 +6,7 @@ class ProductForm extends React.Component {
         super(props);
 
         this.state = {
-            name: "",
+            comment: "",
             price: null, 
             showDetails: false,
         };
@@ -17,13 +17,12 @@ class ProductForm extends React.Component {
 
     changeValue (product) {
         this.setState({
-            name: product.name,
+            comment: product.name,
             price: product.price,
         });
     }
 
     toggleProductDetails () {
-        console.log(this.state.showDetails);
         this.setState({
             showDetails: !(this.state.showDetails),
         });
@@ -59,7 +58,7 @@ class ProductForm extends React.Component {
                     <div className="input-field col s6">
                         <input 
                             style={styleDisplay} 
-                            value={this.state.name} 
+                            value={this.state.comment} 
                             onChange={this.bindState('comment')}
                             name="comment" 
                             id="comment" 
