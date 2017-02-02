@@ -36,11 +36,11 @@ class BuyerForm extends React.Component {
                         <Entry barcode={this.state.barcode}/>
                     </div>
                     <div className="col s3">
-                        <a
-                            onClick={this.toggleScanner} 
-                            className="waves-effect waves-light btn"
-                        >
+                        <a onClick={this.toggleScanner} className="waves-effect waves-light btn">
                             Scanner
+                            <i className="material-icons right">
+                                {this.state.scanner ? "videocam_off" : "videocam"}
+                            </i>
                         </a>
 
                     </div>

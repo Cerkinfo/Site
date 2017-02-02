@@ -1,38 +1,53 @@
 const React = require('react');
+const ReactSelectize = require("react-selectize");
+const SimpleSelect = ReactSelectize.SimpleSelect;
+const axios = require('axios');
 
 class Entry extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            value: this.props.value, 
+            users: [],
         };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.searchMember = this.searchMember.bind(this);
     }
 
-    handleChange (e) {
-        console.log(e.target.value);
-        this.setState({
-            value: e.target.value, 
-        });
+    searchMember (search) {
+        if (search) {
+            axios.get('/fr/api/v1/member?search=' + search)
+                .then(json => {
+                    this.setState({
+                        users: json.data,
+                    });
+                });
+        }
     }
 
     render () {
+        const options = this.state.users.map(user => {
+            if (user.user) {
+                return {label: user.user.username, value: user.id};
+            } else {
+                return {label: user.id, value: user.id};
+            }
+        });
+
         return (
             <div className="input-field">
                 <i className="material-icons prefix">account_circle</i>
-                <input name="user" id="id_user" type="text" onChange={this.handleChange} value={this.state.value} className="validate"/>
-                <label htmlFor="id_user">
-                    { "Nom d'utilisateur" }
-                </label>
+                <SimpleSelect
+                    name="user"
+                    options={options}
+                    placeholder = {this.state.users.length ? "Choisir l'utilisateur" : "Chargement..."}                                                                        
+                    theme = "material"
+                    transitionEnter = {true}
+                    onSearchChange = {this.searchMember}
+                />
             </div> 
         );
     }
 }
-
-Entry.propTypes = {
-    value: React.PropTypes.string,
-};
 
 module.exports = Entry;

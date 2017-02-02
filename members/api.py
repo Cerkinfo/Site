@@ -14,6 +14,11 @@ class MemberViewSet(mixins.RetrieveModelMixin,
         viewsets.GenericViewSet):
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
+    filter_backends = (
+        filters.SearchFilter,
+        filters.OrderingFilter
+    )
+    search_fields = ('user__username', 'user__first_name', 'user__last_name')
 
 class FullMemberViewSet(mixins.RetrieveModelMixin,
         mixins.ListModelMixin,
@@ -24,7 +29,7 @@ class FullMemberViewSet(mixins.RetrieveModelMixin,
         filters.SearchFilter,
         filters.OrderingFilter
     )
-    search_fields = ('user__email', 'comitemembership__card_id')
+    search_fields = ('user__username', 'user__first_name', 'user__last_name')
 
     @detail_route(methods=['post'])
     def register_member_card(self, request, pk=None):
