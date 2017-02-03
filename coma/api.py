@@ -38,9 +38,9 @@ class TransactionView(mixins.CreateModelMixin,
         serializer.save(fromWho=self.request.user.member)
 
 
-# TODO Add delete
 class ProductView(mixins.CreateModelMixin,
         mixins.RetrieveModelMixin,
+        mixins.DestroyModelMixin,
         mixins.ListModelMixin,
         viewsets.GenericViewSet):
     """
@@ -49,7 +49,7 @@ class ProductView(mixins.CreateModelMixin,
     serializer_class = ProductSerializer
 
     def perform_create(self, serializer):
-        if not self.request.user.has_perm('coma.add_transaction'):
+        if not self.request.user.has_perm('coma.add_product'):
             raise PermissionDenied("Il faut faire parti du bar pour ajouter des produits")
 
         if not serializer.is_valid():
@@ -58,3 +58,14 @@ class ProductView(mixins.CreateModelMixin,
         serializer.save()
 
 
+    def destroy(self, request, *args, **kwargs):
+        if not request.user.has_perm('coma.add_product'):
+            raise PermissionDenied("Il faut faire parti du bar pour supprimer des produits")
+
+        try:
+            instance = self.get_object()
+            self.perform_destroy(instance)
+        except Http404:
+            pass
+
+        return Response()

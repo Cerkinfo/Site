@@ -80,3 +80,8 @@ class TransactionMakerView(CreateView):
     template_name = 'reader.html'
     success_url = "/"
     form_class = PurchaseForm
+
+class TransactionMakerView(CreateView):
+    template_name = 'reader.html'
+    success_url = "/"
+    form_class = PurchaseForm

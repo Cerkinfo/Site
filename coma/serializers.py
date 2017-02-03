@@ -10,4 +10,4 @@ class TransactionSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('name', 'price')
+        fields = ('id', 'name', 'price')
