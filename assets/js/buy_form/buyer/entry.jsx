@@ -14,6 +14,11 @@ class Entry extends React.Component {
         this.searchMember = this.searchMember.bind(this);
     }
 
+    componentWillReceiveProps (nextProps) {
+        this.setState(nextProps);
+    
+    }
+
     searchMember (search) {
         if (search) {
             axios.get('/fr/api/v1/member?search=' + search)
@@ -51,6 +56,14 @@ class Entry extends React.Component {
             </div> 
         );
     }
+}
+
+Entry.propTypes = {
+    users: React.PropTypes.object,
+};
+
+Entry.defaultProps = {
+    users: [],
 }
 
 module.exports = Entry;

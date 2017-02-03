@@ -17,9 +17,12 @@ class BuyerForm extends React.Component {
     }
 
     barcodeScanned (barcode) {
-        this.setState({
-            barcode: barcode,
-        });
+        axios.get('/fr/api/v1/check_membership/' + barcode)
+            .then(json => {
+                if (Array.isArray(json) && json.length == 1) {
+                    this.setState({barcode: json[0]});
+                }
+            });
     }
 
     toggleScanner () {
@@ -51,7 +54,7 @@ class BuyerForm extends React.Component {
 
                     </div>
                 </div>
-                {this.state.scanner ? <Scanner onDetected={this.barcodeScanned}/> : null}
+                {this.state.scanner ? <Scanner users={this.state.barcode} onDetected={this.barcodeScanned}/> : null}
             </div>
         );
     }
