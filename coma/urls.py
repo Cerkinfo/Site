@@ -1,21 +1,30 @@
-from django.conf.urls import url, patterns
-from .views import start_payment, finish_payment, TransactionMakerView
+from django.conf.urls import url
+import coma.views as views
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(
         r'^top_up$',
-        start_payment,
+        views.start_payment,
         name="coma_top_up"
     ),
     url(
         r'^top_up_end/(?P<id>\d+)$',
-        finish_payment,
+        views.finish_payment,
         name="coma_top_up_end"
     ),
     url(
         r'^reader$',
-        TransactionMakerView.as_view(),
+        views.TransactionMakerView.as_view(),
         name="coma_reader"
     ),
-)
+    url(
+        r'^product/delete/(?P<id>\d+)$',
+        views.ProductDelete,
+        name="coma_product_delete"
+    ),
+    url(
+        r'^products/',
+        views.ProductCreationView.as_view(),
+        name="coma_products"
+    ),
+]
