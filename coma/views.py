@@ -95,9 +95,9 @@ class ProductCreationView(CreateView, UserPassesTestMixin):
     def test_func(self):
         return self.request.user.user.has_perm('coma.can_add_product')
 
-def ProductDelete(request, uid):
+def ProductDelete(request, pid):
     if request.user.has_perm('coma.can_can_delete_product'):
-        product = get_object_or_404(Product, pk=uid)
+        product = get_object_or_404(Product, pk=pid)
         product.delete()
         return HttpResponseRedirect(reverse_lazy('coma_products'))
     else:

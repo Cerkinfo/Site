@@ -18,7 +18,7 @@ urlpatterns = [
         name="coma_reader"
     ),
     url(
-        r'^product/delete/(?P<id>\d+)$',
+        r'^product/delete/(?P<pid>\d+)$',
         views.ProductDelete,
         name="coma_product_delete"
     ),
