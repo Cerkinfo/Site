@@ -1,14 +1,16 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
-from django.http import HttpResponseRedirect
-from django.http import HttpResponseForbidden
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.views.generic.edit import CreateView
+from django.views.generic import DeleteView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 import Mollie
 
-from coma.models import MolliePayment, Transaction
-from coma.forms import PaymentForm, PurchaseForm
+from coma.models import MolliePayment, Transaction, Product
+from coma.forms import PaymentForm, PurchaseForm, ProductForm
 
 
 def get_api():
@@ -76,12 +78,27 @@ def finish_payment(request, id):
         return render(request, 'top_up_success.html', {'amount': -1})
 
 
-class TransactionMakerView(CreateView):
+class TransactionMakerView(CreateView, UserPassesTestMixin):
     template_name = 'reader.html'
     success_url = "/"
     form_class = PurchaseForm
 
-class TransactionMakerView(CreateView):
-    template_name = 'reader.html'
-    success_url = "/"
-    form_class = PurchaseForm
+    def test_func(self):
+        return self.request.user.user.has_perm('coma.create_purchase')
+
+
+class ProductCreationView(CreateView, UserPassesTestMixin):
+    template_name = 'products.html'
+    success_url = reverse_lazy('coma_products')
+    form_class = ProductForm
+
+    def test_func(self):
+        return self.request.user.user.has_perm('coma.can_add_product')
+
+def ProductDelete(request, uid):
+    if request.user.has_perm('coma.can_can_delete_product'):
+        product = get_object_or_404(Product, pk=uid)
+        product.delete()
+        return HttpResponseRedirect(reverse_lazy('coma_products'))
+    else:
+        return HttpResponseForbidden()

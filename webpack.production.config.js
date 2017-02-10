@@ -19,6 +19,9 @@ module.exports = {
     buy_form: [
       './assets/js/buy_form/index',
     ],
+    products: [
+      './assets/js/products/index',
+    ],
   },
 
   output: {

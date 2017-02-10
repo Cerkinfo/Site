@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.conf import settings
 
-from coma.models import Transaction
+from coma.models import Transaction, Product
 
 def validate_top_up(value):
     if value < 0:
@@ -24,4 +24,12 @@ class PurchaseForm(forms.ModelForm):
             'quantity',
             'price',
             'comment',
+        )
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = (
+            'name',
+            'price',
         )
