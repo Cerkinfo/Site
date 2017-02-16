@@ -1,7 +1,6 @@
 var path = require("path");
 var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   context: __dirname,
@@ -18,6 +17,9 @@ module.exports = {
     ],
     buy_form: [
       './assets/js/buy_form/index',
+    ],
+    add_form: [
+      './assets/js/add_form/index',
     ],
     products: [
       './assets/js/products/index',
@@ -36,44 +38,36 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
-      comments: false,
-      compress: {
-        warnings: false,
-        drop_console: true
-      },
-      mangle: {
-        except: ['$'],
-        screw_ie8 : true,
-        keep_fnames: false,
-      }
-    }),
-    new ExtractTextPlugin('public/style.css', {
-      allChunks: true
+    new webpack.LoaderOptionsPlugin({
+        minimize: true,
+        debug: false,
     }),
   ],
 
   module: {
-    loaders: [
-      { test: /\.jsx?$/,
+    rules: [
+      { 
+        test: /\.jsx?$/,
         exclude: /node_modules/, 
         loader: 'babel-loader',
         query: {
-          presets:['es2015', 'react'],
+          presets:[
+            ['es2015', {modules: false}], 
+            'react'
+          ],
         },
       }, {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass', ExtractTextPlugin.extract('css!sass')]
+        loaders: ['css-loader', 'sass-loader']
       }, {
         test: /\.json$/,
-        loader: 'json'        
+        loader: 'json-loader'        
       },
     ],
   },
 
   resolve: {
-    modulesDirectories: ['node_modules', 'bower_components'],
-    extensions: ['', '.js', '.jsx']
+    modules: ['node_modules', 'bower_components'],
+    extensions: ['.js', '.jsx']
   },
 };

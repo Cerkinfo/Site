@@ -13,6 +13,11 @@ urlpatterns = [
         name="coma_top_up_end"
     ),
     url(
+        r'^add',
+        views.AddToBalanceView.as_view(),
+        name="coma_add"
+    ),
+    url(
         r'^reader$',
         views.TransactionMakerView.as_view(),
         name="coma_reader"

@@ -16,6 +16,14 @@ def validate_top_up(value):
 class PaymentForm(forms.Form):
     amount = forms.FloatField(validators=[validate_top_up])
 
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = (
+            'user',
+            'price',
+        )
+
 class PurchaseForm(forms.ModelForm):
     class Meta:
         model = Transaction

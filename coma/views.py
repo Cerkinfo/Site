@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 import Mollie
 
 from coma.models import MolliePayment, Transaction, Product
-from coma.forms import PaymentForm, PurchaseForm, ProductForm
+from coma.forms import PaymentForm, PurchaseForm, ProductForm, ProductForm
 
 
 def get_api():
@@ -76,6 +76,15 @@ def finish_payment(request, id):
         return render(request, 'top_up_success.html', {'amount': payment.amount})
     else:
         return render(request, 'top_up_success.html', {'amount': -1})
+
+
+class AddToBalanceView(CreateView, UserPassesTestMixin):
+    template_name = 'add.html'
+    success_url = "/"
+    form_class = ProductForm
+
+    def test_func(self):
+        return self.request.user.user.has_perm('coma.add_money')
 
 
 class TransactionMakerView(CreateView, UserPassesTestMixin):
