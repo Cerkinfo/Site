@@ -15,6 +15,15 @@ module.exports = {
     barcode: [
       './assets/js/barcode_render/index',
     ],
+    buy_form: [
+      './assets/js/buy_form/index',
+    ],
+    add_form: [
+      './assets/js/add_form/index',
+    ],
+    products: [
+      './assets/js/products/index',
+    ],
   },
 
   output: {
@@ -27,26 +36,29 @@ module.exports = {
   ],
 
   module: {
-    loaders: [
+    rules: [
       { 
         test: /\.jsx?$/,
         exclude: /node_modules/, 
         loader: 'babel-loader',
         query: {
-          presets:['react'],
+          presets:[
+            ['es2015', {modules: false}],
+              'react'
+          ],
         },
       }, {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['css-loader', 'sass-loader']
       }, {
         test: /\.json$/,
-        loader: 'json'        
+        loader: 'json-loader'        
       },
     ],
   },
 
   resolve: {
-    modulesDirectories: ['node_modules', 'bower_components'],
-    extensions: ['', '.js', '.jsx']
+    modules: ['node_modules', 'bower_components'],
+    extensions: ['.js', '.jsx']
   },
 };

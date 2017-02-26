@@ -36,6 +36,8 @@ class Member(models.Model):
     # Additionnal Info
     extra_info = models.TextField(default='', blank=True)
 
+    balance = models.DecimalField(null=True, max_digits=5, decimal_places=2, default=0)
+
     def firstname(self):
         """
         Returns: the user firstname
@@ -152,6 +154,11 @@ class Member(models.Model):
                             "media%2F%2Fimages%2Fmembers%2Fdefault-person.png"
             return gravatar_url
         return MEDIA_URL + "/images/members/default-person.png"
+
+    def get_transaction(self):
+        """
+        """
+        return self.transaction_user.all()
 
     def __str__(self):
         if self.user:
@@ -367,15 +374,3 @@ class CustomPermissionsManager(models.Model):
 
     class Meta:
         verbose_name = "Permissions Manager"
-
-
-from django.db.models import signals
-
-
-def create_member_for_user(sender, instance, created, **kwargs):
-    try:
-        instance.member
-    except User.member.RelatedObjectDoesNotExist:
-        Member.objects.create(user=instance)
-
-signals.post_save.connect(create_member_for_user, sender=User, weak=False)

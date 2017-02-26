@@ -32,18 +32,24 @@
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
     "uglify-js": "^2.7.3",
-    "webpack": "^1.13.2",
+    "webpack": "^2.2.1",
     "webpack-bundle-tracker": "0.0.93"
   },
   "dependencies": {
+    "axios": "^0.15.3",
+    "install": "^0.8.4",
     "jsbarcode": "^3.5.5",
     "moment": "^2.14.1",
+    "quagga": "^0.11.5",
     "react": "^15.3.1",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-addons-shallow-compare": "^15.4.2",
     "react-collapse": "^2.3.3",
     "react-dom": "^15.3.1",
     "react-height": "^2.1.1",
     "react-icons": "^2.2.1",
     "react-markdown": "^2.4.2",
-    "react-motion": "^0.4.4"
+    "react-motion": "^0.4.4",
+    "react-selectize": "^2.1.0"
   }
 }

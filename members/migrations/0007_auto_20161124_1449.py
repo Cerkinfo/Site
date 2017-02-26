@@ -20,6 +20,12 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='member',
+            name='balance',
+            field=models.DecimalField(decimal_places=2, default=0, max_digits=5),
+        ),
+
+        migrations.AddField(
+            model_name='member',
             name='card_id',
             field=models.UUIDField(default=uuid.uuid4),
         ),
