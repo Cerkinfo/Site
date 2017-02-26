@@ -9,7 +9,6 @@ class BuyerForm extends React.Component {
         this.state = {
             barcode: null, 
             scanner: false,
-
         };
 
         this.toggleScanner = this.toggleScanner.bind(this);

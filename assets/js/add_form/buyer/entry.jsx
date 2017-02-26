@@ -16,8 +16,11 @@ class Entry extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        this.setState(nextProps);
-    
+        if (nextProps.barcode) {
+            this.setState({
+                users: [nextProps.barcode],
+            });
+        }
     }
 
     searchMember (search) {
@@ -60,11 +63,11 @@ class Entry extends React.Component {
 }
 
 Entry.propTypes = {
-    users: React.PropTypes.object,
+    barcode: React.PropTypes.object,
 };
 
 Entry.defaultProps = {
-    users: [],
+    barcode: [],
 }
 
 module.exports = Entry;
