@@ -1,4 +1,5 @@
 django>=1.10
+django-extensions
 Pillow
 
 django-webpack-loader
