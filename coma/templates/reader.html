@@ -26,11 +26,8 @@
         {% endfor %}
     {% endif %}
 
-    <form action="/fr/api/v1/transaction/" class="form" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div id="react-buy-form"></div>
-        {% render_bundle 'buy_form' %}
-    </form>
+    <div id="react-buy-form"></div>
+    {% render_bundle 'buy_form' %}
 </div>
 
 {% endblock %}
