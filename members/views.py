@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, UpdateView, CreateView, ListView
 
-from frontend.settings import LOGIN_REDIRECT_URL
+from cerkinfobe.settings import LOGIN_REDIRECT_URL
 from members.forms import MemberForm, ComiteItemFormset, FolkloItemFormset, \
     YearForm, ComiteListFormset, MemberImportForm, UserCreationForm
 from members.models import Member, ComiteMembership, AcademicYear

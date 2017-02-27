@@ -94,7 +94,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'skeletton', 'templates'),
+            os.path.join(BASE_DIR, 'cerkinfobe', 'templates'),
             os.path.join(BASE_DIR, 'ciwiki', 'templates')
         ],
         'APP_DIRS': True,
@@ -219,7 +219,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'skeletton', 'static'),
+    os.path.join(BASE_DIR, 'cerkinfo', 'static'),
     os.path.join(BASE_DIR, 'assets'),
 )
 LOGIN_REDIRECT_URL = '/cipedia/profile'

@@ -6,7 +6,7 @@ import string
 from django.contrib.auth.models import User, Group
 from django.db import models
 from django.utils import timezone
-from frontend.settings import MEDIA_URL
+from cerkinfobe.settings import MEDIA_URL
 
 logger = getLogger(__name__)
 
