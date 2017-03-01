@@ -33,6 +33,7 @@ module.exports = {
 
   plugins: [
     new BundleTracker({filename: './webpack-stats.json'}),
+    new ExtractTextPlugin("styles.css"),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
@@ -57,8 +58,11 @@ module.exports = {
           ],
         },
       }, {
-        test: /\.scss$/,
-        loaders: ['css-loader', 'sass-loader']
+        test: [/\.css$/, /\.scss$/],
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: ['css-loader', 'sass-loader']
+        })
       }, {
         test: /\.json$/,
         loader: 'json-loader'        
