@@ -242,14 +242,8 @@ SUIT_CONFIG = {
 MOLLIE_API_KEY = ""
 MINIMAL_TOP_UP_AMOUNT = 5.0
 
-RAVEN_CONFIG = {
-    'dsn': 'https://xxx@sentry.io/143735',
-    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
-}
-
 from raven.contrib.django.raven_compat.models import client
 client.captureException()
-
 
 try:
     from .local_settings import *  # noqa
