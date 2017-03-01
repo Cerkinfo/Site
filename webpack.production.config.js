@@ -1,6 +1,7 @@
 var path = require("path");
 var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   context: __dirname,
