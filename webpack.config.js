@@ -34,7 +34,7 @@ module.exports = {
 
   plugins: [
     new BundleTracker({filename: './webpack-stats.json'}),
-    new ExtractTextPlugin("styles.css"),
+    new ExtractTextPlugin("[name]-[hash].css"),
   ],
 
   module: {
