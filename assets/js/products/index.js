@@ -1,6 +1,6 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Products = require('./products.jsx');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Products from './products.jsx';
 
 window.onload = () => {
   ReactDOM.render(<Products/>, 

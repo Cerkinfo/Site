@@ -1,8 +1,8 @@
-const React = require('react');
-const axios = require('axios')
-const AddProductModal = require('./products_modal.jsx');
+import React from 'react';
+import axios from 'axios';
+import { Modal, Button, Collection, CollectionItem } from 'react-materialize';
 
-class Products extends React.Component {
+export default class Products extends React.Component {
     constructor (props) {
         super(props);
 
@@ -25,29 +25,42 @@ class Products extends React.Component {
 
         const products = this.state.products.map(x => {
             return (
-                <li className="collection-item">
+                <CollectionItem>
                     <span className="title">{x.name} </span>
                     <span style={style}>({x.price} €)</span>
 
                     <a href={"/fr/coma/product/delete/" + x.id} className="right">
                         <i className="material-icons">delete</i>
                     </a>
-                </li>
+                </CollectionItem>
             );
         });
 
         return (
             <div>
-                <ul className="collection"> 
+                <Collection>
                     {products}
-                </ul> 
-                <AddProductModal/>
-                <a href="#add_product_modal" className="btn-floating btn-large waves-effect waves-light red">
-                    <i className="material-icons">add</i>
-                </a>
+                </Collection> 
+                <Modal
+                    header='Ajouter un produit à vendre.'
+                    fixedFooter
+                    trigger={
+                        <Button floating large className='red' waves='light' icon='add'/>
+                    }
+                >
+                    <p>
+                        <div className="input-field">
+                            <input name="name" id="name" type="text" className="validate"/>
+                            <label htmlFor="name">Nom du produit</label>
+                        </div>
+
+                        <div className="input-field">
+                            <input name="price" id="price" type="number" className="validate"/>
+                            <label htmlFor="price">Prix du produit</label>
+                        </div>
+                    </p>
+                </Modal>
             </div>
         );
     }
 }
-
-module.exports = Products;
