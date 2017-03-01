@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import logging.config
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.humanize',
+    'raven.contrib.django.raven_compat',
     'django_extensions',
     'mathfilters',
     'django_nyt',
@@ -240,6 +240,15 @@ SUIT_CONFIG = {
 
 MOLLIE_API_KEY = ""
 MINIMAL_TOP_UP_AMOUNT = 5.0
+
+RAVEN_CONFIG = {
+    'dsn': 'https://xxx@sentry.io/143735',
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+}
+
+from raven.contrib.django.raven_compat.models import client
+client.captureException()
+
 
 try:
     from .local_settings import *  # noqa
