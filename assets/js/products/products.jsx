@@ -1,6 +1,11 @@
 import React from 'react';
+import cookie from 'react-cookie';
+import { Provider } from 'react-redux';
+import { Form, Control, actions, Row } from 'react-redux-form';
 import axios from 'axios';
-import { Modal, Button, Collection, CollectionItem } from 'react-materialize';
+import store from './store.js';
+import DjangoCSRFToken from 'django-react-csrftoken';
+import { Modal, Input, Button, Collection, CollectionItem, Icon } from 'react-materialize';
 
 export default class Products extends React.Component {
     constructor (props) {
@@ -18,47 +23,78 @@ export default class Products extends React.Component {
             });
     }
 
-    render () {
+    handleSubmit (product) {
+        // console.log("Sending: " + JSON.stringify(product));
+        axios.post('/fr/api/v1/product/', product, {
+            headers: {
+                'X-CSRFToken': cookie.load('csrftoken'),
+            }
+        }).then(json => {
+            if (json.data.error) {
+            
+            } else {
+                const tmp = this.state.products;
+                tmp.push(json.data);
+                this.setState({
+                    products: tmp,
+                });
+            }
+        });
+    }
+
+    render_products () {
         const style = {
             color: 'grey', 
         };
 
-        const products = this.state.products.map(x => {
+        return this.state.products.map(x => {
             return (
-                <CollectionItem>
+                <CollectionItem key={x.id}>
                     <span className="title">{x.name} </span>
                     <span style={style}>({x.price} €)</span>
 
-                    <a href={"/fr/coma/product/delete/" + x.id} className="right">
-                        <i className="material-icons">delete</i>
+                    <a href={'/fr/coma/product/delete/' + x.id} className='right'>
+                        <i className='material-icons'>delete</i>
                     </a>
                 </CollectionItem>
             );
         });
+    }
 
+    render () {
         return (
             <div>
                 <Collection>
-                    {products}
+                    {this.render_products()}
                 </Collection> 
                 <Modal
                     header='Ajouter un produit à vendre.'
-                    fixedFooter
+                    actions={null}
                     trigger={
                         <Button floating large className='red' waves='light' icon='add'/>
                     }
                 >
-                    <p>
-                        <div className="input-field">
-                            <input name="name" id="name" type="text" className="validate"/>
-                            <label htmlFor="name">Nom du produit</label>
-                        </div>
-
-                        <div className="input-field">
-                            <input name="price" id="price" type="number" className="validate"/>
-                            <label htmlFor="price">Prix du produit</label>
-                        </div>
-                    </p>
+                    <Provider store={ store }>
+                        <Form 
+                            model='product'
+                            onSubmit={product => this.handleSubmit(product)}
+                        >
+                            <DjangoCSRFToken/>
+                            <Control.text
+                                model='product.name'
+                                component={Input}
+                                label='Nom du produit'
+                            />
+                            <Control
+                                type='number'
+                                step='0.01'
+                                model='product.price'
+                                component={Input}
+                                label='Prix du produit'
+                            />
+                            <Button type='submit' modal='close' waves='light'>Envoyer <Icon right>send</Icon></Button>
+                        </Form>
+                    </Provider>
                 </Modal>
             </div>
         );
