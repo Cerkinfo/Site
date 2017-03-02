@@ -1,7 +1,11 @@
-const React = require('react')
-const Quagga = require('quagga');
+import React from 'react';
+import Quagga from 'quagga';
 
-class Scanner extends React.Component {
+export default class Scanner extends React.Component {
+    static propTypes: {
+        onDetected: React.PropTypes.func.isRequired,
+    }
+
     constructor(props) {
         super(props);
     }
@@ -48,9 +52,3 @@ class Scanner extends React.Component {
         ) 
     }
 }
-
-Scanner.propTypes = {
-    onDetected: React.PropTypes.func.isRequired,
-};
-
-module.exports = Scanner;
