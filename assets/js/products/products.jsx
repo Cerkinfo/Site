@@ -2,10 +2,9 @@ import React from 'react';
 import cookie from 'react-cookie';
 import { Provider } from 'react-redux';
 import { Form, Control, actions, Row } from 'react-redux-form';
+import { Modal, Input, Button, Collection, CollectionItem, Icon } from 'react-materialize';
 import axios from 'axios';
 import store from './store.js';
-import DjangoCSRFToken from 'django-react-csrftoken';
-import { Modal, Input, Button, Collection, CollectionItem, Icon } from 'react-materialize';
 
 export default class Products extends React.Component {
     constructor (props) {
@@ -24,7 +23,6 @@ export default class Products extends React.Component {
     }
 
     handleSubmit (product) {
-        // console.log("Sending: " + JSON.stringify(product));
         axios.post('/fr/api/v1/product/', product, {
             headers: {
                 'X-CSRFToken': cookie.load('csrftoken'),
