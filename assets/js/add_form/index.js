@@ -1,9 +1,9 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Form = require('./form.jsx');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Container from './form.jsx';
 
 window.onload = () => {
-  ReactDOM.render(<Form/>, 
+  ReactDOM.render(<Container/>, 
     document.getElementById('react-add-form')
   );
 };
