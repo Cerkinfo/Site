@@ -4,6 +4,7 @@ const utils = require('./data.js');
 const Event = require('./Event.jsx');
 const EventDescription = require('./EventDescription.jsx');
 const moment = require('moment');
+
 require('./Events.scss');
 
 class Events extends React.Component {

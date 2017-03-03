@@ -7,6 +7,8 @@ const CalIcon = require('react-icons/lib/fa/calendar');
 const FacebookIcon = require('react-icons/lib/fa/facebook-official');
 const LinkIcon = require('react-icons/lib/fa/external-link');
 
+require('./EventDescription.scss');
+
 class EventDescription extends React.Component {
     constructor (props) {
         super(props);

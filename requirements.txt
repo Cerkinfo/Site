@@ -1,5 +1,6 @@
 django>=1.10
 django-extensions
+raven
 Pillow
 
 django-webpack-loader
@@ -19,6 +20,7 @@ coverage
 # frontend
 django-extra-views
 -e git+git://github.com/thomacer/django-material-dynamic-formsets.git#egg=django-material-dynamic-formsets
+django-materializecss-form
 fuzzywuzzy
 djangorestframework
 metron

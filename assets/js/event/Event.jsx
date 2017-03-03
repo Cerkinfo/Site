@@ -1,5 +1,6 @@
 const React = require('react');
 const moment = require('moment');
+
 require('./Event.scss');
 
 class Event extends React.Component {
