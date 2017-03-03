@@ -24,6 +24,9 @@
     {% if request.user.is_staff %}
         <li><a href="/admin"><i class="material-icons">grade</i>Administration</a></li>
     {% endif %}
+    {% if perms.coma.add_money %}
+        <li><a href="{% url "coma_add" %}"><i class="material-icons">payment</i>Ajouter de l'argent à l'ardoise</a></li>
+    {% endif %}
     {% if perms.coma.can_add_product %}
         <li><a href="{% url "coma_products" %}"><i class="material-icons">toc</i>Gêrer les produits</a></li>
     {% endif %}
@@ -160,6 +163,9 @@
 
                             {% if request.user.is_staff %}
                                 <li><a href="/admin"><i class="material-icons">grade</i>Administration</a></li>
+                            {% endif %}
+                            {% if perms.coma.add_money %}
+                                <li><a href="{% url "coma_add" %}"><i class="material-icons">payment</i>Ajouter de l'argent à l'ardoise</a></li>
                             {% endif %}
                             {% if perms.coma.can_add_product %}
                                 <li><a href="{% url "coma_products" %}"><i class="material-icons">toc</i>Gêrer les produits</a></li>
