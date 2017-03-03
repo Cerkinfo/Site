@@ -1,8 +1,9 @@
 <a name="team" class="separator"></a>
-    {% if academic_year %}
-        <div class="row">
-            {% with title_desc="Comité de Cercle" memberships=academic_year.get_comite instance=academic_year %}
-                {% include 'comite.html' %}
-            {% endwith %}
-        </div>
- {% endif %}
+
+{% if academic_year %}
+    <div class="row">
+        {% with title_desc="Comité de Cercle" memberships=academic_year.get_comite instance=academic_year %}
+            {% include 'comite.html' %}
+        {% endwith %}
+    </div>
+{% endif %}

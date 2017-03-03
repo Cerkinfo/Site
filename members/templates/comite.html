@@ -7,7 +7,7 @@
 
 <a name="team" class="separator"></a>
 <section style="text-align:center;">
-    <div class="comite_desc"> {{ title_desc }}</div>
+    <div class="section_header"> {{ title_desc }}</div>
     {% for membership in memberships %}
         <a class="member-widget" href="{% if membership.member %}{% url 'member_profil' membership.member_id %}{% else %}#{% endif %}">
             <div class="circle"

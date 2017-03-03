@@ -21,6 +21,15 @@ a:hover{
     vertical-align:middle;
 }
 
+.section_header {
+    display: block;
+    text-align: center;
+    padding: 50px;
+    font-weight: 100;
+    font-size: 2.2em;
+    background-color: whitesmoke;
+}
+
 /* footer style */
 .footer {
     width: 100%;

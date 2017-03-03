@@ -136,13 +136,3 @@ img.header:hover {
         transform: translateX(0px);
     }
 }
-
-/*cerkinfo_comite style*/
-.comite_desc {
-    display: block;
-    text-align: center;
-    padding: 50px;
-    font-weight: 100;
-    font-size: 2.2em;
-    background-color: whitesmoke;
-}
