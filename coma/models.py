@@ -51,7 +51,7 @@ def transaction_execute(instance, *args, **kwargs):
     elif (instance.price < 0) and (not instance.fromWho.user.has_perm('coma.add_money')):
         raise PermissionDenied("Vous n'avez pas la permission d'ajouter de l'argent")
     else:
-        new_balance = instance.user.balance - instance.price
+        new_balance = instance.user.balance - (instance.quantity * instance.price)
         if new_balance >= 0:
             instance.user.balance = new_balance
             instance.user.save()
