@@ -6,7 +6,7 @@ const store = createStore(combineForms({
     transaction: {
       price: 0,
       user: null,
-      quantity: 0,
+      quantity: 1,
       comment: "Versement sur l'ardoise",
     },
   }),

@@ -1,9 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Row, Col, Icon } from 'react-materialize';
 import Scanner from './scanner';
 import Entry from './entry';
 
-export default class BuyerForm extends React.Component {
+class BuyerForm extends React.Component {
+    static propTypes: {
+        dispatch: React.PropTypes.func.isRequired,
+        model: React.PropTypes.string.isRequired,
+    }
+
     constructor(props) {
         super(props);
 
@@ -42,7 +48,10 @@ export default class BuyerForm extends React.Component {
                 </Row>
                 <Row>
                     <Col s={4}>
-                        <Entry barcode={this.state.barcode}/>
+                        <Entry 
+                            model={this.props.model}
+                            barcode={this.state.barcode}
+                        />
                     </Col>
                     <Col s={3}>
                         <a onClick={this.toggleScanner} className="waves-effect waves-light btn">
@@ -58,3 +67,5 @@ export default class BuyerForm extends React.Component {
         );
     }
 }
+
+export default connect()(BuyerForm)

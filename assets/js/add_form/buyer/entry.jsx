@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Row, Input, Collection, CollectionItem } from 'react-materialize';
 import { actions } from 'react-redux-form';
 import ReactSelectize from 'react-selectize';
@@ -6,7 +7,7 @@ const SimpleSelect = ReactSelectize.SimpleSelect;
 import axios from 'axios';
 import store from '../store.js';
 
-export default class Entry extends React.Component {
+class Entry extends React.Component {
     static propTypes: {
         barcode: React.PropTypes.object,
     }
@@ -67,8 +68,10 @@ export default class Entry extends React.Component {
                 theme = "material"
                 transitionEnter = {true}
                 onSearchChange = {this.searchMember}
-                onValueChange = {e => store.dispatch(actions.change(model, e.value))}
+                onValueChange = {e => dispatch(actions.change(model, e.value))}
             />
         );
     }
 }
+
+export default connect()(Entry)
