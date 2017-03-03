@@ -77,7 +77,6 @@ export default class Products extends React.Component {
                             model='product'
                             onSubmit={product => this.handleSubmit(product)}
                         >
-                            <DjangoCSRFToken/>
                             <Control.text
                                 model='product.name'
                                 component={Input}
