@@ -1,11 +1,14 @@
-const React = require('react');
-const ReactSelectize = require("react-selectize");
+import React from 'react';
+import ReactSelectize from "react-selectize";
 const SimpleSelect = ReactSelectize.SimpleSelect;
-const axios = require('axios');
-require('./material.scss');
+import axios from 'axios';
 
-class Select extends React.Component {
-    constructor(props) {
+export default class Select extends React.Component {
+    static propTypes: {
+        onValueChange: React.PropTypes.func.isRequired,
+    }
+
+    constructor (props) {
         super(props);
 
         this.state = {
@@ -39,15 +42,9 @@ class Select extends React.Component {
                     placeholder = {this.state.products.length ? "Choisir le produit" : "Chargement..."}
                     theme = "material"
                     transitionEnter = {true}
-                    onValueChange = {this.onValueChange}
+                    onValueChange = {x => this.props.onValueChange(x.value)}
                 />
             </div>
         );
     }
 }
-
-Select.propTypes = {
-    onValueChange: React.PropTypes.func.isRequired,
-};
-
-module.exports = Select;

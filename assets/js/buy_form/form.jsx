@@ -1,28 +1,90 @@
-const React = require('react')
-const ProductForm = require('./product/index.jsx');
-const QuantityForm = require('./quantity/index.jsx');
-const BuyerForm = require('./buyer/index.jsx');
+import React from 'react';
+import { Form } from 'react-redux-form';
+import { Provider } from 'react-redux';
+import { Button, Icon, CardPanel } from 'react-materialize';
+import cookie from 'react-cookie';
+import axios from 'axios';
+import ProductForm from './product/index.jsx';
+import QuantityForm from './quantity/index.jsx';
+import BuyerForm from './buyer/index.jsx';
+import store from './store.js';
 
-class Form extends React.Component {
+export default class TransactionForm extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            messages: [],
+            errors: [],
+        };
+    }
+
+    handleSubmit (transaction) {
+        axios.post('/fr/api/v1/transaction/', transaction, {
+            headers: {
+                'X-CSRFToken': cookie.load('csrftoken'),
+            },
+        }).then(json => {
+            const r = json.data;
+            this.setState({
+                messages: [
+                    `Achat de ${r.quantity} ${r.comment} à ${Math.abs(r.price)}€ effectué avec succès.`
+                ]
+            });
+
+        }).catch(error => {
+            if (error.response) {
+                console.log(error.response.data);
+                this.setState({errors: error.response.data});
+            } else {
+                console.log('Error', error.message);
+                this.setState({errors: [error.message]});
+            }
+            console.log(error.config);
+        });
+    }
+
+    renderMessages () {
+        const result = [];
+        for(let key in this.state.messages) {
+            result.push(
+                <CardPanel className="green darken-1 black-text">
+                    {key}: {this.state.messages[key]}
+                </CardPanel>
+            );
+        } 
+        return result;
+    }
+
+    renderErrors () {
+        const result = [];
+        for(let key in this.state.errors) {
+            result.push(
+                <CardPanel className="red darken-1 black-text">
+                    {key}: {this.state.errors[key]}
+                </CardPanel>
+            );
+        } 
+        return result;
     }
 
     render () {
         return (
-            <div>
-                <ProductForm/>
-                <QuantityForm/>
-                <BuyerForm/>
-                <button className="waves-effect waves-light btn" type="submit" name="action">
-                    Envoyer
-                    <i className="material-icons right">
-                        send
-                    </i>
-                </button>
-            </div>
+            <Provider store={ store }>
+                <Form model="transaction" onSubmit={t => this.handleSubmit(t)}>
+                    {this.renderMessages()}
+                    {this.renderErrors()}
+                    <ProductForm/>
+                    <QuantityForm/>
+                    <BuyerForm model='transaction.user'/>
+                    <Button type="submit">
+                        Envoyer
+                        <Icon right>
+                            send
+                        </Icon>
+                    </Button>
+                </Form>
+            </Provider>
         );
     }
 }
-
-module.exports = Form

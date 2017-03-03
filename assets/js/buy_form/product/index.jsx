@@ -1,25 +1,24 @@
-const React = require('react');
-const Select = require('./select.jsx');
+import React from 'react';
+import { connect } from 'react-redux';
+import { Row, Col, Input, Icon } from 'react-materialize';
+import { Control, actions } from 'react-redux-form';
+import Select from './select.jsx';
+
 
 class ProductForm extends React.Component {
+    static propTypes: {
+        dispatch: React.PropTypes.func.isRequired,    
+    }
+
     constructor(props) {
         super(props);
 
         this.state = {
-            comment: "",
-            price: null, 
             showDetails: false,
         };
 
-        this.changeValue = this.changeValue.bind(this);
         this.toggleProductDetails = this.toggleProductDetails.bind(this);
-    }
-
-    changeValue (product) {
-        this.setState({
-            comment: product.name,
-            price: product.price,
-        });
+        this.newProductValue = this.newProductValue.bind(this);
     }
 
     toggleProductDetails () {
@@ -28,10 +27,11 @@ class ProductForm extends React.Component {
         });
     }
 
-    bindState(property) {                                                                                                                                                      
-        return (event) => { this.setState({ [property]: event.target.value }); };
+    newProductValue (product) {
+        const { dispatch } = this.props;
+        dispatch(actions.change('transaction.comment', product.name));
+        dispatch(actions.change('transaction.price', product.price));
     }
-
 
     render () {
         const styleDisplay = {
@@ -41,48 +41,38 @@ class ProductForm extends React.Component {
         return (
             <div>
                 <h4>
-                    <i className="material-icons prefix">shopping_cart</i>
+                    <Icon>shopping_cart</Icon>
                     Produit
                 </h4>
-                <div className="row">
-                    <div className="col s4">
-                        <Select onValueChange={this.changeValue}/>
-                    </div>
-                    <div className="col s2">
+                <Row>
+                    <Col s={4}>
+                        <Select onValueChange={this.newProductValue}/>
+                    </Col>
+                    <Col s={2}>
                         <a onClick={this.toggleProductDetails} className="waves-effect waves-light btn">
-                            <i className="material-icons">settings</i>
+                            <Icon>settings</Icon>
                         </a>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="input-field col s6">
-                        <input 
-                            style={styleDisplay} 
-                            value={this.state.comment} 
-                            onChange={this.bindState('comment')}
-                            name="comment" 
-                            id="comment" 
-                            type="text" 
-                            className="validate"
-                        />
-                        <label style={styleDisplay} htmlFor="comment">Produit</label>
-                    </div>
-                    <div className="input-field col s6">
-                        <input 
-                            style={styleDisplay} 
-                            value={this.state.price} 
-                            onChange={this.bindState('price')}
-                            name="price" 
-                            id="price" 
-                            type="number" 
-                            className="validate"
-                        />
-                        <label style={styleDisplay} htmlFor="price">Prix</label>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Control.text 
+                        getRef={node => this.comment = node}
+                        style={styleDisplay} 
+                        component={Input} 
+                        model=".comment"
+                    />
+                    <Control 
+                        getRef={node => this.price = node}
+                        style={styleDisplay} 
+                        type="number" 
+                        step="0.01" 
+                        component={Input} 
+                        model=".price"
+                    />
+                </Row>
             </div>
         );
     }
 }
 
-module.exports = ProductForm;
+export default connect()(ProductForm)

@@ -1,9 +1,21 @@
-const React = require('react');
-const ReactSelectize = require("react-selectize");
+import React from 'react';
+import { connect } from 'react-redux';
+import { Row, Input, Collection, CollectionItem } from 'react-materialize';
+import { actions } from 'react-redux-form';
+import ReactSelectize from 'react-selectize';
 const SimpleSelect = ReactSelectize.SimpleSelect;
-const axios = require('axios');
+import axios from 'axios';
+import store from '../store.js';
 
 class Entry extends React.Component {
+    static propTypes: {
+        barcode: React.PropTypes.object,
+    }
+
+    static defaultProps: {
+        barcode: [],
+    }
+
     constructor(props) {
         super(props);
 
@@ -15,12 +27,15 @@ class Entry extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        this.setState(nextProps);
-    
+        if (nextProps.barcode) {
+            this.setState({
+                users: [nextProps.barcode],
+            });
+        }
     }
 
     searchMember (search) {
-        if (search) {
+        if (search.length > 2) {
             axios.get('/fr/api/v1/member?search=' + search)
                 .then(json => {
                     this.setState({
@@ -35,6 +50,8 @@ class Entry extends React.Component {
     }
 
     render () {
+        const { model, dispatch } = this.props;
+
         const options = this.state.users.map(user => {
             if (user.user) {
                 return {label: user.user.username, value: user.id};
@@ -44,26 +61,17 @@ class Entry extends React.Component {
         });
 
         return (
-            <div className="input-field">
-                <SimpleSelect
-                    name="user"
-                    options={options}
-                    placeholder = {this.loading ? "Choisir l'utilisateur" : "Chargement..."}                                                                        
-                    theme = "material"
-                    transitionEnter = {true}
-                    onSearchChange = {this.searchMember}
-                />
-            </div> 
+            <SimpleSelect
+                name="user"
+                options={options}
+                placeholder = {this.loading ? "Choisir l'utilisateur" : "Chargement..."}                                                                        
+                theme = "material"
+                transitionEnter = {true}
+                onSearchChange = {this.searchMember}
+                onValueChange = {e => dispatch(actions.change(model, e.value))}
+            />
         );
     }
 }
 
-Entry.propTypes = {
-    users: React.PropTypes.object,
-};
-
-Entry.defaultProps = {
-    users: [],
-}
-
-module.exports = Entry;
+export default connect()(Entry)

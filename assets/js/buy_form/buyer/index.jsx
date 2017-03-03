@@ -1,15 +1,21 @@
-const React = require('react');
-const Scanner = require('./scanner');
-const Entry = require('./entry');
+import React from 'react';
+import { connect } from 'react-redux';
+import { Row, Col, Icon } from 'react-materialize';
+import Scanner from './scanner';
+import Entry from './entry';
 
 class BuyerForm extends React.Component {
+    static propTypes: {
+        dispatch: React.PropTypes.func.isRequired,
+        model: React.PropTypes.string.isRequired,
+    }
+
     constructor(props) {
         super(props);
 
         this.state = {
             barcode: null, 
             scanner: false,
-
         };
 
         this.toggleScanner = this.toggleScanner.bind(this);
@@ -34,30 +40,32 @@ class BuyerForm extends React.Component {
     render () {
         return (
             <div>
-                <div className="row">
+                <Row>
                     <h4>
-                        <i className="material-icons prefix">account_circle</i>
+                        <Icon>account_circle</Icon>
                         Acheteur
                     </h4>
-                </div>
-                <div className="row">
-                    <div className="col s4">
-                        <Entry barcode={this.state.barcode}/>
-                    </div>
-                    <div className="col s3">
+                </Row>
+                <Row>
+                    <Col s={4}>
+                        <Entry 
+                            model={this.props.model}
+                            barcode={this.state.barcode}
+                        />
+                    </Col>
+                    <Col s={3}>
                         <a onClick={this.toggleScanner} className="waves-effect waves-light btn">
                             Scanner
-                            <i className="material-icons right">
+                            <Icon right>
                                 {this.state.scanner ? "videocam_off" : "videocam"}
-                            </i>
+                            </Icon>
                         </a>
-
-                    </div>
-                </div>
+                    </Col>
+                </Row>
                 {this.state.scanner ? <Scanner users={this.state.barcode} onDetected={this.barcodeScanned}/> : null}
             </div>
         );
     }
 }
 
-module.exports = BuyerForm;
+export default connect()(BuyerForm)

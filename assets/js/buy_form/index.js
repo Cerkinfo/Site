@@ -1,9 +1,9 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Form = require('./form.jsx');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TransactionForm from './form.jsx';
 
 window.onload = () => {
-  ReactDOM.render(<Form/>, 
+  ReactDOM.render(<TransactionForm/>, 
     document.getElementById('react-buy-form')
   );
 };

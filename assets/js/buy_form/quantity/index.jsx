@@ -1,37 +1,25 @@
-const React =  require('react');
+import React from 'react';
+import { Input, Icon } from 'react-materialize';
+import { Control } from 'react-redux-form';
 
-class QuantityForm extends React.Component {
+export default class QuantityForm extends React.Component {
     constructor (props) {
         super(props);
-
-        this.state = {
-            quantity: 1,
-        };
-    }
-
-    bindState(property) {
-        return (event) => { this.setState({ [property]: event.target.value }); };
     }
 
     render () {
         return (
             <div>
                 <h4>
-                    <i className="material-icons prefix">import_export</i>
+                    <Icon>import_export</Icon>
                     Quantitée
                 </h4>
-                <label htmlFor="quantity"/>
-                <input 
+                <Control
                     type="number"
-                    name="quantity" 
-                    id="quantity" 
-                    value={this.state.quantity} 
-                    onChange={this.bindState('quantity')}
-                    className="validate"
+                    model=".quantity" 
+                    component={Input} 
                 />
             </div>
         );
     }
 }
-
-module.exports = QuantityForm;
