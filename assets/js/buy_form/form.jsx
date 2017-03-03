@@ -29,16 +29,23 @@ export default class TransactionForm extends React.Component {
             this.setState({
                 messages: [
                     `Achat de ${r.quantity} ${r.comment} à ${Math.abs(r.price)}€ effectué avec succès.`
-                ]
+                ],
+                errors: [],
             });
 
         }).catch(error => {
             if (error.response) {
                 console.log(error.response.data);
-                this.setState({errors: error.response.data});
+                this.setState({
+                    messages: [],
+                    errors: error.response.data,
+                });
             } else {
                 console.log('Error', error.message);
-                this.setState({errors: [error.message]});
+                this.setState({
+                    messages: [],
+                    errors: [error.message],
+                });
             }
             console.log(error.config);
         });

@@ -13,8 +13,8 @@ export default class Container extends React.Component {
         super(props);
 
         this.state = {
-            errors: [],
             messages: [],
+            errors: [],
         };
     }
 
@@ -30,14 +30,21 @@ export default class Container extends React.Component {
                 messages: [
                     `Versement de ${Math.abs(r.price)}€ effectué avec succès.`
                 ]
+                errors: [],
             });
         }).catch(error => {
             if (error.response) {
                 console.log(error.response.data);
-                this.setState({errors: error.response.data});
+                this.setState({
+                    messages: [],
+                    errors: error.response.data,
+                });
             } else {
                 console.log('Error', error.message);
-                this.setState({errors: [error.message]});
+                this.setState({
+                    messages: [],
+                    errors: [error.message],
+                });
             }
             console.log(error.config);
         });
