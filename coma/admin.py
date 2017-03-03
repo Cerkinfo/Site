@@ -1,3 +1,12 @@
 from django.contrib import admin
+from .models import Transaction, MolliePayment
 
-# Register your models here.
+
+@admin.register(MolliePayment)
+class MolliePaymentAdmin(admin.ModelAdmin):
+    list_display = ['user', 'amount', 'mollie_id', 'confirmed']
+
+
+@admin.register(Transaction)
+class TransactionAdmin(admin.ModelAdmin):
+    list_display = ['user', 'quantity', 'price', 'comment', 'date']

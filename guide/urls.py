@@ -1,9 +1,8 @@
-from django.conf.urls import *
+from django.conf.urls import url
 
 from .views import CurrentGuideView, GuideView
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(
         r'^$',
         CurrentGuideView.as_view(),
@@ -12,5 +11,6 @@ urlpatterns = patterns(
     url(
         r'^(?P<slug>.+)',
         GuideView.as_view(),
-        name='guide'),
-)
+        name='guide'
+    ),
+]

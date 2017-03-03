@@ -1,7 +1,11 @@
-django>=1.9,<1.10
+django>=1.10
+django-extensions
 Pillow
 
 django-webpack-loader
+
+# Payments
+mollie-api-python
 
 # For testing
 pytest

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load sekizai_tags metron_tags %}
+{% load staticfiles %}
+
+{% block content %}
+    {% if amount > 0 %}
+        <h1>Payement réussi</h1>
+        <p>Pour la somme de {{amount}}€.</p>
+        <p>Votre ardoise s'élève donc maintenant à {{request.user.member.balance}}</p>
+    {% else %}
+        <h1>Problème inconnu</h1>
+        <p>En gros, échec.</p>
+        <p>Votre ardoise s'élève donc toujours à {{request.user.member.balance}}</p>
+        <p>Si vous êtes persuadés que vous avez été débité de votre compte mais que votre ardoise n'a pas été rechargée, contactez webmaster@cerkinfo.be en précisant votre nom d'utilisateur, la date et l'heure de votre payement !</p>
+    {% endif %}
+{% endblock %}

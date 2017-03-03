@@ -19,9 +19,16 @@
     <li><a href="{% url "password_change" %}"><i class="material-icons">loop</i>Changer de mot de passe</a></li>
     <li><a href="{% url "logout" %}?next=/"><i class="material-icons">settings_power</i>Déconnexion</a></li>
 
+    <li><div class="divider"></div></li>
+
     {% if request.user.is_staff %}
-        <li><div class="divider"></div></li>
-        <li><a href="/admin">Administration</a></li>
+        <li><a href="/admin"><i class="material-icons">grade</i>Administration</a></li>
+    {% endif %}
+    {% if perms.coma.can_add_product %}
+        <li><a href="{% url "coma_products" %}"><i class="material-icons">toc</i>Gêrer les produits</a></li>
+    {% endif %}
+    {% if perms.coma.create_purchase %}
+        <li><a href="{% url "coma_reader" %}"><i class="material-icons">redeem</i>Passer une transaction</a></li>
     {% endif %}
 </ul>
 
@@ -144,12 +151,21 @@
                     </a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="{% url "profile" %}">Profil</a></li>
-                            <li><a href="{% url "password_change" %}">Changer de mot de passe</a></li>
-                            <li><a href="{% url "logout" %}?next=/">Déconnexion</a></li>
+                            <li><a href="{% url "profile" %}"><i class="material-icons">perm_identity</i>Profil</a></li>
+                            <li><a href="#barcode_modal"><i class="material-icons">credit_card</i>Carte membre</a></li>                                                                                 
+                            <li><a href="{% url "password_change" %}"><i class="material-icons">loop</i>Changer de mot de passe</a></li>
+                            <li><a href="{% url "logout" %}?next=/"><i class="material-icons">settings_power</i>Déconnexion</a></li>
+
+                            <li><div class="divider"></div></li>
+
                             {% if request.user.is_staff %}
-                                <li><div class="divider"></div></li>
-                                <li><a href="/admin">Administration</a></li>
+                                <li><a href="/admin"><i class="material-icons">grade</i>Administration</a></li>
+                            {% endif %}
+                            {% if perms.coma.can_add_product %}
+                                <li><a href="{% url "coma_products" %}"><i class="material-icons">toc</i>Gêrer les produits</a></li>
+                            {% endif %}
+                            {% if perms.coma.create_purchase %}
+                                <li><a href="{% url "coma_reader" %}"><i class="material-icons">redeem</i>Passer une transaction</a></li>
                             {% endif %}
                         </ul>
                     </div>

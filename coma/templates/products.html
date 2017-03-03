@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load render_bundle from webpack_loader %}
+{% load sekizai_tags %}
+
+{% block title %}
+    {{ block.super }}
+    Produits
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Produits</h1>
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="card-panel red">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <div class="card-panel red">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form action="/fr/api/v1/product/" class="form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div id="react-products-list"></div>
+        {% render_bundle 'products' %}
+    </form>
+
+</div>
+
+{% endblock %}

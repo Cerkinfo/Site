@@ -40,6 +40,9 @@
                 <p class="grey-text text-darken-4">
                     {{ object.birthdate }}
                 </p>
+                <p class="grey-text text-darken-4">
+                    Ardoise: {{ object.balance }} €
+                </p>
             </div>
             {% if object.user == user %}
                 <div class="card-action">
@@ -70,6 +73,21 @@
             <ul>
                 {% for cm in object.bapteme_carreer %}
                     <li><a href="{% url 'year_detail' cm.year.slug %}"> {{ cm.year }} </a> : {{ cm.poste.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="transactions">
+            <h2>Transactions</h2>
+            <ul>
+                {% for transaction in object.get_transaction %}
+                    {% if transaction.comment %}
+                        <li>{{ transaction.date }}: {{ transaction.quantity }} {{ transaction.comment }} pour {{ transaction.price }}</li>
+                    {% else %}
+                        <li>{{ transaction.date }}: {{ transaction.price }}</li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>

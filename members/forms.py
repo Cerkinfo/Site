@@ -1,4 +1,3 @@
-from bootstrap3_datetime.widgets import DateTimePicker
 from captcha.fields import ReCaptchaField
 from django import forms
 from django.contrib.auth import authenticate
@@ -21,10 +20,6 @@ class MemberForm(forms.ModelForm):
     class Meta:
         model = Member
         fields = ['avatar', 'birthdate']
-        widgets = {
-            'birthdate': DateTimePicker(options={"format": "DD/MM/YYYY"})
-        }
-
 
 class ComiteMForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

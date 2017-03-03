@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from rest_framework import fields
 from rest_framework import serializers
 
 from members.models import Member, ComiteMembership, ComitePoste
@@ -22,6 +21,7 @@ class MembershipSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ComiteMembership
+        fields = '__all__'
 
 
 class MemberCardSerializer(serializers.BaseSerializer):
@@ -31,7 +31,7 @@ class MemberCardSerializer(serializers.BaseSerializer):
     paid = serializers.BooleanField(default=False)
 
 
-class MemberSerializer(serializers.ModelSerializer):
+class FullMemberSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     surnames = serializers.StringRelatedField(many=True)
     memberships = MembershipSerializer(source='comitemembership_set', read_only=True, many=True)
@@ -53,4 +53,15 @@ class MemberMembershipQuerySerializer(serializers.Serializer):
     """
     status = serializers.BooleanField(required=True)
     error = serializers.CharField(required=False, max_length=100, allow_blank=True)
-    member = MemberSerializer(required=False) # TODO Not well rendered
+    member = FullMemberSerializer(required=False) # TODO Not well rendered
+
+class MemberSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Member
+        fields = (
+            'id',
+            'avatar',
+            'user',
+        )

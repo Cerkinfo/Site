@@ -10,7 +10,7 @@
 
 {% block content %}
 
-<form action="{% url "user_edit" %}" method="post" class="form" enctype="multipart/form-data" >
+<form action="{% url "user_edit" %}" method="post" class="form" enctype="multipart/form-data">
     <div class="row">
         {% csrf_token %}
         <div class="col s1"></div>

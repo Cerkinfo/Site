@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load sekizai_tags metron_tags %}
+{% load staticfiles %}
+
+{% block content %}
+<h1>Recharge de l'ardoise</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}

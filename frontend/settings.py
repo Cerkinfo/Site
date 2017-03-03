@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.humanize',
+    'django_extensions',
     'mathfilters',
     'django_nyt',
     'mptt',
@@ -62,6 +63,7 @@ INSTALLED_APPS = [
     'wiki.plugins.notifications',
     'wiki.plugins.images',
     'wiki.plugins.macros',
+    'materializecssform',
     'ciwiki',
     'agenda',
     'welcoming',
@@ -105,7 +107,7 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.core.context_processors.request',
+                'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
                 'sekizai.context_processors.sekizai',
             ],
@@ -149,7 +151,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
 
@@ -234,8 +238,10 @@ SUIT_CONFIG = {
     'ADMIN_NAME': 'Cerkinfo',
 }
 
+MOLLIE_API_KEY = ""
+MINIMAL_TOP_UP_AMOUNT = 5.0
+
 try:
-    from .local_settings import *  # pragma: no flakes
+    from .local_settings import * # NOQA
 except ImportError:
     print("No local settings !")
-    pass
