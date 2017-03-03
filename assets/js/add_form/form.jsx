@@ -29,7 +29,7 @@ export default class Container extends React.Component {
             this.setState({
                 messages: [
                     `Versement de ${Math.abs(r.price)}€ effectué avec succès.`
-                ]
+                ],
                 errors: [],
             });
         }).catch(error => {
