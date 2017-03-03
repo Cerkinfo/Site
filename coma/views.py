@@ -11,7 +11,7 @@ import Mollie
 
 from coma.models import MolliePayment, Transaction, Product
 from members.models import Member
-from coma.forms import PaymentForm, PurchaseForm, ProductForm, AddForm
+from coma.forms import PaymentForm
 
 
 def get_api():
