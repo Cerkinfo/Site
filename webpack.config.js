@@ -25,6 +25,10 @@ module.exports = {
     products: [
       './assets/js/products/index',
     ],
+    markdown_page: [
+      './assets/js/markdown_page/index',
+    ],
+
   },
 
   output: {

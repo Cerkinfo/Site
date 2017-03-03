@@ -2,7 +2,6 @@ from agenda.icalReader import IcalReader
 from agenda.models import Event
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import TemplateView
-from guide.models import Guide
 from members.models import AcademicYear
 import json
 import pprint
@@ -18,15 +17,10 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         try:
-            guide = Guide.objects.filter(active=True).get()
-        except:
-            guide = None
-        try:
             year_active = AcademicYear.objects.filter(active=True).get()
         except ObjectDoesNotExist:
             year_active = None
 
-        context['guide'] = guide
         context['events_dict'] = json.dumps(IcalReader(CALS_URL).get())
         context['academic_year'] = year_active
 
