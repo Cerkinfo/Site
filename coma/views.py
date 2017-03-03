@@ -2,15 +2,16 @@ from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponseForbidden
-from django.views.generic.edit import CreateView
 from django.views.generic import DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.views.generic import TemplateView
 
 import Mollie
 
 from coma.models import MolliePayment, Transaction, Product
-from coma.forms import PaymentForm, PurchaseForm, ProductForm, ProductForm
+from members.models import Member
+from coma.forms import PaymentForm, PurchaseForm, ProductForm, AddForm
 
 
 def get_api():
@@ -78,28 +79,25 @@ def finish_payment(request, id):
         return render(request, 'top_up_success.html', {'amount': -1})
 
 
-class AddToBalanceView(CreateView, UserPassesTestMixin):
+class AddToBalanceView(TemplateView, UserPassesTestMixin):
     template_name = 'add.html'
     success_url = "/"
-    form_class = ProductForm
 
     def test_func(self):
         return self.request.user.user.has_perm('coma.add_money')
 
 
-class TransactionMakerView(CreateView, UserPassesTestMixin):
+class TransactionMakerView(TemplateView, UserPassesTestMixin):
     template_name = 'reader.html'
     success_url = "/"
-    form_class = PurchaseForm
 
     def test_func(self):
         return self.request.user.user.has_perm('coma.create_purchase')
 
 
-class ProductCreationView(CreateView, UserPassesTestMixin):
+class ProductCreationView(TemplateView, UserPassesTestMixin):
     template_name = 'products.html'
     success_url = reverse_lazy('coma_products')
-    form_class = ProductForm
 
     def test_func(self):
         return self.request.user.user.has_perm('coma.can_add_product')
