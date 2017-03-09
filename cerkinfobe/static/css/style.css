@@ -8,6 +8,10 @@ body {
     padding: 0px;
 }
 
+.clear-0 {
+    margin-bottom: 0px;
+}
+
 .content {
     flex: 1;
 }
