@@ -17,16 +17,8 @@
 }
 
 img.header {
-    width: 95vh;
-    transition: width 1s ease-in-out;
-    -webkit-transition: width 1s ease-in-out;
+    width: 65vh;
     margin: 0 auto;
-}
-
-img.header:hover {
-    width: 100vh;
-    transition: width 1s ease-in-out;
-    -webkit-transition: width 1s ease-in-out;
 }
 
 /* guide style */
@@ -66,73 +58,4 @@ img.header:hover {
     margin-top: 15px;
     padding: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-.hvr-icon-wobble-horizontal:hover::before {
-    animation-duration: 1s;
-    animation-iteration-count: 1;
-    animation-name: hvr-icon-wobble-horizontal-left;
-    animation-timing-function: ease-in-out;
-
-}
-
-.hvr-icon-wobble-horizontal:hover::after {
-    animation-duration: 1s;
-    animation-iteration-count: 1;
-    animation-name: hvr-icon-wobble-horizontal-right;
-    animation-timing-function: ease-in-out;
-}
-
-.hvr-icon-wobble-horizontal::before {
-    content: ">";
-    position: absolute;
-    left: -1em;
-}
-
-.hvr-icon-wobble-horizontal::after {
-    content: "<";
-    position: absolute;
-    right: -1em;
-}
-
-@keyframes hvr-icon-wobble-horizontal-left {
-    16.65% {
-        transform: translateX(6px);
-    }
-    33.3% {
-        transform: translateX(-5px);
-    }
-    49.95% {
-        transform: translateX(4px);
-    }
-    66.6% {
-        transform: translateX(-2px);
-    }
-    83.25% {
-        transform: translateX(1px);
-    }
-    100% {
-        transform: translateX(0px);
-    }
-}
-
-@keyframes hvr-icon-wobble-horizontal-right {
-    16.65% {
-        transform: translateX(-6px);
-    }
-    33.3% {
-        transform: translateX(5px);
-    }
-    49.95% {
-        transform: translateX(-4px);
-    }
-    66.6% {
-        transform: translateX(2px);
-    }
-    83.25% {
-        transform: translateX(-1px);
-    }
-    100% {
-        transform: translateX(0px);
-    }
 }

@@ -28,6 +28,9 @@ module.exports = {
     markdown_page: [
       './assets/js/markdown_page/index',
     ],
+    hero: [
+      './assets/css/styles.scss',
+    ],
   },
 
   output: {

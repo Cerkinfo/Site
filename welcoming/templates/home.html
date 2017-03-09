@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load sekizai_tags %}
+{% load render_bundle from webpack_loader %}
 
 {% block title %}
     {{ block.super }}
@@ -11,20 +12,42 @@
 {% block content %}
     {% addtoblock "css" %}
         <link href="{% static 'css/home.css' %}" rel="stylesheet" type="text/css">
+        {% render_bundle 'hero' %}
     {% endaddtoblock %}
 
-    <div class="header_container">
-        <div class="header_container" style="
+    <section class="ui-section -hero header_container" style="
             background-size: cover;
             -webkit-background-size:cover;
             -moz-background-size:cover;
             -o-background-size:cover;
-            background-image: url({% static 'img/header.jpg' %}">
-            <div class="header-logo">
-                <img class="header img-responsive" src="{% static 'img/cerkinfo_logo.png' %}" usemap="#header-logo-map">
-            </div>
+            background-image: url({% static 'img/header.jpg' %})">
+        <div class="ui-aside">
+            <h1 class="ui-heading">
+                <span class="ui-heading-inner">
+                    <span>Cercle</span>
+                    <span>Informatique</span>
+                    <span>ULB</span>
+                </span>                
+            </h1>
         </div>
-    </div>
+        <div class="ui-content">
+            <img class="header img-responsive" src="{% static 'img/cerkinfo_logo.png' %}">
+            <div class="ui-screen"></div>
+        </div>
+    </section>
+
+    <!-- <div class="header_container"> -->
+    <!--     <div class="header_container" style=" -->
+    <!--         background-size: cover; -->
+    <!--         -webkit-background-size:cover; -->
+    <!--         -moz-background-size:cover; -->
+    <!--         -o-background-size:cover; -->
+    <!--         background-image: url({% static 'img/header.jpg' %}"> -->
+    <!--         <div class="header-logo"> -->
+    <!--             <img class="header img-responsive" src="{% static 'img/cerkinfo_logo.png' %}" usemap="#header-logo-map"> -->
+    <!--         </div> -->
+    <!--     </div> -->
+    <!-- </div> -->
 
     <div class="guide_container">
         <div class="guide_link">
