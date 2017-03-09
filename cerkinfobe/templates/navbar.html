@@ -37,13 +37,12 @@
         <li><a href="{% url "coma_reader" %}"><i class="material-icons">redeem</i>Passer une transaction</a></li>
     {% endif %}
 </ul>
-{% endif %}
-
+{% else %}
 <!-- Not logged form -->
 <div id="no-auth-modal" class="modal">
     <div class="modal-content">
         <div class="row">
-            <div class="col s6">
+            <div class="col m12 l6">
                 <h4>Se connecter</h4>
                 <form class="form" role="form" method="post"
                         action="{% url 'login' %}"
@@ -79,7 +78,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col s6 center-align">
+            <div class="col m12 l6 center-align">
                 <div class="valign card-panel white-text purple darken-4">
                     <img class="responsive-img circle" src="{% static "img/register.jpg" %}">
                     <div class="row">
@@ -94,7 +93,7 @@
         </div>
     </div>
 </div>
-<!-- End for login form -->
+{% endif %}
 
 <!-- Mobile Sliding Menu -->
 <ul id="sliding_mobile_menu" class="side-nav">
