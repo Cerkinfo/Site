@@ -15,25 +15,23 @@
 {% endaddtoblock %}
 
 <div class="row profile_content">
-    <div class="col s3">
+    <div class="col s2 m2 l12"></div>
+    <div class="col s8 m8 l4">
         <div class="card hoverable">
-            <div class="card-image waves-effect waves-block waves-light">
+            <div class="card-image">
                 <img src="{{ object.image_url }}" alt="{{ object }}" class="activator"/>
+                {% if object.user == user %}
+                    <a href="{% url 'user_edit' %}" class="btn-floating btn halfway-fab waves-effect waves-light red">
+                        <i class="material-icons">mode_edit</i>
+                    </a>
+                {% endif %}
             </div>
             <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4">
-                    {% if object.user.first_name or object.user.last_name %}
+                    {% if object.user.first_name and object.user.last_name %}
                         {{ object.user.first_name }} {{ object.user.last_name }}
                     {% else %}
                         {{ object.username }}
-                    {% endif %}
-                    {% if object.user == user %}
-                        (
-                        <a href="{% url 'user_edit' %}">
-                            editer
-                            <i class="material-icons">mode_edit</i>
-                        </a>
-                        )
                     {% endif %}
                     <i class="material-icons right">more_vert</i>
                 </span>
@@ -57,8 +55,8 @@
             </div>
         </div>
     </div>
-    <div class="col s1"></div>
-    <div class="col s7">
+    <div class="col s2 m2 l1"></div>
+    <div class="col s12 m12 l6">
         <div class="career">
             <h2>Comités de Cercle</h2>
             <ul>
@@ -92,7 +90,7 @@
             </ul>
         </div>
     </div>
-    <div class="col s1"></div>
+    <div class="col s12 m12 l1"></div>
 </div>
 
 {% endblock %}
