@@ -2,9 +2,12 @@
 {% load sekizai_tags metron_tags %}
 {% load render_bundle from webpack_loader %}
 
-{% include 'card.html' with card_id=request.user.member.card_id %}
+{% if request.user.is_authenticated %}
+  {% include 'card.html' with card_id=request.user.member.card_id %}
+{% endif %}
 
 <!-- Logged side bar -->
+{% if request.user.is_authenticated %}
 <ul id="slide-out" class="side-nav">
     <li>
         <div class="userView">
@@ -34,6 +37,7 @@
         <li><a href="{% url "coma_reader" %}"><i class="material-icons">redeem</i>Passer une transaction</a></li>
     {% endif %}
 </ul>
+{% endif %}
 
 <!-- Not logged form -->
 <div id="no-auth-modal" class="modal">
