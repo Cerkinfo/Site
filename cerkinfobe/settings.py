@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import logging.config
-import raven
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -27,7 +26,9 @@ SECRET_KEY = '0q8t-hewxi3_k2i^9$55hnmto))*!rv0&^tgo8pg7apih4q)@z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+]
 
 WEBPACK_LOADER = {
     'DEFAULT': {
@@ -241,9 +242,6 @@ SUIT_CONFIG = {
 
 MOLLIE_API_KEY = ""
 MINIMAL_TOP_UP_AMOUNT = 5.0
-
-from raven.contrib.django.raven_compat.models import client
-client.captureException()
 
 try:
     from .local_settings import *  # noqa
