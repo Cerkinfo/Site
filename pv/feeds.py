@@ -8,7 +8,7 @@ class LatestPVFeed(Feed):
     description = "Dernier procès-verbaux du Cercle Informatique"
 
     def items(self):
-        return PV.objects.all().order_by('-meeting_date')[:10]
+        return PV.objects.all().order_by('-upload_date')[:10]
 
     def item_link(self, item):
         return item.ressource.url
