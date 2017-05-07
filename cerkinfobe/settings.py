@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'mathfilters',
     'django_nyt',
     'mptt',
-    'django_material_dynamic_formsets',
     'metron',
     'sekizai',
     'sorl.thumbnail',
