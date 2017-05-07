@@ -16,14 +16,14 @@ export default class Products extends React.Component {
     }
 
     componentDidMount () {
-        axios.get('/fr/api/v1/product/')
+        axios.get('/api/v1/product/')
             .then(json => {
                 this.setState({products: json.data});
             });
     }
 
     handleSubmit (product) {
-        axios.post('/fr/api/v1/product/', product, {
+        axios.post('/api/v1/product/', product, {
             headers: {
                 'X-CSRFToken': cookie.load('csrftoken'),
             }

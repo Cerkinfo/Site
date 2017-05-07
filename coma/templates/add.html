@@ -30,7 +30,7 @@
         {% endfor %}
     {% endif %}
 
-    <form action="/fr/api/v1/transaction/" class="form" method="post" enctype="multipart/form-data">
+    <form action="/api/v1/transaction/" class="form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input value="1" name="quantity" id="quantity" hidden>
         <input value="Versement sur l'ardoise" name="comment" id="comment" hidden>

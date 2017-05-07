@@ -18,7 +18,7 @@ export default class Select extends React.Component {
     }
 
     componentDidMount () {
-        axios.get('/fr/api/v1/product/') 
+        axios.get('/api/v1/product/') 
             .then(json => {
                 this.setState({
                     products: json.data,

@@ -19,7 +19,7 @@ export default class Container extends React.Component {
     }
 
     handleSubmit (transaction) {
-        axios.post('/fr/api/v1/transaction/', transaction, {
+        axios.post('/api/v1/transaction/', transaction, {
             headers: {
                 'X-CSRFToken': cookie.load('csrftoken'),
             } 

@@ -36,7 +36,7 @@ class Entry extends React.Component {
 
     searchMember (search) {
         if (search.length > 2) {
-            axios.get('/fr/api/v1/member?search=' + search)
+            axios.get('/api/v1/member?search=' + search)
                 .then(json => {
                     this.setState({
                         users: json.data,

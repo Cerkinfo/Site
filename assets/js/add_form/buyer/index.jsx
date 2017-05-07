@@ -23,7 +23,7 @@ class BuyerForm extends React.Component {
     }
 
     barcodeScanned (barcode) {
-        axios.get('/fr/api/v1/check_membership/' + barcode)
+        axios.get('/api/v1/check_membership/' + barcode)
             .then(json => {
                 if (Array.isArray(json) && json.length == 1) {
                     this.setState({barcode: json[0]});
