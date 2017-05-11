@@ -1,92 +1,94 @@
-const React = require('react');
-const Collapse = require('react-collapse');
+// @flow
+import React, { Component } from 'react';
 require('./SpaceAPIPin.scss');
 
-class SpaceAPIPin extends React.Component {
-  constructor (props) {
+type Props = {
+  url: string,
+  offsetLeft: number,
+  offsetTop: number,
+};
+
+type DefaultProps = {
+  offsetLeft: number,
+  offsetTop: number,
+};
+
+type State = {
+  url: string,
+  api: Object,
+  checked: boolean,
+};
+
+export default class SpaceAPIPin extends Component<DefaultProps, Props, State> {
+  static defaultProps = {
+    offsetLeft: 0,
+    offsetTop: 0,
+  };
+
+  state = {
+    url: this.props.url,
+    api: {},
+    checked: false,
+  };
+
+  constructor(props: Props) {
     super(props);
-
-    this.state = {
-      url: this.props.url,
-      api: null,
-      checked: false,
-    };
-
-    this.download(this.state.url);
-
-    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick () {
+  handleClick() {
     this.setState({
       checked: !(this.state.checked),
     });
   }
 
-  download (link) {
-    fetch(link).then((res) => {
-      console.log(res.url);
-      if (res.status !== 200) {  
-        throw ('Wrong Status Code: ' + res.status);  
+  componentDidMount() {
+    fetch(this.state.url).then((res) => {
+      if (res.status !== 200) {
+        throw new Error('Wrong Status Code: ' + res.status);
       }
 
       return res.json();
-    }).then(json => {
+    }).then((json) => {
       this.setState({
         api: json,
       });
-    }).catch(err => {
+    }).catch((err) => {
       console.log(err);
     });
-  } 
+  }
 
-  _formatDate (open, date) {
-    const format = date.getDate() + '/' + date.getMonth() + ' ' + date.getHours() + 'h';
-    return (open ? 'Ouvert' : 'Fermé') + ' depuis ' + format + '.';
+  static _formatDate(open: Boolean, date: Date) {
+    const day = date.getDate();
+    const month = date.getMonth();
+    const hour = date.getHours();
+    return `${open ? 'Ouvert' : 'Fermé'} depuis ${day}/${month} ${hour}h.`;
   }
 
   render() {
     const api = this.state.api;
     if (!api) {
-      return null;    
+      return null;
     }
 
     const style = {
-      left: this.props.offsetLeft + 'px',
-      top: this.props.offsetTop + 'px',
+      left: `${this.props.offsetLeft} px`,
+      top: `${this.props.offsetTop} px`,
     };
 
     const open = api.state.open;
-    const date = new Date(api.state.lastchange * 1000);
     const colorStyle = {
-      color: open ? "green" : "red",
+      color: open ? 'green' : 'red',
     };
 
     return (
-      <div style={ style } className="space-state">
-        <div onClick={this.handleClick} className={"space-state-box " + (this.state.checked ? 'checked' : 'unchecked')}>
-          <b style={ colorStyle }>●</b> { open ? "Ouvert" : "Fermé" }
-          <Collapse isOpened={ this.state.checked }>
-            <div className="space-status">
-              {this._formatDate(open, date)}
-            </div>
-          </Collapse>
-
+      <div style={style} className="space-state">
+        <div
+          onClick={this.handleClick.bind(this)}
+          className={`space-state-box ${this.state.checked ? 'checked' : 'unchecked'}`}
+        >
+          <b style={colorStyle}>●</b> {open ? 'Ouvert' : 'Fermé'}
         </div>
       </div>
     );
   }
 }
-
-SpaceAPIPin.propTypes = {
-  url: React.PropTypes.string.isRequired,
-  offsetLeft: React.PropTypes.number,
-  offsetTop: React.PropTypes.number,
-};
-
-SpaceAPIPin.defaultProps = {
-  offsetLeft: 0,
-  offsetTop: 0,
-};
-
-module.exports.SpaceAPIPin = SpaceAPIPin;
