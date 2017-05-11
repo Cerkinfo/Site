@@ -59,9 +59,12 @@ module.exports = {
         loader: 'babel-loader',
         query: {
           presets: [
-            ['es2017', { modules: false }],
+            'es2017',
             'react',
             'flow'
+          ], 
+          plugins: [
+            ["transform-class-properties", { "spec": true }],
           ]
         }
       }, {
