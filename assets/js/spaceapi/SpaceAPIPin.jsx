@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import axios from 'axios';
 require('./SpaceAPIPin.scss');
 
 type Props = {
@@ -14,7 +15,6 @@ type DefaultProps = {
 };
 
 type State = {
-  url: string,
   api: Object,
   checked: boolean,
 };
@@ -26,7 +26,6 @@ export default class SpaceAPIPin extends Component<DefaultProps, Props, State> {
   };
 
   state = {
-    url: this.props.url,
     api: {},
     checked: false,
   };
@@ -41,20 +40,10 @@ export default class SpaceAPIPin extends Component<DefaultProps, Props, State> {
     });
   }
 
-  componentDidMount() {
-    fetch(this.state.url).then((res) => {
-      if (res.status !== 200) {
-        throw new Error('Wrong Status Code: ' + res.status);
-      }
-
-      return res.json();
-    }).then((json) => {
-      this.setState({
-        api: json,
-      });
-    }).catch((err) => {
-      console.log(err);
-    });
+  componentWillMount() {
+    axios.get(this.props.url, {headers: {'Access-Control-Allow-Origin': '*'}})
+      .then(x => this.setState({api: x.data}))
+      .catch(x => console.log(x));
   }
 
   static _formatDate(open: Boolean, date: Date) {
@@ -66,7 +55,7 @@ export default class SpaceAPIPin extends Component<DefaultProps, Props, State> {
 
   render() {
     const api = this.state.api;
-    if (!api) {
+    if (api == {}) {
       return null;
     }
 
