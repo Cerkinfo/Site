@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load sekizai_tags metron_tags %}
 {% load static %}
-{% load material_dynamic_formsets %}
 
 {% block title %}
     {{ block.super }}
@@ -37,15 +36,7 @@
             </div>
 
             <h5>Comité de Cercle</h5>
-            {% material_dynamic_formset comite_form can_delete=True layout="horizontal" %}
-            <!-- {% for hidden in comite_form.hidden_fields %} -->
-            <!--     {{ hidden }} -->
-            <!-- {% endfor %} -->
             <h5>Parcours Folklorique</h5>
-            {% material_dynamic_formset folklo_form can_delete=True layout="horizontal" %}
-            <!-- {% for hidden in folklo_form.hidden_fields %} -->
-            <!--     {{ hidden }} -->
-            <!-- {% endfor %} -->
             <button type="submit" class="btn btn-primary">
                 Envoyer
                 <i class="material-icons right">send</i>

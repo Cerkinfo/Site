@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load material_dynamic_formsets %}
 {% load static %}
 
 {% block title %}
@@ -25,25 +24,9 @@
             {% csrf_token %}
             <div class="row">
                 <h2>Comité de Cercle</h2>
-                {% material_dynamic_formset comite_cercle_form can_delete=True layout="horizontal" id_formset='cercle'%}
-                {% for hidden in comite_cercle_form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
                 <h2>Comité de Baptême</h2>
-                {% material_dynamic_formset comite_bapteme_form can_delete=True layout="horizontal" %}
-                {% for hidden in comite_bapteme_form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
                 <h2>Toges de cercle</h2>
-                {% material_dynamic_formset bapt_cercle_form can_delete=True layout="horizontal" %}
-                {% for hidden in bapt_cercle_form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
                 <h2>Bleus</h2>
-                {% material_dynamic_formset bleu_form can_delete=True layout="horizontal" %}
-                {% for hidden in bleu_form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
             </div>
             <div class="row">
                 <button type="submit" class="btn btn-primary">
