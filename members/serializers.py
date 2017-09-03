@@ -31,7 +31,7 @@ class MemberCardSerializer(serializers.BaseSerializer):
     paid = serializers.BooleanField(default=False)
 
 
-class FullMemberSerializer(serializers.ModelSerializer):
+class MemberSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     surnames = serializers.StringRelatedField(many=True)
     memberships = MembershipSerializer(source='comitemembership_set', read_only=True, many=True)
@@ -48,20 +48,10 @@ class FullMemberSerializer(serializers.ModelSerializer):
             'memberships'
         )
 
+
 class MemberMembershipQuerySerializer(serializers.Serializer):
     """
     """
     status = serializers.BooleanField(required=True)
     error = serializers.CharField(required=False, max_length=100, allow_blank=True)
-    member = FullMemberSerializer(required=False) # TODO Not well rendered
-
-class MemberSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-
-    class Meta:
-        model = Member
-        fields = (
-            'id',
-            'avatar',
-            'user',
-        )
+    member = MemberSerializer(required=False) # TODO Not well rendered
