@@ -28,9 +28,6 @@ module.exports = {
     markdown_page: [
       './assets/js/markdown_page/index'
     ],
-    image_upload: [
-      './assets/js/image_upload/index'
-    ],
     hero: [
       './assets/css/styles.scss'
     ]
