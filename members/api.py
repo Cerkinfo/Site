@@ -2,7 +2,7 @@ from rest_framework import mixins
 from rest_framework import filters
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 
 from members.models import Member, ComiteMembership, AcademicYear
@@ -22,25 +22,12 @@ class MemberViewSet(mixins.RetrieveModelMixin,
     )
     search_fields = ('user__username', 'user__first_name', 'user__last_name')
 
-    @detail_route(methods=['get', 'post'])
-    def self(self, request, pk=None):
-        serializer = MemberSerializer(data=request.user)
-        return serializer.data
-
-
-class FullMemberViewSet(mixins.RetrieveModelMixin,
-        mixins.ListModelMixin,
-        viewsets.GenericViewSet):
-    """
-    @desc: API to visualize cerkinfo's members with full details.
-    """
-    queryset = Member.objects.all()
-    serializer_class = MemberSerializer
-    filter_backends = (
-        filters.SearchFilter,
-        filters.OrderingFilter
-    )
-    search_fields = ('user__username', 'user__first_name', 'user__last_name')
+    @list_route(methods=['get', 'post'])
+    def self(self, request, pk=None, **kwargs):
+        current = Member.objects.get(user=request.user)
+        print(current)
+        serializer = MemberSerializer(current)
+        return Response(serializer.data)
 
     @detail_route(methods=['post'])
     def register_member_card(self, request, pk=None):
