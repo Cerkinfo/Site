@@ -1,13 +1,18 @@
 {% load staticfiles %}
 {% load sekizai_tags metron_tags %}
 {% load render_bundle from webpack_loader %}
-
 <!DOCTYPE html>
 <html>
 <head>
-    {% render_block "css" %}
 
+    {% render_block "css" %}
     {% render_block "js" %}
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/img/favicon/manifest.json">
+    <meta name="theme-color" content="#ffffff">
 
     <title>{% block title %}CI - {% endblock %}</title>
 
@@ -49,7 +54,7 @@
 
 {% addtoblock "js" %}
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>   
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 {% endaddtoblock %}
 
