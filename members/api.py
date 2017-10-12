@@ -25,7 +25,6 @@ class MemberViewSet(mixins.RetrieveModelMixin,
     @list_route(methods=['get', 'post'])
     def self(self, request, pk=None, **kwargs):
         current = Member.objects.get(user=request.user)
-        print(current)
         serializer = MemberSerializer(current)
         return Response(serializer.data)
 
