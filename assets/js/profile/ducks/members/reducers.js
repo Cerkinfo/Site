@@ -2,26 +2,29 @@ import { combineReducers } from 'redux';
 import types from './types';
 import { createReducer } from '../utils';
 
-const selfReducer = createReducer({}, () => ({
-  [types.FETCH_ME_COMPLETED]: (state, action) => {
-    console.log(state);
-    console.log(action);
-    return action.payload;
-  },
-}));
+function selfReducer (state = {}, action) {
+  console.log(action, state);
+  switch (action.type) {
+    case 'members/FETCH_SELF_COMPLETED':
+      return Object.assign({}, state, action.payload);
+    default:
+      return state
+  }
+}
+//const selfReducer = createReducer({}, () => ({
+//  [types.FETCH_SELF_COMPLETED]: (state, action) => {
+//    return action.payload;
+//  },
+//}));
 
 const membersReducer = createReducer({}, () => ({
   [types.FETCH_LIST_COMPLETED]: (state, action) => {
-    console.log(state);
-    console.log(action);
   },
   [types.FETCH_DETAIL_COMPLETED]: (state, action) => {
-    console.log(state);
-    console.log(action);
   },
 }));
 
 export default combineReducers({
-  self: selfReducers,
-  members: membersReducers,
+  self: selfReducer,
+  members: membersReducer,
 });

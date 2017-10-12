@@ -7,7 +7,7 @@ const API_ENDPOINT = 'member/';
 
 export const fetchSelf = () => ({
   [CALL_API]: {
-    endpoint: `${API + API_ENDPOINT}/self.json`,
+    endpoint: `${API + API_ENDPOINT}self.json`,
     method: 'GET',
     headers: {
       'X-CSRFToken': cookie.load('csrftoken'),

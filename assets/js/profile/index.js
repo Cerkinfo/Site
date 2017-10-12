@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import configureStore from './store';
 import Profile from './components/Profile';
 import {
   BrowserRouter as Router,
@@ -7,18 +9,14 @@ import {
   Link
 } from 'react-router-dom';
 
-const Test = () => (
-  <div>
-    test
-  </div>
-);
-
 const Main = () => (
-  <Router>
-    <div>
-      <Route path="/:lang/cipedia/:id" component={Test}/>
-    </div>
-  </Router>
+  <Provider store={configureStore({})}>
+    <Router>
+      <div>
+        <Route path="/:lang/cipedia/member/:id" component={Profile}/>
+      </div>
+    </Router>
+  </Provider>
 );
 
 ReactDOM.render(<Main/>,
