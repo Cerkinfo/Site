@@ -9,6 +9,7 @@ import { Row, Col, Card, } from 'react-materialize';
 
 class Profile extends React.Component {
   componentWillMount() {
+    this.props.fetchSelf();
     this.props.fetchDetail(this.props.match.params.id);
   }
 
@@ -20,8 +21,12 @@ class Profile extends React.Component {
     return _.flatten(current.memberships.map(x => x.postes.filter(x => x.is_bapteme)));
   }
 
-  isSelf() {
+  isSelf(current) {
+    if (!this.props.self.hasOwnProperty('id')) {
+        return false;
+    }
 
+    return this.props.self.id === current.id;
   }
 
   render() {
@@ -36,7 +41,7 @@ class Profile extends React.Component {
         <Col s={2} m={2} l={12}/>
         <Col s={8} m={8} l={4}>
           <Card
-            header={<Avatar/>}
+            header={<Avatar avatar={current.avatar}/>}
             title={
               <span className="grey-text text-darken-4">
                 { current.first_name && current.last_name
@@ -60,7 +65,7 @@ class Profile extends React.Component {
                 Ardoise: {current.balance} €
               </p>
             : null}
-            { current ? (
+            { this.isSelf(current) ? (
               <div className="card-action">
                 <a className="waves-effect waves-light btn" href="#barcode_modal">Carte membre</a>
               </div>
@@ -100,8 +105,9 @@ const mapDispatchToProps = dispatch => ({
   fetchDetail: (id) => dispatch(membersOperations.fetchDetail(id)),
 });
 
-const mapStateToProps = ({ members: { members, }, }) => ({
+const mapStateToProps = ({ members: { members, self, }, }) => ({
   members,
+  self,
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
