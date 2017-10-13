@@ -6,11 +6,12 @@ import Profile from './components/Profile';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  browserHistory,
 } from 'react-router-dom';
 
 const Main = () => (
-  <Provider store={configureStore({})}>
+  <Provider store={configureStore({})} history={browserHistory}>
     <Router>
       <div>
         <Route path="/:lang/cipedia/member/:id" component={Profile}/>

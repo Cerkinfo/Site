@@ -1,19 +1,33 @@
 import React from 'react';
 import Avatar from './Avatar';
+import YearList from './YearList';
+import _ from 'lodash';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { membersOperations } from '../ducks/members/';
 import { Row, Col, Card, } from 'react-materialize';
 
 class Profile extends React.Component {
   componentWillMount() {
-    this.props.fetchSelf();
+    this.props.fetchDetail(this.props.match.params.id);
   }
 
-  isSelf () {
+  getBapteme(current) {
+    return _.flatten(current.memberships.map(x => x.postes.filter(x => !x.is_bapteme)));
+  }
+
+  getPoste(current) {
+    return _.flatten(current.memberships.map(x => x.postes.filter(x => x.is_bapteme)));
+  }
+
+  isSelf() {
+
   }
 
   render() {
-    if (!this.props.self.hasOwnProperty("id")) {
+    const current = this.props.members[this.props.match.params.id] || {};
+
+    if (!current.hasOwnProperty("id")) {
       return (<div>Loading</div>);
     }
 
@@ -25,28 +39,28 @@ class Profile extends React.Component {
             header={<Avatar/>}
             title={
               <span className="grey-text text-darken-4">
-                { this.props.self.first_name && this.props.self.last_name
-                  ? `${this.props.self.first_name} ${this.props.self.last_name}`
-                  : this.props.self.username
+                { current.first_name && current.last_name
+                  ? `${current.first_name} ${current.last_name}`
+                  : current.username
                 }
               </span>
             }
             reveal={
               <div>
                 <span className="card-title grey-text text-darken-4">Surnoms<i className="material-icons right">close</i></span>
-                {this.props.self.surnames.map(x => (<p key={x} className="grey-text text-darken-4">{x}</p>))}
+                {current.surnames.map(x => (<p key={x} className="grey-text text-darken-4">{x}</p>))}
               </div>
             }
           >
             <p className="grey-text text-darken-4">
-                {this.props.self.birthdate}
+                {current.birthdate}
             </p>
-            { this.props.self.hasOwnProperty('ardoise') ?
+            { current.hasOwnProperty('ardoise') ?
               <p className="grey-text text-darken-4">
-                Ardoise: {this.props.self.balance} €
+                Ardoise: {current.balance} €
               </p>
             : null}
-            { this.props.self ? (
+            { current ? (
               <div className="card-action">
                 <a className="waves-effect waves-light btn" href="#barcode_modal">Carte membre</a>
               </div>
@@ -56,17 +70,17 @@ class Profile extends React.Component {
         <Col s={2} m={2} l={1}/>
         <Col s={12} m={12} l={6}>
           <div className="career">
-            <h2>Comités de Cercle</h2>
-            <ul>
-              {this.props.self.memberships.map(x => x.postes.filter(x => x.is_bapteme).map(x => <div>{x.name}<br/></div>))}
-            </ul>
+            <YearList
+              title="Comités de Cercle"
+              content={this.getPoste(current)}
+            />
 
             <div className="divider"></div>
 
-            <h2>Parcours Folklorique</h2>
-            <ul>
-              {this.props.self.memberships.map(x => x.postes.filter(x => !x.is_bapteme).map(x => <div>{x.name}<br/></div>))}
-            </ul>
+            <YearList
+              title="Parcours Folklorique"
+              content={this.getBapteme(current)}
+            />
           </div>
 
           <div className="divider"></div>
@@ -83,11 +97,11 @@ class Profile extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   fetchSelf: () => dispatch(membersOperations.fetchSelf()),
-  fetchDetail: () => dispatch(membersOperations.fetchDetail()),
+  fetchDetail: (id) => dispatch(membersOperations.fetchDetail(id)),
 });
 
-const mapStateToProps = ({ members: { self, }, }) => ({
-  self,
+const mapStateToProps = ({ members: { members, }, }) => ({
+  members,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));

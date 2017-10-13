@@ -62,9 +62,11 @@ module.exports = {
             'es2017',
             'react',
             'flow',
+
           ],
           plugins: [
             ['transform-class-properties', { spec: true, }, ],
+            ['transform-object-rest-spread'],
           ],
         },
       }, {
