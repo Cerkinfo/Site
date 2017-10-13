@@ -20,8 +20,11 @@ class HomeView(TemplateView):
             year_active = AcademicYear.objects.filter(active=True).get()
         except ObjectDoesNotExist:
             year_active = None
+        try:
+            context['events_dict'] = json.dumps(IcalReader(CALS_URL).get())
+        except:
+            context['events_dict'] = "[]"
 
-        context['events_dict'] = json.dumps(IcalReader(CALS_URL).get())
         context['academic_year'] = year_active
 
         return context
