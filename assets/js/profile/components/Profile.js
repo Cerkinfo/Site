@@ -14,11 +14,31 @@ class Profile extends React.Component {
   }
 
   getBapteme(current) {
-    return _.flatten(current.memberships.map(x => x.postes.filter(x => !x.is_bapteme)));
+    return _.flatten(
+      current.memberships.map(
+        x => x.postes.filter(x => !x.is_bapteme).map(
+          y => ({
+            ...y,
+            start: x.year.start,
+            stop: x.year.stop,
+          })
+        )
+      )
+    );
   }
 
   getPoste(current) {
-    return _.flatten(current.memberships.map(x => x.postes.filter(x => x.is_bapteme)));
+    return _.flatten(
+      current.memberships.map(
+        x => x.postes.filter(x => x.is_bapteme).map(
+          y => ({
+            ...y,
+            start: x.year.start,
+            stop: x.year.stop,
+          })
+        )
+      )
+    );
   }
 
   isSelf(current) {

@@ -1,12 +1,13 @@
 import React from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { membersOperations } from '../ducks/members/';
 import { Row, Col, Card, } from 'react-materialize';
 
-const Entry = ({ name, }) => {
+const Entry = ({ name, start, stop, }) => {
   return (
     <li>
-      {name}
+      {moment(start).year()} - {moment(stop).year()}: {name}
     </li>
   );
 }
@@ -17,7 +18,7 @@ const YearList = ({ title, content }) => {
     <div>
       <h2>{title}</h2>
       <ul>
-        {content.map(x => (<Entry name={x.name}/>))}
+        {content.map(x => (<Entry name={x.name} start={x.start} stop={x.stop}/>))}
       </ul>
     </div>
   );
