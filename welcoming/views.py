@@ -8,7 +8,7 @@ import pprint
 
 CALS_URL = [
         "https://calendar.google.com/calendar/ical/b6s2tn7vm5mr8cl4sdq1m9qp0o%40group.calendar.google.com/public/basic.ics",
-        "https://wallflux.com/events/370305636381641",
+        "https://wallflux.com/feed/370305636381641",
 ]
 
 class HomeView(TemplateView):
@@ -20,8 +20,11 @@ class HomeView(TemplateView):
             year_active = AcademicYear.objects.filter(active=True).get()
         except ObjectDoesNotExist:
             year_active = None
+        try:
+            context['events_dict'] = json.dumps(IcalReader(CALS_URL).get())
+        except:
+            context['events_dict'] = "[]"
 
-        context['events_dict'] = json.dumps(IcalReader(CALS_URL).get())
         context['academic_year'] = year_active
 
         return context
