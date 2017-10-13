@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from members.models import Member, ComiteMembership, ComitePoste
+from members.models import Member, ComiteMembership, ComitePoste, AcademicYear
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,13 +15,18 @@ class ComitePostSerializer(serializers.ModelSerializer):
         model = ComitePoste
         fields = ('name', 'slug', 'email', 'is_bureau', 'is_bapteme')
 
+class AcademicYearSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AcademicYear
+        fields = ('start', 'stop',)
 
 class MembershipSerializer(serializers.ModelSerializer):
     postes = ComitePostSerializer(read_only=True, many=True)
+    year = AcademicYearSerializer(read_only=True)
 
     class Meta:
         model = ComiteMembership
-        fields = '__all__'
+        exclude = ('member',)
 
 
 class MemberCardSerializer(serializers.BaseSerializer):
