@@ -10,7 +10,6 @@ import { Row, Col, Card, } from 'react-materialize';
 const avatarUrl = 'http://www.gravatar.com/avatar/f26f9290731a749a7fbc9ad6fd080827?s=300&d=http%3A%2F%2Fcerkinfo.be%2Fmedia%2F%2Fimages%2Fmembers%2Fdefault-person.png';
 
 const Avatar = ({ avatar, }) => {
-  console.log(avatar);
   return (
     <div>
       <CardTitle reveal image={avatar ? avatar : avatarUrl } waves='light'/>
@@ -34,8 +33,6 @@ const MembershipMarker = ({infos}) => {
   if (!currentYear) {
     return null;
   }
-
-  console.log(currentYear);
 
   if (currentYear.paid) {
     return (
