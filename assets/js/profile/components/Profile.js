@@ -1,5 +1,5 @@
 import React from 'react';
-import Avatar from './Avatar';
+import AsideInfo from './AsideInfo';
 import YearList from './YearList';
 import _ from 'lodash';
 import { withRouter } from 'react-router';
@@ -60,37 +60,7 @@ class Profile extends React.Component {
       <Row className="profile_content">
         <Col s={2} m={2} l={12}/>
         <Col s={8} m={8} l={4}>
-          <Card
-            header={<Avatar avatar={current.avatar}/>}
-            title={
-              <span className="grey-text text-darken-4">
-                { current.first_name && current.last_name
-                  ? `${current.first_name} ${current.last_name}`
-                  : current.username
-                }
-              </span>
-            }
-            reveal={
-              <div>
-                <span className="card-title grey-text text-darken-4">Surnoms<i className="material-icons right">close</i></span>
-                {current.surnames.map(x => (<p key={x} className="grey-text text-darken-4">{x}</p>))}
-              </div>
-            }
-          >
-            <p className="grey-text text-darken-4">
-                {current.birthdate}
-            </p>
-            { current.hasOwnProperty('ardoise') ?
-              <p className="grey-text text-darken-4">
-                Ardoise: {current.balance} €
-              </p>
-            : null}
-            { this.isSelf(current) ? (
-              <div className="card-action">
-                <a className="waves-effect waves-light btn" href="#barcode_modal">Carte membre</a>
-              </div>
-            ) : null }
-          </Card>
+          <AsideInfo infos={current} isSelf={true}/>
         </Col>
         <Col s={2} m={2} l={1}/>
         <Col s={12} m={12} l={6}>
