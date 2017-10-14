@@ -192,6 +192,9 @@ class AcademicYear(models.Model):
     slug = models.CharField(max_length=4)
     active = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.start
+
     def is_current(self):
         """
         @desc: Si l'année est celle qui est en cours.

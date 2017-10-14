@@ -29,7 +29,7 @@ export default class Products extends React.Component {
             }
         }).then(json => {
             if (json.data.error) {
-            
+
             } else {
                 const tmp = this.state.products;
                 tmp.push(json.data);
@@ -42,7 +42,7 @@ export default class Products extends React.Component {
 
     render_products () {
         const style = {
-            color: 'grey', 
+            color: 'grey',
         };
 
         return this.state.products.map(x => {
@@ -64,7 +64,7 @@ export default class Products extends React.Component {
             <div>
                 <Collection>
                     {this.render_products()}
-                </Collection> 
+                </Collection>
                 <Modal
                     header='Ajouter un produit à vendre.'
                     actions={null}
@@ -73,7 +73,7 @@ export default class Products extends React.Component {
                     }
                 >
                     <Provider store={ store }>
-                        <Form 
+                        <Form
                             model='product'
                             onSubmit={product => this.handleSubmit(product)}
                         >

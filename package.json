@@ -23,6 +23,7 @@
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.11.1",
@@ -49,6 +50,7 @@
     "axios": "^0.15.3",
     "install": "^0.8.4",
     "jsbarcode": "^3.5.5",
+    "lodash": "^4.17.4",
     "moment": "^2.14.1",
     "quagga": "^0.11.5",
     "react": "^15.3.1",
@@ -71,6 +73,7 @@
     "react-selectize": "^2.1.0",
     "redux": "^3.6.0",
     "redux-api-middleware": "^2.0.0-beta.3",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
   }
 }
