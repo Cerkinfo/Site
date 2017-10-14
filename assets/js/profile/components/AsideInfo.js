@@ -11,12 +11,11 @@ const avatarUrl = 'http://www.gravatar.com/avatar/f26f9290731a749a7fbc9ad6fd0808
 
 const Avatar = ({ avatar, }) => {
   return (
-    <div>
-      <CardTitle reveal image={avatar ? avatar : avatarUrl } waves='light'/>
-      <a href="" className="btn-floating btn halfway-fab waves-effect waves-light red">
+    <CardTitle reveal image={avatar ? avatar : avatarUrl } waves='light'>
+      <a href="#" className="btn-floating btn halfway-fab waves-effect waves-light red" style={{bottom: "25px", right: "-4px"}}>
         <i className="material-icons">mode_edit</i>
       </a>
-    </div>
+    </CardTitle>
   );
 }
 
