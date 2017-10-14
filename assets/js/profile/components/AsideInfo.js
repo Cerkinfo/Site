@@ -20,7 +20,7 @@ const Avatar = ({ avatar, }) => {
   );
 }
 
-const MembershipMarker = ({infos}) => {
+const MembershipMarker = ({ infos, }) => {
   if (!infos.hasOwnProperty('memberships')) {
     return null;
   }
@@ -43,7 +43,7 @@ const MembershipMarker = ({infos}) => {
     );
   }}
 
-const BirthDay = ({ infos }) => {
+const BirthDay = ({ infos, }) => {
   const BirthDayCake = () => (
     <i className="fa fa-birthday-cake" aria-hidden="true"/>
   )
@@ -59,14 +59,14 @@ const BirthDay = ({ infos }) => {
   );
 }
 
-const AsideInfo = ({ infos, isSelf }) => {
+const AsideInfo = ({ infos, isSelf, }) => {
   const getName = (infos) => (
     infos.hasOwnProperty('user') && infos.user
       ? infos.user.hasOwnProperty('first_name') && infos.user.hasOwnProperty('last_name')
         ? `${infos.user.first_name} ${infos.user.last_name}`
         :  infos.user.username
       : "null"
-    );
+  );
 
   return (
     <Card
