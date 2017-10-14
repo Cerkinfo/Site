@@ -60,7 +60,7 @@ class Profile extends React.Component {
       <Row className="profile_content">
         <Col s={2} m={2} l={12}/>
         <Col s={8} m={8} l={4}>
-          <AsideInfo infos={current} isSelf={true}/>
+          <AsideInfo infos={current} isSelf={this.isSelf(current)}/>
         </Col>
         <Col s={2} m={2} l={1}/>
         <Col s={12} m={12} l={6}>
