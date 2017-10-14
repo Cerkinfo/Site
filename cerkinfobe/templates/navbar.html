@@ -17,7 +17,7 @@
             <br>
         </div>
     </li>
-    <li><a href="{% url "profile" %}"><i class="material-icons">perm_identity</i>Profil</a></li>
+    <li><a href="{% url "profile" %}{{ request.user.id }}"><i class="material-icons">perm_identity</i>Profil</a></li>
     <li><a href="#barcode_modal"><i class="material-icons">credit_card</i>Carte membre</a></li>                                                                                 
     <li><a href="{% url "password_change" %}"><i class="material-icons">loop</i>Changer de mot de passe</a></li>
     <li><a href="{% url "logout" %}?next=/"><i class="material-icons">settings_power</i>Déconnexion</a></li>
