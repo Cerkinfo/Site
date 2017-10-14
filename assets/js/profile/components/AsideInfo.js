@@ -78,7 +78,7 @@ const AsideInfo = ({ infos, isSelf, }) => {
       }
       reveal={
         <div>
-          <span className="card-title grey-text text-darken-4">Surnoms<i className="material-icons right">close</i></span>
+          <span className="grey-text text-darken-4">Surnoms:</span>
           {infos.surnames.map(x => (<p key={x} className="grey-text text-darken-4">{x}</p>))}
         </div>
       }
