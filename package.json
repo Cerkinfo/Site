@@ -52,6 +52,7 @@
     "jsbarcode": "^3.5.5",
     "lodash": "^4.17.4",
     "moment": "^2.14.1",
+    "moment-range": "^3.0.3",
     "quagga": "^0.11.5",
     "react": "^15.3.1",
     "react-addons-css-transition-group": "^15.4.2",
