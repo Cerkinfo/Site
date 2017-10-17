@@ -1,13 +1,17 @@
 const webpack = require('webpack');
 const config = require('./webpack.base.js');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const PrepackWebpackPlugin = require('prepack-webpack-plugin').default;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 config.plugins = config.plugins.concat([
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: JSON.stringify('production')
+    }
+  }),
+  new UglifyJsPlugin({}),
   new PrepackWebpackPlugin({}),
-  new webpack.LoaderOptionsPlugin({
-    minimize: true,
-    debug: false
-  })
 ]);
 
 module.exports = config;
