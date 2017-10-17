@@ -59,7 +59,7 @@ module.exports = {
         loader: 'babel-loader',
         query: {
           presets: [
-            'es2017',
+            ['es2015', { 'modules': false }],
             'react',
             'flow',
 
