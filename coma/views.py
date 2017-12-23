@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.views.generic import DeleteView
