@@ -107,3 +107,6 @@ venv
 node_modules/
 assets_bundles/
 webpack-stats.json
+
+# macOS
+.DS_Store
