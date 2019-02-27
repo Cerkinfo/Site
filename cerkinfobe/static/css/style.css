@@ -54,3 +54,13 @@ a {
     color: cornflowerblue;
     text-decoration: none;
 }
+
+.nav-wrapper .brand-logo {
+    height: 100%;
+}
+
+.nav-wrapper .brand-logo img {
+    height: calc(100% - 24px);
+    margin: 12px 0px 12px 12px;
+    vertical-align: middle;
+}

@@ -18,7 +18,7 @@
         </div>
     </li>
     <li><a href="{% url "profile" %}{{ request.user.id }}"><i class="material-icons">perm_identity</i>Profil</a></li>
-    <li><a href="#barcode_modal"><i class="material-icons">credit_card</i>Carte membre</a></li>                                                                                 
+    <li><a href="#barcode_modal"><i class="material-icons">credit_card</i>Carte membre</a></li>
     <li><a href="{% url "password_change" %}"><i class="material-icons">loop</i>Changer de mot de passe</a></li>
     <li><a href="{% url "logout" %}?next=/"><i class="material-icons">settings_power</i>Déconnexion</a></li>
 
@@ -95,7 +95,7 @@
 <!-- Mobile Sliding Menu -->
 <ul id="sliding_mobile_menu" class="side-nav">
     <li class="logo center-align purple darken-4">
-          <img class="responsive-img brand-logo" src="{% static "img/nav_brand.png" %}">
+          <img class="responsive-img brand-logo" src="{% static "img/puce.png" %}">
     </li>
     <li>
         <ul class="collapsible collapsible-accordion">
@@ -155,7 +155,7 @@
                     <div class="collapsible-body">
                         <ul>
                             <li><a href="{% url "profile" %}"><i class="material-icons">perm_identity</i>Profil</a></li>
-                            <li><a href="#barcode_modal"><i class="material-icons">credit_card</i>Carte membre</a></li>                                                                                 
+                            <li><a href="#barcode_modal"><i class="material-icons">credit_card</i>Carte membre</a></li>
                             <li><a href="{% url "password_change" %}"><i class="material-icons">loop</i>Changer de mot de passe</a></li>
                             <li><a href="{% url "logout" %}?next=/"><i class="material-icons">settings_power</i>Déconnexion</a></li>
 
@@ -192,7 +192,7 @@
     <nav>
         <div class="nav-wrapper purple darken-4">
             <a href="{% url "home" %}" class="brand-logo">
-                <!-- <img class="responsive-img brand-logo" src="{% static "img/nav_brand.png" %}"> -->
+                <img class="responsive-img" src="{% static "img/puce.png" %}">
                 Cercle Informatique
             </a>
             <a href="#" id="mobile_menu" data-activates="sliding_mobile_menu" class="button-collapse"><i class="material-icons">menu</i></a>
