@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}
+    {{ block.super }}
+    Accueil
+{% endblock %}
+
+{% block content %}
+    {% include 'home.html' %}
+    {% include 'guide.html' %}
+    {% include 'events.html' %}
+    {% include 'contact.html' %}
+    {% include 'team.html' %}
+{% endblock %}
