@@ -7,7 +7,7 @@
 
     {% render_block "css" %}
     {% render_block "js" %}
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png">
@@ -18,6 +18,7 @@
 
     <link rel="icon" type="image/png" href="{{ MEDIA_URL }}images/icon/icon.png">
     <link rel="stylesheet" href="{{ STATIC_URL }}/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     {% render_bundle 'commons' %}
 
@@ -25,6 +26,8 @@
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="http://cerkinfo.be/fr/"/>
     <meta property="og:image" content="http://cerkinfo.be/static/img/cerkinfo_logo.png"/>
+
+
 
     {% block head %}{% endblock %}
 </head>
