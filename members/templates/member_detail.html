@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load sekizai_tags metron_tags %}                                                
-{% load staticfiles %}                                                
+{% load sekizai_tags metron_tags %}
+{% load staticfiles %}
 {% load render_bundle from webpack_loader %}
 
 {% block title %}
@@ -10,12 +10,13 @@
 {% endblock %}
 
 {% block content %}
+  {% addtoblock "css" %}
+      {% render_bundle 'profile' 'css' %}
+  {% endaddtoblock %}
 
-{% addtoblock "css" %}
-    <link href="{% static "css/profile.css" %}" rel="stylesheet" type="text/css">
-{% endaddtoblock %}
+  {% addtoblock "js" %}
+    {% render_bundle 'profile' 'js' %}
+  {% endaddtoblock %}
 
-<div id="react-profile"></div>
-{% render_bundle 'profile' %}
-
+  <div id="react-profile"></div>
 {% endblock %}

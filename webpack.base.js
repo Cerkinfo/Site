@@ -55,12 +55,7 @@ module.exports = {
           presets: [
             ['es2015', { 'modules': false }],
             'react',
-<<<<<<< HEAD
-            'flow',
-
-=======
             'flow'
->>>>>>> fix-profile-link
           ],
           plugins: [
             ['transform-class-properties', { spec: true, }, ],
