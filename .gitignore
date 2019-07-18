@@ -108,5 +108,5 @@ node_modules/
 assets_bundles/
 webpack-stats.json
 
-# macOS
+# Macos
 .DS_Store

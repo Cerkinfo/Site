@@ -1,3 +1,10 @@
+a.anchor {
+    display: block;
+    position: relative;
+    top: -64px;
+    visibility: hidden;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -20,14 +27,6 @@ img.emoji {
     margin-top: 0;
 }
 
-.content {
-    flex: 1;
-}
-
-a:hover{
-    text-decoration: none;
-}
-
 .glyphicon {
     padding: 3px;
     vertical-align:middle;
@@ -36,7 +35,7 @@ a:hover{
 .section_header {
     display: block;
     text-align: center;
-    padding: 50px;
+    padding: 0.35em;
     font-weight: 100;
     font-size: 2.2em;
     background-color: whitesmoke;
@@ -49,8 +48,12 @@ a:hover{
     color: gray;
 }
 
-a {
-    cursor: pointer;
-    color: cornflowerblue;
-    text-decoration: none;
+.nav-wrapper .brand-logo {
+    height: 100%;
+}
+
+.nav-wrapper .brand-logo img {
+    height: calc(100% - 24px);
+    margin: 12px 0px 12px 12px;
+    vertical-align: middle;
 }

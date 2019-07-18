@@ -1,0 +1,23 @@
+{% load sekizai_tags %}
+{% load staticfiles %}
+{% load render_bundle from webpack_loader %}
+
+<section class="ui-section -hero header_container" style="
+        background-size: cover;
+        -webkit-background-size:cover;
+        -moz-background-size:cover;
+        -o-background-size:cover;
+        background-image: url({% static 'img/header.jpg' %})">
+    <div class="ui-aside">
+        <h1 class="ui-heading">
+            <span class="ui-heading-inner">
+                <span>Cercle</span>
+                <span>Informatique</span>
+                <span>ULB</span>
+            </span>
+        </h1>
+    </div>
+    <div class="ui-content">
+        <img class="header img-responsive" src="{% static 'img/cerkinfo_logo.png' %}">
+    </div>
+</section>

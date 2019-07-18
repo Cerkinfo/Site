@@ -95,7 +95,7 @@
 <!-- Mobile Sliding Menu -->
 <ul id="sliding_mobile_menu" class="side-nav">
     <li class="logo center-align purple darken-4">
-          <img class="responsive-img brand-logo" src="{% static "img/nav_brand.png" %}">
+          <img class="responsive-img brand-logo" src="{% static "img/puce.png" %}">
     </li>
     <li>
         <ul class="collapsible collapsible-accordion">
@@ -192,7 +192,7 @@
     <nav>
         <div class="nav-wrapper purple darken-4">
             <a href="{% url "home" %}" class="brand-logo">
-                <!-- <img class="responsive-img brand-logo" src="{% static "img/nav_brand.png" %}"> -->
+                <img class="responsive-img" src="{% static "img/puce.png" %}">
                 Cercle Informatique
             </a>
             <a href="#" id="mobile_menu" data-activates="sliding_mobile_menu" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -259,7 +259,3 @@
     $('#mobile_menu').sideNav();
   });
 </script>
-
-<div id="react-space-api-pin">
-</div>
-{% render_bundle 'spaceapi' %}

@@ -1,13 +1,25 @@
 {% load staticfiles %}
 {% load sekizai_tags metron_tags %}
 {% load render_bundle from webpack_loader %}
+{% addtoblock "js" %}
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    {% render_bundle 'commons' %}
+{% endaddtoblock %}
+{% addtoblock "css" %}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+{% endaddtoblock %}
+{% block include %}{% endblock %}
 <!DOCTYPE html>
 <html>
 <head>
-
     {% render_block "css" %}
     {% render_block "js" %}
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png">
@@ -18,8 +30,7 @@
 
     <link rel="icon" type="image/png" href="{{ MEDIA_URL }}images/icon/icon.png">
     <link rel="stylesheet" href="{{ STATIC_URL }}/css/style.css">
-
-    {% render_bundle 'commons' %}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <meta property="og:title" content="Cercle Informatique"/>
     <meta property="og:type" content="website"/>
@@ -51,16 +62,3 @@
     {% include 'footer.html' %}
 </body>
 </html>
-
-{% addtoblock "js" %}
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-{% endaddtoblock %}
-
-{% addtoblock "css" %}
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-{% endaddtoblock %}

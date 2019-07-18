@@ -10,21 +10,26 @@
 
 {% block content %}
 
-{% addtoblock "css" %}
-    <link href="{% static "css/guide.css" %}" rel="stylesheet" type="text/css">
-{% endaddtoblock %}
+  {% addtoblock "css" %}
+      {% render_bundle 'guide' 'css' %}
+  {% endaddtoblock %}
 
-<div class="container">
+  {% addtoblock "js" %}
+    {% render_bundle 'guide' 'js' %}
+    <script>
+      $(document).ready(function () {
+          markdown_page_render(
+            'https://raw.githubusercontent.com/Cerkinfo/BA1/master/guide.md',
+            'react-markdown-page'
+          );
+      });
+    </script>
+  {% endaddtoblock %}
+
+  <div class="container">
     <h3>Guide de l'étudiant</h3>
     <hr>
     <div id="react-markdown-page"></div>
-    {% render_bundle 'markdown_page' %}
-    <script>
-        $(document).ready(function () {
-            markdown_page_render('https://raw.githubusercontent.com/Cerkinfo/BA1/master/guide.md', 'react-markdown-page');
-        });
-    </script>
-</div>
-
+  </div>
 
 {% endblock %}

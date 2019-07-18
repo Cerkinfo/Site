@@ -1,0 +1,56 @@
+{% load staticfiles %}
+{% load sekizai_tags %}
+
+{% addtoblock "css" %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+{% endaddtoblock %}
+
+{% addtoblock "js" %}
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
+  <script type="text/javascript">
+    $(document).ready(() => {
+      var mymap = L.map('map-canvas', {scrollWheelZoom:false}).setView([50.819988, 4.399052], 16);
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox.streets',
+          accessToken: 'pk.eyJ1IjoibWFyaWJpYiIsImEiOiJjanNucWxxYWIwZGtxNGFueXk1NjU1ZHlkIn0.jg9gcvq3dK_zFicBU_liKw'
+      }).addTo(mymap);
+      L.marker([50.819988, 4.399052]).addTo(mymap);
+    })
+  </script>
+{% endaddtoblock %}
+
+<section>
+  <a name="contact" class="anchor"></a>
+  <div class="section_header">
+      Contact
+  </div>
+  <div class="frater-info">
+      <div class="info">
+          <div class="adress">
+              <b>Cerkinfo A.S.B.L.</b> <br />
+              Boulevard du Triomphe, CP 206<br />
+              1050, Ixelles<br />
+              Bruxelles
+          </div>
+          <div class="phone-mail">
+              <a href="{% url 'home' %}#team">Comité</a>
+              02 650 54 88
+          </div>
+          <div class="bank-account">
+              <i class="glyphicon glyphicon-piggy-bank"></i>
+              BE02 0014 0193 5340
+          </div>
+      </div>
+      <div class="desc">
+          Notre local est situé sur le <b>campus de la Plaine</b>, à deux pas de tes salles de cours et de la Jefke. Il se trouve <b>en dessous des forums</b>. En te penchant par la rambarde devant l'entrée de la cafétéria, tu peux apercevoir la porte d'entrée, plus communément appelée la <b>porte jaune</b>.
+      </div>
+  </div>
+
+  <div id="map-canvas"></div>
+</section>

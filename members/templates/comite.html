@@ -5,8 +5,8 @@
     <link href="{% static "css/member.css" %}" rel="stylesheet" type="text/css">
 {% endaddtoblock %}
 
-<a name="team" class="separator"></a>
 <section style="text-align:center;">
+    <a name="team" class="anchor"></a>
     <div class="section_header"> {{ title_desc }}</div>
     {% for membership in memberships %}
         <a class="member-widget" href="{% if membership.member %}{% url 'member_profil' membership.member_id %}{% else %}#{% endif %}">

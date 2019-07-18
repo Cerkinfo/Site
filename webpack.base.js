@@ -7,33 +7,27 @@ module.exports = {
   context: __dirname,
 
   entry: {
-    events: [
-      './assets/js/event/index',
+    // barcode: [
+    //   './assets/js/barcode_render/index'
+    // ],
+    // buy_form: [
+    //   './assets/js/buy_form/index'
+    // ],
+    // add_form: [
+    //   './assets/js/add_form/index'
+    // ],
+    // products: [
+    //   './assets/js/products/index'
+    // ],
+    // profile: [
+    //   './assets/js/profile/index',
+    // ],
+    guide: [
+      './guide/static/index'
     ],
-    spaceapi: [
-      './assets/js/spaceapi/index',
-    ],
-    barcode: [
-      './assets/js/barcode_render/index',
-    ],
-    buy_form: [
-      './assets/js/buy_form/index',
-    ],
-    add_form: [
-      './assets/js/add_form/index',
-    ],
-    products: [
-      './assets/js/products/index',
-    ],
-    markdown_page: [
-      './assets/js/markdown_page/index',
-    ],
-    profile: [
-      './assets/js/profile/index',
-    ],
-    hero: [
-      './assets/css/styles.scss',
-    ],
+    welcoming: [
+      './welcoming/static/index'
+    ]
   },
 
   output: {
@@ -61,8 +55,12 @@ module.exports = {
           presets: [
             ['es2015', { 'modules': false }],
             'react',
+<<<<<<< HEAD
             'flow',
 
+=======
+            'flow'
+>>>>>>> fix-profile-link
           ],
           plugins: [
             ['transform-class-properties', { spec: true, }, ],
