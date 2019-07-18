@@ -7,29 +7,23 @@ module.exports = {
   context: __dirname,
 
   entry: {
-    events: [
-      './assets/js/event/index'
+    // barcode: [
+    //   './assets/js/barcode_render/index'
+    // ],
+    // buy_form: [
+    //   './assets/js/buy_form/index'
+    // ],
+    // add_form: [
+    //   './assets/js/add_form/index'
+    // ],
+    // products: [
+    //   './assets/js/products/index'
+    // ],
+    guide: [
+      './guide/static/index'
     ],
-    spaceapi: [
-      './assets/js/spaceapi/index'
-    ],
-    barcode: [
-      './assets/js/barcode_render/index'
-    ],
-    buy_form: [
-      './assets/js/buy_form/index'
-    ],
-    add_form: [
-      './assets/js/add_form/index'
-    ],
-    products: [
-      './assets/js/products/index'
-    ],
-    markdown_page: [
-      './assets/js/markdown_page/index'
-    ],
-    hero: [
-      './assets/css/styles.scss'
+    welcoming: [
+      './welcoming/static/index'
     ]
   },
 
@@ -45,7 +39,7 @@ module.exports = {
       filename: '[name]-[hash].js',
       minChunks: 2
     }),
-    new ExtractTextPlugin('[name]-[hash].css')
+    new ExtractTextPlugin('[name]-[hash].css'),
   ],
 
   module: {
@@ -59,7 +53,7 @@ module.exports = {
             'es2017',
             'react',
             'flow'
-          ], 
+          ],
           plugins: [
             ["transform-class-properties", { "spec": true }],
           ]

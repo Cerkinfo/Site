@@ -1,0 +1,18 @@
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% load render_bundle from webpack_loader %}
+
+{% addtoblock "js" %}
+    <script>
+        window.events = {{ events_dict | safe }};
+    </script>
+{% endaddtoblock %}
+
+<section>
+    <a name="agenda" class="anchor"></a>
+    <div class="section_header">
+        Évènements à venir
+    </div>
+
+    <div id="events-container"></div>
+</section>

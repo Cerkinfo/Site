@@ -2,11 +2,6 @@
 {% load staticfiles %}
 {% load render_bundle from webpack_loader %}
 
-{% addtoblock "css" %}
-    <link href="{% static 'css/home.css' %}" rel="stylesheet" type="text/css">
-    {% render_bundle 'hero' %}
-{% endaddtoblock %}
-
 <section class="ui-section -hero header_container" style="
         background-size: cover;
         -webkit-background-size:cover;
@@ -24,6 +19,5 @@
     </div>
     <div class="ui-content">
         <img class="header img-responsive" src="{% static 'img/cerkinfo_logo.png' %}">
-        <div class="ui-screen"></div>
     </div>
 </section>

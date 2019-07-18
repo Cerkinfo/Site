@@ -10,17 +10,8 @@ $bar-height: 80%;
   transition: all 0.3s $easing;
 }
 
-body, html {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  font-size: 18px;
-  font-family: 'Oxygen', sans-serif;
-}
-
 .ui-section {
-  height: 100vh;
+  height: calc(100vh - 64px);
   width: 100vw;
   display: flex;
   flex-direction: row;
@@ -173,7 +164,7 @@ body, html {
         }
       }
     }
-    
+
     .ui-button {
       color: white;
       border-color: white;
@@ -270,7 +261,7 @@ body, html {
           transparent);
     background-attachment: fixed;
     background-repeat: no-repeat;
-    margin-top: 32px;
+
   }
 
   > ul {
@@ -323,96 +314,4 @@ body, html {
   .ui-buttons:hover ~ & {
     transform: scaleX(1);
   }
-}
-
-.ui-buttons {
-  &:hover {
-    ~ * {
-      color: #111;
-    }
-
-    > .ui-button {
-      @extend .ui-button;
-    }
-  }
-}
-
-.ui-button {
-  display: inline-block;
-  appearance: none;
-  text-decoration: none;
-  display: inline-block;
-  text-transform: uppercase;
-  padding: 1rem;
-  font-weight: 700;
-  background: transparent;
-  color: $color-primary;
-  border: 1px solid $color-primary;
-  overflow: hidden;
-  outline: none;
-
-  + .ui-button {
-    margin-left: 1rem;
-  }
-
-  &:hover, &:focus {
-    color: white;
-    outline: none;
-
-    &:before {
-      transform: translateX(0) skewX(30deg);
-    }
-  }
-
-  &:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: calc(100% + 2rem);
-    height: 100%;
-    transform: scale(1.1) translateX(calc(-100% - 2rem)) skewX(30deg);
-    transform-origin: left bottom;
-    background: $color-primary;
-    transition: transform 0.3s $easing;
-    z-index: -1;
-  }
-}
-
-.ui-footer {
-  background: $color-primary;
-  width: 100%;
-  padding: 1rem;
-  text-align: center;
-  color: white;
-
-  a {
-    text-decoration: none;
-    color: $color-accent;
-    display: inline-block;
-    margin: 0 0.5rem;
-
-    &:before {
-      content: '';
-      position: absolute;
-      display: block;
-      top: calc(100% + 0.1rem);
-      left: 0;
-      height: 0.5ex;
-      width: 100%;
-      background: $color-accent;
-      transform: scaleX(0);
-      transform-origin: left;
-    }
-
-    &:hover:before {
-      transform: scaleX(1);
-    }
-  }
-}
-
-.ui-npm-badge {
-  align-self: flex-end;
-  padding: 0 2rem;
 }

@@ -1,27 +1,3 @@
-/* header style */
-.header-container {
-    background-size: cover;
-    background-repeat:no-repeat;
-    -webkit-background-size:cover;
-    -moz-background-size:cover;
-    -o-background-size:cover;
-    background-position:center;
-}
-
-
-.header-logo {
-    text-align: center;
-    vertical-align: middle;
-    padding-top: 40px;
-    height: 100vh;
-}
-
-img.header {
-    width: 65vh;
-    margin: 0 auto;
-}
-
-/* guide style */
 .guide_container {
     background: rgba(0, 0, 0, 0) linear-gradient(75deg, crimson 0px, crimson 34%, gold 80%, gold 100%) repeat scroll 0 0;
     display: table;

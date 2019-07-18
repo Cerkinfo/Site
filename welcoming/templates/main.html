@@ -1,6 +1,17 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load sekizai_tags %}
 {% load render_bundle from webpack_loader %}
+{% load i18n %}
+
+{% block include %}
+    {% addtoblock "css" %}
+        {% render_bundle 'welcoming' 'css' %}
+    {% endaddtoblock %}
+
+    {% addtoblock "js" %}
+        {% render_bundle 'welcoming' 'js' %}
+    {% endaddtoblock %}
+{% endblock %}
 
 {% block title %}
     {{ block.super }}
@@ -8,9 +19,9 @@
 {% endblock %}
 
 {% block content %}
-    {% include 'home.html' %}
-    {% include 'guide.html' %}
-    {% include 'events.html' %}
-    {% include 'contact.html' %}
-    {% include 'team.html' %}
+    {% include 'section_home.html' %}
+    {% include 'section_guide.html' %}
+    {% include 'section_events.html' %}
+    {% include 'section_contact.html' %}
+    <!-- {% include 'team.html' %} -->
 {% endblock %}

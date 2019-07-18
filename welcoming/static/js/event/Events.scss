@@ -1,0 +1,113 @@
+#events-container {
+  padding-top: 2px;
+}
+
+#events-container .flex-row {
+  display: flex;
+}
+
+#events-container .date {
+  text-align: center;
+  background-color: #4a148c;
+  padding: 0.2em;
+  color: white;
+  width: 100px;
+  height: 100px;
+  max-width: 100px;
+  min-width: 100px;
+  max-height: 100px;
+  min-height: 100px;
+}
+
+#events-container .event-body {
+  padding: 1.0em;
+  height: 100px;
+  max-height: 100px;
+  min-height: 100px;
+}
+
+#events-container * {
+  transition: none;
+}
+
+#events-container .event-body,
+#events-container .event-description-container {
+  background-color: whitesmoke;
+  flex-grow: 1;
+}
+
+#events-container .event-title {
+  font-weight: bold;
+  font-size: 1.2em;
+  line-height: 1em;
+}
+
+#events-container .event {
+  margin-bottom: 2px;
+}
+
+#events-container .event:nth-child(2n) .date {
+  background-color: rgba(74,20,140, 0.7);
+}
+
+#events-container .event:nth-child(2n) .event-body,
+#events-container .event:nth-child(2n) .desc-button-container,
+#events-container .event:nth-child(2n) .event-description-container {
+  background-color: white;
+}
+
+#events-container .day {
+  font-weight: bold;
+  font-size: 4em;
+  line-height: 1em;
+}
+
+#events-container .month, #events-container .year {
+  line-height: 1em;
+}
+
+#events-container .event-body i {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+#events-container .location {
+  font-size: 1em;
+  vertical-align: middle;
+}
+
+#events-container .location-container,
+#events-container .end-container {
+  margin-top: 0.6em;
+  color: #757575;
+  line-height: 1em;
+}
+
+#events-container .location-container > i {
+  font-size: 1em;
+}
+
+#events-container .desc-button-container {
+  background-color: whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 10px;
+  flex-grow: 0;
+}
+
+#events-container .desc-button {
+  box-shadow: none;
+}
+
+#events-container .event-link i {
+  line-height: 1em;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+#events-container .event-description {
+  overflow: scroll;
+  height: calc(100px - 2em);
+  margin: 1em;
+}

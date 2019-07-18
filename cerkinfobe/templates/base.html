@@ -1,10 +1,22 @@
 {% load staticfiles %}
 {% load sekizai_tags metron_tags %}
 {% load render_bundle from webpack_loader %}
+{% addtoblock "js" %}
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    {% render_bundle 'commons' %}
+{% endaddtoblock %}
+{% addtoblock "css" %}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+{% endaddtoblock %}
+{% block include %}{% endblock %}
 <!DOCTYPE html>
 <html>
 <head>
-
     {% render_block "css" %}
     {% render_block "js" %}
 
@@ -20,14 +32,10 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    {% render_bundle 'commons' %}
-
     <meta property="og:title" content="Cercle Informatique"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="http://cerkinfo.be/fr/"/>
     <meta property="og:image" content="http://cerkinfo.be/static/img/cerkinfo_logo.png"/>
-
-
 
     {% block head %}{% endblock %}
 </head>
@@ -54,16 +62,3 @@
     {% include 'footer.html' %}
 </body>
 </html>
-
-{% addtoblock "js" %}
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-{% endaddtoblock %}
-
-{% addtoblock "css" %}
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-{% endaddtoblock %}
