@@ -70,11 +70,7 @@ const AsideInfo = ({ infos, isSelf, }) => {
   return (
     <Card
       header={<Avatar avatar={infos.avatar}/>}
-      title={
-        <span className="grey-text text-darken-4">
-          {getName(infos)}
-        </span>
-      }
+      title={getName(infos)}
       reveal={
         <div>
           <span className="grey-text text-darken-4">Surnoms:</span>
@@ -85,19 +81,9 @@ const AsideInfo = ({ infos, isSelf, }) => {
       <p className="grey-text text-darken-4">
         <BirthDay infos={infos}/>
       </p>
-      { infos.hasOwnProperty('balance') ?
-        <p className="grey-text text-darken-4">
-          Ardoise: {infos.balance} €
-        </p>
-      : null}
       <p className="grey-text text-darken-4">
         <MembershipMarker infos={infos}/>
       </p>
-      { isSelf ? (
-        <div className="card-action">
-          <a className="waves-effect waves-light btn" href="#barcode_modal">Carte membre</a>
-        </div>
-      ) : null }
     </Card>
   );
 }

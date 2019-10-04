@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% load sekizai_tags i18n wiki_tags static %}
 
+{% block include %}
+    {% addtoblock "css" %}
+        <link rel="stylesheet" href="{% static "wiki/bootstrap/css/wiki-bootstrap.min.css" %}" />
+    {% endaddtoblock %}
+
+    {% addtoblock "js" %}
+        <script src="{% static "wiki/bootstrap/js/bootstrap.min.js" %}" />
+    {% endaddtoblock %}
+{% endblock %}
+
 {% block title %}
     {{ block.super }}
     Wiki

@@ -16,11 +16,14 @@ const Main = () => (
     <Router>
       <div>
         <Route path="/:lang/cipedia/member/:id" component={Profile}/>
+        <Route path="/:lang/cipedia/profile" component={Profile}/>
       </div>
     </Router>
   </Provider>
 );
 
-ReactDOM.render(<Main/>,
-  document.getElementById('react-profile')
-);
+$(document).ready( () => {
+  ReactDOM.render(<Main/>,
+    document.getElementById('react-profile')
+  );
+});

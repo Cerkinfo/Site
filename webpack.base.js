@@ -7,9 +7,6 @@ module.exports = {
   context: __dirname,
 
   entry: {
-    // barcode: [
-    //   './assets/js/barcode_render/index'
-    // ],
     // buy_form: [
     //   './assets/js/buy_form/index'
     // ],
@@ -19,9 +16,9 @@ module.exports = {
     // products: [
     //   './assets/js/products/index'
     // ],
-    // profile: [
-    //   './assets/js/profile/index',
-    // ],
+    profile: [
+      './members/static/index',
+    ],
     guide: [
       './guide/static/index'
     ],

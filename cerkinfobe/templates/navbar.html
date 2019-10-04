@@ -2,10 +2,6 @@
 {% load sekizai_tags metron_tags %}
 {% load render_bundle from webpack_loader %}
 
-{% if request.user.is_authenticated %}
-  {% include 'card.html' with card_id=request.user.member.card_id %}
-{% endif %}
-
 <!-- Logged side bar -->
 {% if request.user.is_authenticated %}
 <ul id="slide-out" class="side-nav">
@@ -18,7 +14,6 @@
         </div>
     </li>
     <li><a href="{% url "member_profil" request.user.member.id %}"><i class="material-icons">perm_identity</i>Profil</a></li>
-    <li><a href="#barcode_modal"><i class="material-icons">credit_card</i>Carte membre</a></li>
     <li><a href="{% url "password_change" %}"><i class="material-icons">loop</i>Changer de mot de passe</a></li>
     <li><a href="{% url "logout" %}?next=/"><i class="material-icons">settings_power</i>Déconnexion</a></li>
 

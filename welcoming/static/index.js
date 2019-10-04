@@ -4,4 +4,4 @@ import './css/guide.css';
 import './css/style.css';
 import './css/contact.css';
 import './css/member.css';
-import './js/event/index.jsx';
+import './event/index.jsx';
