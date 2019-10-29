@@ -32,7 +32,7 @@
     "butternut-webpack-plugin": "0.0.4",
     "css-loader": "^0.24.0",
     "cssnano": "^3.10.0",
-    "eslint": "^3.16.1",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^11.1.0",
     "eslint-loader": "^1.6.3",
     "eslint-plugin-flowtype": "^2.32.1",
